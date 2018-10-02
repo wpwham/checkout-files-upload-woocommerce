@@ -4,11 +4,11 @@ Plugin Name: Checkout Files Upload for WooCommerce
 Plugin URI: https://wpfactory.com/item/checkout-files-upload-woocommerce-plugin/
 Description: Let your customers upload files on (or after) WooCommerce checkout.
 Version: 1.4.5
-Author: Algoritmika Ltd
-Author URI: http://www.wpwham.com
+Author: WP Wham
+Author URI: https://www.wpwham.com
 Text Domain: checkout-files-upload-woocommerce
 Domain Path: /langs
-Copyright: © 2018 Algoritmika Ltd.
+Copyright: © 2018 WP Wham
 WC tested up to: 3.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
