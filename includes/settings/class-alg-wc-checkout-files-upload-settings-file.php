@@ -55,6 +55,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 		}
 
 		// Products
+		$products_options = array();
 		$offset     = 0;
 		$block_size = 1024;
 		while( true ) {
