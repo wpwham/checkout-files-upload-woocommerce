@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Checkout Files Upload for WooCommerce
-Plugin URI: https://wpfactory.com/item/checkout-files-upload-woocommerce-plugin/
+Plugin URI: https://wpwham.com/products/checkout-files-upload-for-woocommerce/
 Description: Let your customers upload files on (or after) WooCommerce checkout.
 Version: 1.4.5
 Author: WP Wham
-Author URI: https://www.wpwham.com
+Author URI: https://wpwham.com
 Text Domain: checkout-files-upload-woocommerce
 Domain Path: /langs
 Copyright: © 2018 WP Wham
@@ -129,7 +129,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		$custom_links = array();
 		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=alg_wc_checkout_files_upload' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>';
 		if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
-			$custom_links[] = '<a target="_blank" href="https://wpfactory.com/item/checkout-files-upload-woocommerce-plugin/">' .
+			$custom_links[] = '<a target="_blank" href="https://wpwham.com/products/checkout-files-upload-for-woocommerce/">' .
 				__( 'Unlock all', 'checkout-files-upload-woocommerce' ) . '</a>';
 		}
 		return array_merge( $custom_links, $links );

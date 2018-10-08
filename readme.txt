@@ -66,7 +66,7 @@ Optionally **validate image dimensions**.
 * Drop us a line at [www.wpwham.com](http://www.wpwham.com).
 
 = More =
-* Visit the [Checkout Files Upload for WooCommerce plugin page](https://wpfactory.com/item/checkout-files-upload-woocommerce-plugin/).
+* Visit the [Checkout Files Upload for WooCommerce plugin page](https://wpwham.com/products/checkout-files-upload-for-woocommerce/).
 
 == Installation ==
 
