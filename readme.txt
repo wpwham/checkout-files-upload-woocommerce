@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 1.4.5
+Stable tag: 1.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -63,7 +63,7 @@ Optionally **validate image dimensions**.
 
 = Feedback =
 * We are open to your suggestions and feedback. Thank you for using or trying out one of our plugins!
-* Drop us a line at [www.wpwham.com](http://www.wpwham.com).
+* Drop us a line at [www.wpwham.com](https://wpwham.com).
 
 = More =
 * Visit the [Checkout Files Upload for WooCommerce plugin page](https://wpwham.com/products/checkout-files-upload-for-woocommerce/).
@@ -76,29 +76,33 @@ Optionally **validate image dimensions**.
 
 == Changelog ==
 
-= 1.4.5 - 01/10/2018 =
+= 1.5.0 - 2018-10-08 =
+* FIX: php notice
+* UPDATE: updated .pot file for translations
+
+= 1.4.5 - 2018-10-01 =
 * Dev - `[alg_wc_cfu_translate]` shortcode added and `do_shortcode()` is now applied to each file's "Labels".
 
-= 1.4.4 - 13/09/2018 =
+= 1.4.4 - 2018-09-13 =
 * Dev - Emails - "Additional Emails Options" subsection added.
 * Dev - "Raw" input is now allowed in all textarea admin settings fields.
 * Dev - Code refactoring - "Reset" function re-written.
 * Dev - Code refactoring - `custom_number_checkout_files_upload` settings type removed.
 * Dev - "Your settings have been saved" admin notice added.
 
-= 1.4.3 - 10/09/2018 =
+= 1.4.3 - 2018-09-10 =
 * Dev - "Author URI" updated.
 
-= 1.4.2 - 10/09/2018 =
+= 1.4.2 - 2018-09-10 =
 * Dev - "Contributors" updated.
 
-= 1.4.1 - 27/08/2018 =
+= 1.4.1 - 2018-08-27 =
 * Fix - `%image%` in AJAX form fixed on "Thank you" and "My Account" pages.
 * Dev - "Validate image dimensions" options added for each file.
 * Dev - Minor code refactoring.
 * Dev - Minor admin settings restyling.
 
-= 1.4.0 - 25/08/2018 =
+= 1.4.0 - 2018-08-25 =
 * Fix - User file download fixed on "Thank you" and "My Account" pages.
 * Dev - `%image%` replaced value added.
 * Dev - "AJAX form" now is enabled (`yes`) in settings by default.
@@ -106,7 +110,7 @@ Optionally **validate image dimensions**.
 * Dev - Minor admin settings restyling.
 * Dev - Plugin URI updated.
 
-= 1.3.0 - 09/06/2018 =
+= 1.3.0 - 2018-06-09 =
 * Fix - Case insensitive comparison of the "Accepted file types" options.
 * Fix - Default values fixed for all `get_option()` calls.
 * Dev - "AJAX form" options added.
@@ -116,23 +120,23 @@ Optionally **validate image dimensions**.
 * Dev - Admin settings - Files settings added as separate sections.
 * Dev - Admin settings - Minor changes: restyling; `select` option type changed to `wc-enhanced-select`; settings array saved as main class property.
 
-= 1.2.0 - 10/05/2017 =
+= 1.2.0 - 2017-05-10 =
 * Fix - `Call to undefined function is_shop_manager()` error fixed.
 * Dev - WooCommerce v3.x.x compatibility - Order ID - using function instead of accessing property directly.
 * Dev - `load_plugin_textdomain` moved to constructor from `init` hook.
 * Dev - Plugin link changed from `http://coder.fm` to `https://wpcodefactory.com`.
 
-= 1.1.1 - 07/12/2016 =
+= 1.1.1 - 2016-12-07 =
 * Dev - `alg_current_filter_priority()` modified for compatibility with WordPress since v4.7.
 * Dev - Language (POT) file updated.
 * Dev - Checking for Pro modified.
 
-= 1.1.0 - 28/11/2016 =
+= 1.1.0 - 2016-11-28 =
 * Dev - "Form Template Options" settings section added.
 * Dev - Language (POT) file added.
 * Dev - "Emails Options" settings moved to separate section.
 
-= 1.0.0 - 05/09/2016 =
+= 1.0.0 - 2016-09-05 =
 * Initial Release.
 
 == Upgrade Notice ==
