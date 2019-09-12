@@ -9,7 +9,7 @@ Author URI: https://wpwham.com
 Text Domain: checkout-files-upload-woocommerce
 Domain Path: /langs
 Copyright: © 2018-2019 WP Wham
-WC tested up to: 3.6
+WC tested up to: 3.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
