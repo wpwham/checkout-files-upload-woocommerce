@@ -145,6 +145,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 			),
 			array(
 				'title'    => __( 'Checkout page', 'checkout-files-upload-woocommerce' ),
+				'desc'     => sprintf( __( '<a href="%s" target="_blank">Checkout Files Upload for WooCommerce Pro</a> adds 20 more positions to choose from.', 'checkout-files-upload-woocommerce' ), 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/' ),
 				'id'       => 'alg_checkout_files_upload_hook_' . $i,
 				'default'  => 'woocommerce_before_checkout_form',
 				'type'     => 'select',
