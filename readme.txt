@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,10 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 1.5.4 - 2020-01-14 =
+* UPDATE: add new filters 'wpw_checkout_files_upload_form_html' and 'wpw_checkout_files_upload_form_ajax_html'.
+* UPDATE: wrap checkout page file upload controls in <div>.
 
 = 1.5.3 - 2019-11-22 =
 * UPDATE: bump tested versions
