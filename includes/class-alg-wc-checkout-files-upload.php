@@ -858,7 +858,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				'<div class="alg-wc-checkout-files-upload-progress-status">' . ( '' == $file_name ? '0%' : '100%' ). '</div>' .
 			'</div>';
 		}
-		return $html;
+		return apply_filters( 'wpw_checkout_files_upload_form_ajax_html', $html );
 	}
 
 	/**
@@ -905,7 +905,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			$html .= '<input type="hidden" name="alg_checkout_files_upload_order_id_' . $i . '" value="' . $order_id . '">';
 		}
 		$html .= '</div>';
-		return $html;
+		return apply_filters( 'wpw_checkout_files_upload_form_html', $html );
 	}
 
 	/**
