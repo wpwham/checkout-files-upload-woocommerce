@@ -59,7 +59,7 @@ Upload.prototype.doUpload = function (file_num) {
 					jQuery("#alg_checkout_files_upload_image_"+file_num).empty();
 				}
 			} else {
-				jQuery("#alg_checkout_files_upload_form_"+file_num)[0].reset();
+				document.getElementById( 'alg_checkout_files_upload_'+file_num ).value = null;
 				jQuery("#alg_checkout_files_upload_result_file_name_"+file_num).text("");
 				jQuery("#alg_checkout_files_upload_image_"+file_num).empty();
 				if (alg_wc_checkout_files_upload.progress_bar_enabled) {
@@ -89,7 +89,7 @@ jQuery(document).ready(function() {
 		var max_file_size = parseInt(alg_wc_checkout_files_upload.max_file_size);
 		if (max_file_size > 0 && upload.getSize() > max_file_size) {
 			alert(alg_wc_checkout_files_upload.max_file_size_exceeded_message);
-			jQuery("#alg_checkout_files_upload_form_"+jQuery(this).attr('file-num'))[0].reset();
+			document.getElementById( 'alg_checkout_files_upload_'+jQuery(this).attr('file-num') ).value = null;
 		} else {
 			upload.doUpload(jQuery(this).attr('file-num'));
 		}
@@ -107,7 +107,7 @@ jQuery(document).ready(function() {
 			success: function (data) {
 				var data_decoded = jQuery.parseJSON(data);
 				if ( 0 != data_decoded['result'] ) {
-					jQuery("#alg_checkout_files_upload_form_"+file_num)[0].reset();
+					document.getElementById( 'alg_checkout_files_upload_'+file_num ).value = null;
 					jQuery("#alg_checkout_files_upload_"+file_num).show();
 					jQuery("#alg_checkout_files_upload_result_"+file_num).hide();
 					jQuery("#alg_checkout_files_upload_result_file_name_"+file_num).text("");

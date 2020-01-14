@@ -824,7 +824,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 */
 	function get_the_form_ajax( $i, $file_name, $order_id = 0 ) {
 		$html = '';
-		$html .= '<form enctype="multipart/form-data" action="" method="POST" id="alg_checkout_files_upload_form_' . $i . '">';
+		$html .= '<div id="alg_checkout_files_upload_form_' . $i . '">';
 		$html .= get_option( 'alg_checkout_files_upload_form_template_before', '<table>' );
 		$html .= $this->get_the_form_part_label( $i );
 		$field_html = '';
@@ -851,7 +851,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$html .= '<input type="hidden" id="alg_checkout_files_upload_order_id_' . $i  . '"  name="alg_checkout_files_upload_order_id_' . $i  . '" value="' . $order_id . '">';
 		$html .= '<input type="hidden" id="alg_checkout_files_upload_order_key_' . $i . '"  name="alg_checkout_files_upload_order_key_' . $i . '" value="' .
 			( isset( $_REQUEST['key'] ) ? esc_html( $_REQUEST['key'] ) : 0 ) . '">';
-		$html .= '</form>';
+		$html .= '</div>';
 		if ( 'yes' === get_option( 'alg_checkout_files_upload_use_ajax_progress_bar', 'no' ) ) {
 			$html .= '<div id="alg-wc-checkout-files-upload-progress-wrapper-' . $i . '">' .
 				'<div class="alg-wc-checkout-files-upload-progress-bar" style="' . ( '' == $file_name ? '' : 'width:100%;' ). '"></div>' .
@@ -869,7 +869,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 */
 	function get_the_form_simple( $i, $file_name, $order_id = 0 ) {
 		$html = '';
-		$html .= '<form enctype="multipart/form-data" action="" method="POST">';
+		$html .= '<div id="alg_checkout_files_upload_form_' . $i . '">';
 		$html .= get_option( 'alg_checkout_files_upload_form_template_before', '<table>' );
 		$html .= $this->get_the_form_part_label( $i );
 		if ( '' == $file_name ) {
@@ -904,7 +904,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		if ( 0 != $order_id ) {
 			$html .= '<input type="hidden" name="alg_checkout_files_upload_order_id_' . $i . '" value="' . $order_id . '">';
 		}
-		$html .= '</form>';
+		$html .= '</div>';
 		return $html;
 	}
 
