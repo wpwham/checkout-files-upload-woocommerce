@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 5.3
-Stable tag: 1.5.4
+Tested up to: 5.4
+Stable tag: 2.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,16 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.0.0 - 2020-06-11 =
+* NEW: **Breaking Change** the `Form (simple)` template has been removed, and `Form (AJAX)` is now the standard template. `Form (AJAX)` has been the default since v1.4.0 (2018-08-25), so for most people this change will have no effect.  However, if you were using `Form (simple)`, or if you had customized either template, please double check your settings to make sure things look correct. Or, you can reset the settings to get a fresh start.
+* NEW: **Breaking Change** in template settings, the variable `%field_html%` which previously contained BOTH the field html AND the upload button itself, has been split into separate variables `%field_html%` and `%button_html%`.  Your template settings will be updated automatically to reflect this.
+* NEW: image thumbnails will be shown by default.  The image feature has existed since v1.4.0 (2018-08-25), but some people didn't realize this and/or didn't know they needed to add `%image%` into the template to enable it.  Now `%image%` is included in the template by default.  If you don't want this, simply edit your template settings and remove the `%image%` variable.
+* NEW: show spinner when processing, and prevent checkout form submission before upload is completed.
+* UPDATE: change the way we handle sessions -- only start them when needed, not on every page load.
+* UPDATE: extensive code refactoring.
+* UPDATE: updated some styling and text.  For example, progress bars (if enabled) are now green.
+* UPDATE: updated .pot file for translations.
 
 = 1.5.4 - 2020-01-14 =
 * UPDATE: add new filters 'wpw_checkout_files_upload_form_html' and 'wpw_checkout_files_upload_form_ajax_html'.
@@ -153,6 +163,9 @@ Optionally **validate image dimensions**.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 2.0.0 =
+This is a major update.  There are some possibly breaking changes in the template settings.  If you use the default template you have nothing to worry about, however if you customized your template please read the changelog carefully and double check your settings to make sure everything is correct.
 
 = 1.0.0 =
 This is the first release of the plugin.
