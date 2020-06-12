@@ -37,15 +37,23 @@ if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
-define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '1.5.4' );
-define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION', '2' );
-define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_PATH', plugin_dir_path( __FILE__ ) );
-define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_FILE', __FILE__ );
+if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION' ) ) {
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '1.5.4' );
+}
+if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION' ) ) {
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION', '2' );
+}
+if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_PATH' ) ) {
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_PATH', plugin_dir_path( __FILE__ ) );
+}
+if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_FILE' ) ) {
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_FILE', __FILE__ );
+}
 
 /**
  * Update scripts
  */
-require_once( WPWHAM_CHECKOUT_FILES_UPLOAD_PATH . 'includes/checkout-files-upload-woocommerce-update.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'includes/checkout-files-upload-woocommerce-update.php' );
 
 if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload' ) ) :
 
