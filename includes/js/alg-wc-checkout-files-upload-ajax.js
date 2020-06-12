@@ -154,7 +154,7 @@
 					upload.doUpload( fileUploader );
 				}
 			}
-			$( this ).value = null;
+			$( this ).val('');
 		});
 		
 		$( document ).on( 'click', '.alg_checkout_files_upload_result_delete', function( event ) {
