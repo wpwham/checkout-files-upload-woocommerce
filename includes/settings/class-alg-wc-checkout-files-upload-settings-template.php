@@ -2,9 +2,10 @@
 /**
  * Checkout Files Upload - Template Section Settings
  *
- * @version 1.4.4
+ * @version 2.0.0
  * @since   1.1.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -28,7 +29,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_Template extends Alg_WC_Checkout_Fil
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.4.4
+	 * @version 2.0.0
 	 * @since   1.1.0
 	 */
 	function get_settings() {
@@ -56,19 +57,19 @@ class Alg_WC_Checkout_Files_Upload_Settings_Template extends Alg_WC_Checkout_Fil
 				'alg_wc_cfu_raw' => true,
 			),
 			array(
-				'title'    => __( 'Field (Simple)', 'checkout-files-upload-woocommerce' ),
-				'desc'     => sprintf( __( 'Replaced values: %s.', 'checkout-files-upload-woocommerce' ), '<code>%field_html%</code>, <code>%button_html%</code>, <code>%image%</code>' ),
-				'id'       => 'alg_checkout_files_upload_form_template_field',
-				'default'  => '<tr><td style="width:50%;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>',
+				'title'    => __( 'Field Container', 'checkout-files-upload-woocommerce' ),
+				'desc'     => sprintf( __( 'Replaced values: %s.', 'checkout-files-upload-woocommerce' ), '<code>%field_html%</code>, <code>%button_html%</code>' ),
+				'id'       => 'alg_checkout_files_upload_form_template_field_ajax',
+				'default'  => '<tr><td colspan="2">%button_html% %field_html%</td></tr>',
 				'type'     => 'textarea',
 				'css'      => 'width:100%;',
 				'alg_wc_cfu_raw' => true,
 			),
 			array(
-				'title'    => __( 'Field (AJAX)', 'checkout-files-upload-woocommerce' ),
-				'desc'     => sprintf( __( 'Replaced values: %s.', 'checkout-files-upload-woocommerce' ), '<code>%field_html%</code>, <code>%image%</code>' ),
-				'id'       => 'alg_checkout_files_upload_form_template_field_ajax',
-				'default'  => '<tr><td colspan="2">%field_html%</td></tr>',
+				'title'    => __( 'Uploaded File', 'checkout-files-upload-woocommerce' ),
+				'desc'     => sprintf( __( 'Replaced values: %s.', 'checkout-files-upload-woocommerce' ), '<code>%file_name%</code>, <code>%image%</code>, <code>%remove_button%</code>' ),
+				'id'       => 'wpw_cfu_form_template_uploaded_file',
+				'default'  => '%image% %file_name% %remove_button%',
 				'type'     => 'textarea',
 				'css'      => 'width:100%;',
 				'alg_wc_cfu_raw' => true,
@@ -91,7 +92,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_Template extends Alg_WC_Checkout_Fil
 				'id'       => 'alg_checkout_files_upload_form_styling_options',
 			),
 			array(
-				'title'    => __( 'AJAX "Delete" button style', 'checkout-files-upload-woocommerce' ),
+				'title'    => __( '"Delete" button style', 'checkout-files-upload-woocommerce' ),
 				'id'       => 'alg_checkout_files_upload_form_style_ajax_delete',
 				'default'  => 'color:red;',
 				'type'     => 'text',

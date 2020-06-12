@@ -2,9 +2,10 @@
 /**
  * Checkout Files Upload - Emails Section Settings
  *
- * @version 1.4.4
+ * @version 2.0.0
  * @since   1.1.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -28,7 +29,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_Emails extends Alg_WC_Checkout_Files
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.4.4
+	 * @version 2.0.0
 	 * @since   1.1.0
 	 */
 	function get_settings() {
@@ -49,7 +50,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_Emails extends Alg_WC_Checkout_Files
 				'title'    => __( 'Attach files to customer\'s processing order emails', 'checkout-files-upload-woocommerce' ),
 				'desc'     => __( 'Attach', 'checkout-files-upload-woocommerce' ),
 				'id'       => 'alg_checkout_files_upload_attach_to_customer_processing_order',
-				'default'  => 'yes',
+				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(

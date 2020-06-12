@@ -2,9 +2,10 @@
 /**
  * Checkout Files Upload - General Section Settings
  *
- * @version 1.4.4
+ * @version 2.0.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -28,9 +29,8 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.4.4
+	 * @version 2.0.0
 	 * @since   1.0.0
-	 * @todo    [dev] maybe make "AJAX form" enabled by default
 	 */
 	function get_settings() {
 		$settings = array(
@@ -49,41 +49,31 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Total files', 'checkout-files-upload-woocommerce' ),
+				'title'    => __( 'Total file uploaders', 'checkout-files-upload-woocommerce' ),
 				'id'       => 'alg_checkout_files_upload_total_number',
 				'desc_tip' => __( '<em>Save changes</em>, after you change this number, to see new settings sections.', 'checkout-files-upload-woocommerce' ),
 				'default'  => 1,
 				'type'     => 'number',
 				'desc'     => apply_filters( 'alg_wc_checkout_files_upload_option', '<br>' . sprintf(
-					__( 'You will need %s plugin to add more than one file.', 'checkout-files-upload-woocommerce' ),
+					__( 'You will need %s plugin to setup more than one file uploader.', 'checkout-files-upload-woocommerce' ),
 					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/' ) . '">' .
 						__( 'Checkout Files Upload for WooCommerce Pro', 'checkout-files-upload-woocommerce' ) . '</a>'
 					), 'settings_total_files_button' ),
 				'custom_attributes' => apply_filters( 'alg_wc_checkout_files_upload_option', array( 'readonly' => 'readonly' ), 'settings_total_files' ),
 			),
 			array(
-				'title'    => __( 'AJAX form', 'checkout-files-upload-woocommerce' ),
-				'desc'     => __( 'Enable', 'checkout-files-upload-woocommerce' ),
-				'id'       => 'alg_checkout_files_upload_use_ajax',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-				'show_if_checked' => 'option',
-				'checkboxgroup'   => 'start',
-			),
-			array(
+				'title'    => __( 'Form extras', 'checkout-files-upload-woocommerce' ),
 				'desc'     => __( 'Add progress bar', 'checkout-files-upload-woocommerce' ),
 				'id'       => 'alg_checkout_files_upload_use_ajax_progress_bar',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'show_if_checked' => 'yes',
-				'checkboxgroup'   => '',
+				'checkboxgroup' => 'start',
 			),
 			array(
 				'desc'     => __( 'Enable alert on successful file upload', 'checkout-files-upload-woocommerce' ),
 				'id'       => 'alg_checkout_files_upload_use_ajax_alert_success_upload',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'show_if_checked' => 'yes',
 				'checkboxgroup'   => '',
 			),
 			array(
@@ -91,7 +81,6 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 				'id'       => 'alg_checkout_files_upload_use_ajax_alert_success_remove',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'show_if_checked' => 'yes',
 				'checkboxgroup'   => 'end',
 			),
 			array(

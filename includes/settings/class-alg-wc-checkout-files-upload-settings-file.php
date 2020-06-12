@@ -2,9 +2,10 @@
 /**
  * Checkout Files Upload - File Section Settings
  *
- * @version 1.4.5
+ * @version 2.0.0
  * @since   1.3.0
  * @author  Algoritmika Ltd.
+ * @author  WP Wham
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -22,14 +23,14 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 	function __construct( $id ) {
 		$this->id   = 'file_' . $id;
 		$this->nr   = $id;
-		$this->desc = '<span style="color:#61aa00;">' . sprintf( __( 'File #%s', 'checkout-files-upload-woocommerce' ), $id ) . '</span>';
+		$this->desc = '<span style="color:#61aa00;">' . sprintf( __( 'File Uploader #%s', 'checkout-files-upload-woocommerce' ), $id ) . '</span>';
 		parent::__construct();
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.4.5
+	 * @version 2.0.0
 	 * @since   1.3.0
 	 * @todo    [dev] re-do settings as array, i.e. `alg_checkout_files_upload_enabled[{$i}]` etc.
 	 * @todo    [feature] products, cats and tags as comma separated ID list (e.g. from WPML)
@@ -82,7 +83,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 		$i = $this->nr;
 		$settings = array(
 			array(
-				'title'    => __( 'File', 'checkout-files-upload-woocommerce' ) . ' #' . $i,
+				'title'    => __( 'File Uploader', 'checkout-files-upload-woocommerce' ) . ' #' . $i,
 				'type'     => 'title',
 				'id'       => "alg_checkout_files_upload_general_file_options[$i]",
 			),
@@ -99,6 +100,18 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 				'desc'     => __( 'Yes', 'checkout-files-upload-woocommerce' ),
 				'type'     => 'checkbox',
 				'default'  => 'no',
+			),
+			array(
+				'title'    => __( 'Allow Multiple Files', 'checkout-files-upload-woocommerce' ),
+				'desc'     => __( 'Yes', 'checkout-files-upload-woocommerce' ),
+				'type'     => 'checkbox',
+				'default'  => 'no',
+				'desc'     => '<em>' . sprintf(
+					__( '%s adds the ability to upload multiple files.', 'checkout-files-upload-woocommerce' ),
+					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/' ) . '">' .
+						__( 'Checkout Files Upload for WooCommerce Pro', 'checkout-files-upload-woocommerce' ) . '</a>'
+				) . '</em>',
+				'custom_attributes' => array( 'disabled' => 'disabled' ),
 			),
 			array(
 				'title'    => __( 'Accepted file types', 'checkout-files-upload-woocommerce' ),
