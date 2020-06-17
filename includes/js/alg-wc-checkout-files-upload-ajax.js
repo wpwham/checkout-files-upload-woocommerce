@@ -136,12 +136,12 @@
 	
 		$container = jQuery( 'form.woocommerce-checkout' ).closest( 'div' );
 		
-		$( '.alg_checkout_files_upload_button' ).on( 'click', function() {
+		$( document ).on( 'click', '.alg_checkout_files_upload_button', function() {
 			var fileUploader = $( this ).data( 'file-uploader' );
 			$( '#alg_checkout_files_upload_' + fileUploader ).click();
 		});
 		
-		$( '.alg_checkout_files_upload_file_input' ).on( 'change', function() {
+		$( document ).on( 'change', '.alg_checkout_files_upload_file_input', function() {
 			var files = $( this )[0].files;
 			var fileUploader = $( this ).data( 'file-uploader' );
 			for ( var i = 0; i < files.length; i++ ) {
