@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,11 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.0.1 - 2020-06-17 =
+* FIX: issue with upload button not working in certain themes.
+* FIX: user permissions issue incorrectly preventing downloading of images from the WP admin side.
+* FIX: JS typo.
 
 = 2.0.0 - 2020-06-11 =
 * NEW: **Breaking Change** the `Form (simple)` template has been removed, and `Form (AJAX)` is now the standard template. `Form (AJAX)` has been the default since v1.4.0 (2018-08-25), so for most people this change will have no effect.  However, if you were using `Form (simple)`, or if you had customized either template, please double check your settings to make sure things look correct. Or, you can reset the settings to get a fresh start.

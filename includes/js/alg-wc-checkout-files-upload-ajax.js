@@ -1,7 +1,7 @@
 /**
  * alg-wc-checkout-files-upload-ajax.js
  *
- * @version 2.0.0
+ * @version 2.0.1
  * @since   1.3.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
