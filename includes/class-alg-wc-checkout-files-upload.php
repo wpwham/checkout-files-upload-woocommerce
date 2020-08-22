@@ -1055,7 +1055,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			'id="alg_checkout_files_upload_button_' . $file_uploader . '" ' .
 			'class="alg_checkout_files_upload_button" ' .
 			'data-file-uploader="' . $file_uploader . '" ' .
-			'value="' . __( 'Choose File', 'checkout-files-upload-woocommerce' ) . '" ' .
+			'value="' . get_option( 'alg_checkout_files_upload_label_button_single_' . $file_uploader, __( 'Choose File', 'checkout-files-upload-woocommerce' ) ) . '" ' .
 			'style="' . ( $files ? 'display: none;' : '' ). '" />';
 		$button_html .= '<input type="file" data-file-uploader="' . $file_uploader . '" ' .
 			'name="alg_checkout_files_upload_' . $file_uploader . '" ' .
