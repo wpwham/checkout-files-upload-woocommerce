@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - File Section Settings
  *
- * @version 2.0.0
+ * @version 2.0.2
  * @since   1.3.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -30,7 +30,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.0.0
+	 * @version 2.0.2
 	 * @since   1.3.0
 	 * @todo    [dev] re-do settings as array, i.e. `alg_checkout_files_upload_enabled[{$i}]` etc.
 	 * @todo    [feature] products, cats and tags as comma separated ID list (e.g. from WPML)

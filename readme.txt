@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 5.4
-Stable tag: 2.0.1
+Tested up to: 5.5
+Stable tag: 2.0.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,10 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.0.2 - 2020-08-21 =
+* FIX: upload button translation issue (removed old label settings, added new ones).
+* UPDATE: updated .pot file for translations.
 
 = 2.0.1 - 2020-06-17 =
 * FIX: issue with upload button not working in certain themes.
