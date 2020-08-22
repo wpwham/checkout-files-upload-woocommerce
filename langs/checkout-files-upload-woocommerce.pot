@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Checkout Files Upload for WooCommerce\n"
-"POT-Creation-Date: 2020-06-11 18:41-0700\n"
+"POT-Creation-Date: 2020-08-21 19:29-0700\n"
 "PO-Revision-Date: 2018-10-08 05:26-0700\n"
 "Last-Translator: \n"
 "Language-Team: WP Wham <support@wpwham.com>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: checkout-files-upload-woocommerce.php:140
+#: checkout-files-upload-woocommerce.php:148
 msgid "Settings"
 msgstr ""
 
-#: checkout-files-upload-woocommerce.php:143
+#: checkout-files-upload-woocommerce.php:151
 msgid "Unlock all"
 msgstr ""
 
@@ -57,7 +57,7 @@ msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:200
 #: includes/class-alg-wc-checkout-files-upload.php:208
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:294
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:286
 #, php-format
 msgid "File \"%s\" was successfully removed."
 msgstr ""
@@ -68,13 +68,13 @@ msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:296
 #: includes/class-alg-wc-checkout-files-upload.php:533
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:241
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:233
 #, php-format
 msgid "Wrong file type: \"%s\"!"
 msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:337
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:277
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:269
 #, php-format
 msgid "File \"%s\" was successfully uploaded."
 msgstr ""
@@ -94,20 +94,20 @@ msgid "File"
 msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:467
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:251
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:243
 msgid ""
 "Wrong image dimensions: \"%s\"! Current: %current_width% x %current_height%. "
 "Required: %required_width% x %required_height%."
 msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:480
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:260
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:252
 #, php-format
 msgid "Couldn't get image dimensions: \"%s\"!"
 msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:515
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:268
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:260
 msgid "File is required!"
 msgstr ""
 
@@ -125,11 +125,11 @@ msgid "Please select file to upload"
 msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:1058
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:216
 msgid "Choose File"
 msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:1084
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:224
 msgid "Remove"
 msgstr ""
 
@@ -358,7 +358,6 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:204
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:214
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:222
 msgid "You can use shortcodes here."
 msgstr ""
 
@@ -367,97 +366,89 @@ msgid "Leave blank to disable label."
 msgstr ""
 
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:213
-msgid "Upload button"
+msgid "Upload button (single)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:216
-msgid "Upload"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:221
-msgid "Remove button"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:233
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:225
 msgid "Notices"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:238
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:230
 msgid "Wrong file type"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:239
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:248
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:258
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:275
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:292
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:231
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:240
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:250
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:267
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:284
 #, php-format
 msgid "%s will be replaced with file name"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:247
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:239
 msgid "Wrong image dimensions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:249
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:241
 msgid ""
 "Other replaced values: %current_width%, %current_height%, %required_width%, "
 "%required_height%"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:257
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:249
 msgid "Couldn't get image dimensions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:266
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:258
 msgid "File is required"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:274
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:266
 msgid "File was successfully uploaded"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:283
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:275
 msgid "No file selected"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:285
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:277
 msgid "Please select file to upload!"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:291
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:283
 msgid "File was successfully removed"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:304
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:296
 msgid "Advanced"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:309
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:301
 msgid "Require products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:310
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:302
 msgid ""
 "To show this field only if at least one selected product is in cart, enter "
 "products here. Leave blank to show for all products."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:318
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:310
 msgid "Require product categories"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:319
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:311
 msgid ""
 "To show this field only if at least one product of selected category is in "
 "cart, enter categories here. Leave blank to show for all products."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:327
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:319
 msgid "Require product tags"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:328
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:320
 msgid ""
 "To show this field only if at least one product of selected tag is in cart, "
 "enter tags here. Leave blank to show for all products."
