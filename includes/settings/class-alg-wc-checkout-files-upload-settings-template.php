@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - Template Section Settings
  *
- * @version 2.0.0
+ * @version 2.0.3
  * @since   1.1.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -29,7 +29,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_Template extends Alg_WC_Checkout_Fil
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.0.0
+	 * @version 2.0.3
 	 * @since   1.1.0
 	 */
 	public static function get_settings() {

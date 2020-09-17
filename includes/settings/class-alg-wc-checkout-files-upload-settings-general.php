@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - General Section Settings
  *
- * @version 2.0.0
+ * @version 2.0.3
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -29,7 +29,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.0.0
+	 * @version 2.0.3
 	 * @since   1.0.0
 	 */
 	public static function get_settings() {
