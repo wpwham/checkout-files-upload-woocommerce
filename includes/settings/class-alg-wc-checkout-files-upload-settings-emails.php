@@ -32,7 +32,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_Emails extends Alg_WC_Checkout_Files
 	 * @version 2.0.0
 	 * @since   1.1.0
 	 */
-	function get_settings() {
+	public static function get_settings() {
 		$settings = array(
 			array(
 				'title'    => __( 'General Emails Options', 'checkout-files-upload-woocommerce' ),

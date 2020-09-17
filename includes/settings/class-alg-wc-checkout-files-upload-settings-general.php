@@ -32,7 +32,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 	 * @version 2.0.0
 	 * @since   1.0.0
 	 */
-	function get_settings() {
+	public static function get_settings() {
 		$settings = array(
 			array(
 				'title'    => __( 'Checkout Files Upload Options', 'checkout-files-upload-woocommerce' ),

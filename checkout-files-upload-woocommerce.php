@@ -127,6 +127,7 @@ final class Alg_WC_Checkout_Files_Upload {
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$this->settings[ 'file_' . $i ]  = new Alg_WC_Checkout_Files_Upload_Settings_File( $i );
 			}
+			add_action( 'woocommerce_system_status_report', array( $this, 'add_settings_to_status_report' ) );
 			// Version updated
 			if ( get_option( 'alg_checkout_files_upload_version', '' ) !== $this->version ) {
 				add_action( 'admin_init', array( $this, 'version_updated' ) );
@@ -151,6 +152,70 @@ final class Alg_WC_Checkout_Files_Upload {
 				__( 'Unlock all', 'checkout-files-upload-woocommerce' ) . '</a>';
 		}
 		return array_merge( $custom_links, $links );
+	}
+
+	/**
+	 * add settings to WC status report
+	 *
+	 * @version 2.0.3
+	 * @since   2.0.3
+	 * @author  WP Wham
+	 */
+	public static function add_settings_to_status_report() {
+		#region add_settings_to_status_report
+		$protected_settings = array( 'wpwham_checkout_files_upload_license', 'alg_checkout_files_upload_emails_address' );
+		$settings_general   = Alg_WC_Checkout_Files_Upload_Settings_General::get_settings();
+		$settings_emails    = Alg_WC_Checkout_Files_Upload_Settings_Emails::get_settings();
+		$settings_template  = Alg_WC_Checkout_Files_Upload_Settings_Template::get_settings();
+		$settings = array_merge(
+			$settings_general, $settings_emails, $settings_template
+		);
+		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings_file_inst = new Alg_WC_Checkout_Files_Upload_Settings_File( $i );
+			$settings_file = $settings_file_inst->get_settings();
+			$settings = array_merge(
+				$settings, $settings_file
+			);
+		}
+		?>
+		<table class="wc_status_table widefat" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="3" data-export-label="Checkout Files Upload Settings"><h2><?php esc_html_e( 'Checkout Files Upload Settings', 'checkout-files-upload-for-woocommerce' ); ?></h2></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ( $settings as $setting ): ?>
+				<?php 
+				if (
+					in_array( $setting['type'], array( 'title', 'sectionend' ) ) ||
+					! isset( $setting['id'] )
+				) {
+					continue;
+				}
+				if ( isset( $setting['title'] ) ) {
+					$title = $setting['title'];
+				} elseif ( isset( $setting['desc'] ) ) {
+					$title = $setting['desc'];
+				} else {
+					$title = $setting['id'];
+				}
+				$value = get_option( $setting['id'] ); 
+				if ( in_array( $setting['id'], $protected_settings ) ) {
+					$value = $value > '' ? '(set)' : 'not set';
+				}
+				?>
+				<tr>
+					<td data-export-label="<?php echo esc_attr( $title ); ?>"><?php esc_html_e( $title, 'checkout-files-upload-for-woocommerce' ); ?>:</td>
+					<td class="help">&nbsp;</td>
+					<td><?php echo is_array( $value ) ? print_r( $value, true ) : $value; ?></td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+		<?php
+		#endregion add_settings_to_status_report
 	}
 
 	/**
