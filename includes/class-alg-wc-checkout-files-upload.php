@@ -809,7 +809,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 			header( "Cache-Control: private", false );
 			if ( isset( $_GET['force_download'] ) && $_GET['force_download'] === '1' ) {
-				header( 'Content-disposition: attachment; filename=' . $file_name );
+				header( 'Content-disposition: attachment; filename="' . $file_name . '"' );
 			}
 			if ( $mime_type ) {
 				header( "Content-type: $mime_type" );
@@ -878,7 +878,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 			header( "Cache-Control: private", false );
 			if ( isset( $_GET['force_download'] ) && $_GET['force_download'] === '1' ) {
-				header( 'Content-disposition: attachment; filename=' . $file_name );
+				header( 'Content-disposition: attachment; filename="' . $file_name . '"' );
 			}
 			if ( $mime_type ) {
 				header( "Content-type: $mime_type" );
