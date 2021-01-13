@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 5.5
-Stable tag: 2.0.3
+Tested up to: 5.6
+Stable tag: 2.0.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,9 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.0.4 - 2021-01-12 =
+* FIX: clean output buffer before downloads (solves conflict with some 3rd-party plugins which interfere with the output buffer, causing downloads to appear as empty or corrupt).
 
 = 2.0.3 - 2020-09-17 =
 * UPDATE: display our settings in WC status report.
