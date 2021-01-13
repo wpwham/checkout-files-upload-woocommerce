@@ -797,6 +797,14 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$mime_type = mime_content_type( $tmp_file_name );
 			}
 			
+			// clean all levels of output buffering
+			// this is needed in case some 3rd-party plugin interferes with the output buffer
+			// see WP Wham ticket #25396
+			// props to @Márton Báhidszki https://stackoverflow.com/questions/37205855/php-readfile-bad-charset
+			while ( ob_get_level() ) {
+				ob_end_clean();
+			}
+			
 			header( "Expires: 0" );
 			header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 			header( "Cache-Control: private", false );
@@ -856,6 +864,14 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				finfo_close( $finfo );
 			} elseif ( function_exists( 'mime_content_type' ) ) {
 				$mime_type = mime_content_type( $tmp_file_name );
+			}
+			
+			// clean all levels of output buffering
+			// this is needed in case some 3rd-party plugin interferes with the output buffer
+			// see WP Wham ticket #25396
+			// props to @Márton Báhidszki https://stackoverflow.com/questions/37205855/php-readfile-bad-charset
+			while ( ob_get_level() ) {
+				ob_end_clean();
 			}
 			
 			header( "Expires: 0" );
