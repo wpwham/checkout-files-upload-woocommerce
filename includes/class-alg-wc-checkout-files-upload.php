@@ -309,6 +309,17 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				
 				$file = $_FILES['file'];
 				$tmp_dest_file = tempnam( sys_get_temp_dir(), 'alg' );
+				if ( $tmp_dest_file === false ) {
+					// Error
+					echo json_encode( array(
+						'result'  => 0,
+						'message' => sprintf( 
+							__( 'Server\'s temporary directory (%s) is not writeable. If you are the site owner, please check your permissions.', 'checkout-files-upload-woocommerce' ),
+							sys_get_temp_dir()
+						),
+					) );
+					die();
+				}
 				move_uploaded_file( $file['tmp_name'], $tmp_dest_file );
 				$file['tmp_name'] = $tmp_dest_file;
 				
