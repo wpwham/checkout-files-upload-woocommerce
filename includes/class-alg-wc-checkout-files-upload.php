@@ -393,7 +393,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				array(), alg_wc_checkout_files_upload()->version, 'all' );
 		}
 	}
-
+	
 	/**
 	 * add_files_to_email_attachments.
 	 *
@@ -402,13 +402,19 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
 		if (
-			( 'new_order'                 === $status && 'yes' === get_option( 'alg_checkout_files_upload_attach_to_admin_new_order',           'yes' ) ) ||
-			( 'customer_processing_order' === $status && 'yes' === get_option( 'alg_checkout_files_upload_attach_to_customer_processing_order', 'no' ) )
+			(
+				$status === 'new_order' && 
+				get_option( 'alg_checkout_files_upload_attach_to_admin_new_order', 'yes' ) === 'yes' 
+			) ||
+			(
+				$status === 'customer_processing_order' &&
+				get_option( 'alg_checkout_files_upload_attach_to_customer_processing_order', 'no' ) === 'yes'
+			)
 		) {
 			$order_id = ( version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' ) ? $order->id : $order->get_id() );
-			$total_files = get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
+			$total_files = get_post_meta( $order_id, '_alg_checkout_files_total_files', true );
 			for ( $i = 1; $i <= $total_files; $i++ ) {
-				$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+				$files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( is_array( $files ) ) {
 					foreach ( $files as $file_key => $file ) {
 						$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
@@ -424,7 +430,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		}
 		return $attachments;
 	}
-
+	
 	/**
 	 * add_files_to_order_display.
 	 *
@@ -435,9 +441,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$order_id = ( version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' ) ? $order->id : $order->get_id() );
 		$html = '';
 		$has_files = false;
-		$total_files = get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
+		$total_files = get_post_meta( $order_id, '_alg_checkout_files_total_files', true );
 		for ( $i = 1; $i <= $total_files; $i++ ) {
-			$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+			$files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
 				foreach ( $files as $file_key => $file ) {
 					$has_files = true;
@@ -445,8 +451,8 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				}
 			} else {
 				// Backwards compatibility for < v2.0.0
-				$real_file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
-				if ( '' != $real_file_name ) {
+				$real_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i, true );
+				if ( $real_file_name > '' ) {
 					$has_files = true;
 					$html .= __( 'File', 'checkout-files-upload-woocommerce' ) . ': ' . $real_file_name . '<br />';
 				}
