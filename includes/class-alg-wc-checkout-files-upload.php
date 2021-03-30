@@ -415,7 +415,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					}
 				} else {
 					// Backwards compatibility for < v2.0.0
-					$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+					$file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
+					if ( $file_name > '' ) {
+						$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file_name;
+					}
 				}
 			}
 		}
