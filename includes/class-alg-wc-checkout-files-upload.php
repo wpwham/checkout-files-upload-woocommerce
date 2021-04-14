@@ -227,6 +227,40 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	}
 
 	/**
+	 * get_file_delete_link.
+	 *
+	 * @version 2.1.0
+	 * @since   2.1.0
+	 */
+	public function get_file_delete_link( $file_uploader, $file_key = null, $order_id ) {
+		
+		$args = array(
+			'_wpnonce' => wp_create_nonce( 'wpwham_cfu_checkout_file_delete' ),
+		);
+			
+		if ( $file_key !== null ) {
+			
+			// files uploaded from v2.0.0 onwards
+			$args['wpw_cfu_download_file_uploader'] = $file_uploader;
+			$args['wpw_cfu_download_file_key']      = $file_key;
+			if ( $order_id > 0 ) {
+				$args['wpw_cfu_download_file_order_id'] = $order_id;
+			}
+			
+		} else {
+			
+			// files uploaded from < v2.0.0
+			$args['alg_download_checkout_file'] = $file_uploader;
+			if ( 0 != $order_id ) {
+				$args['alg_download_checkout_file_order_id'] = $order_id;
+			}
+			
+		}
+		
+		return add_query_arg( $args );
+	}
+
+	/**
 	 * get_file_download_link.
 	 *
 	 * @version 2.0.0
@@ -602,17 +636,26 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$html = '';
 		$total_files = get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
 		$files_exists = false;
+		$allow_delete = apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true );
 		for ( $i = 1; $i <= $total_files; $i++ ) {
 			$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
 				foreach ( $files as $file_key => $file ) {
 					$files_exists = true;
 					$html .= '<tr>' .
-						'<td style="width:174px; word-break: break-word;">' .
+						'<td style="width:' . ( $allow_delete ? '139' : '174' ) . 'px; word-break: break-word;">' .
 						'<a href="' . $this->get_file_download_link( $i, $file_key, $order_id, false, false ) . '">' .
 						$file['name'] . '</a>' .
 						'</td>' .
-						'<td style="width:70px;">' .
+						'<td style="width:' . ( $allow_delete ? '105' : '70' ) . 'px;">' .
+						( $allow_delete ?
+							'<a href="' . $this->get_file_delete_link( $i, $file_key, $order_id ) . '" ' .
+							'class="button wpwham-checkout-files-upload-file-delete-button"' .
+							'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
+							'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
+							'</a>&nbsp;'
+							: ''
+						) .
 						'<a href="' . $this->get_file_download_link( $i, $file_key, $order_id, false, false ) . '" ' .
 						'class="button" ' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;" ' .
@@ -634,11 +677,16 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( '' != $order_file_name ) {
 					$files_exists = true;
 					$html .= '<tr>' .
-						'<td style="width:174px; word-break: break-word;">' .
+						'<td style="width:139px; word-break: break-word;">' .
 						'<a href="' . $this->get_file_download_link( $i, null, $order_id, false, false ) . '">' .
 						$real_file_name . '</a>' .
 						'</td>' .
-						'<td style="width:70px;">' .
+						'<td style="width:105px;">' .
+						'<a href="' . $this->get_file_delete_link( $i, null, $order_id ) . '" ' .
+						'class="button wpwham-checkout-files-upload-file-delete-button"' .
+						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
+						'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
+						'</a>&nbsp;' .
 						'<a href="' . $this->get_file_download_link( $i, null, $order_id, false, false ) . '" ' .
 						'class="button" ' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;" ' .
@@ -907,6 +955,105 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			header( "Content-Length: ". filesize( $tmp_file_name ) );
 			readfile( $tmp_file_name );
 			exit();
+		}
+		
+		// File delete (files from < v2.0.0)
+		if (
+			isset( $_GET['alg_download_checkout_file'] )
+			&& isset( $_GET['_wpnonce'] )
+			&& wp_verify_nonce( $_GET['_wpnonce'], 'wpwham_cfu_checkout_file_delete' ) !== false
+			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true )
+		) {
+			$i = sanitize_text_field( $_GET['alg_download_checkout_file'] );
+			if ( ! empty( $_GET['alg_download_checkout_file_order_id'] ) ) {
+				$order_id = sanitize_text_field( $_GET['alg_download_checkout_file_order_id'] );
+				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
+					return;
+				}
+				if ( isset( $_GET['key'] ) ) {
+					// Thank you page
+					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
+						return;
+					}
+				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
+					// My Account
+					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
+						require_once( ABSPATH . 'wp-includes/pluggable.php' );
+					}
+					if ( ! is_user_logged_in() || $order->get_customer_id() != get_current_user_id() ) {
+						return;
+					}
+				}
+				$order_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
+				if ( ! $order_file_name ) {
+					return;
+				}
+				$tmp_file_name = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
+			} else {
+				if ( ! isset( $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'] ) ) {
+					return;
+				}
+				$tmp_file_name = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'];
+			}
+			
+			if ( unlink( $tmp_file_name ) ) {
+				if ( $order_id ) {
+					delete_post_meta( $order_id, '_alg_checkout_files_upload_' . $i );
+					delete_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i );
+				}
+				unset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
+			}
+		}
+		
+		// File delete (files from >= v2.0.0)
+		if (
+			isset( $_GET['wpw_cfu_download_file_uploader'] ) &&
+			isset( $_GET['wpw_cfu_download_file_key'] ) &&
+			isset( $_GET['_wpnonce'] ) &&
+			wp_verify_nonce( $_GET['_wpnonce'], 'wpwham_cfu_checkout_file_delete' ) !== false
+			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true )
+		) {
+			$file_uploader = sanitize_text_field( $_GET['wpw_cfu_download_file_uploader'] );
+			$file_key      = sanitize_text_field( $_GET['wpw_cfu_download_file_key'] );
+			if ( ! empty( $_GET['wpw_cfu_download_file_order_id'] ) ) {
+				$order_id = sanitize_text_field( $_GET['wpw_cfu_download_file_order_id'] );
+				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
+					return;
+				}
+				if ( isset( $_GET['key'] ) ) {
+					// Thank you page
+					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
+						return;
+					}
+				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
+					// My Account
+					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
+						require_once( ABSPATH . 'wp-includes/pluggable.php' );
+					}
+					if ( ! is_user_logged_in() || $order->get_customer_id() != get_current_user_id() ) {
+						return;
+					}
+				}
+				$order_files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, true );
+				if ( ! isset( $order_files[ $file_key ] ) ) {
+					return;
+				}
+				$order_file    = $order_files[ $file_key ];
+				$tmp_file_name = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file['tmp_name'];
+			} else {
+				if ( ! isset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] ) ) {
+					return;
+				}
+				$tmp_file_name = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'];
+			}
+			
+			if ( unlink( $tmp_file_name ) ) {
+				if ( $order_files ) {
+					unset( $order_files[ $file_key ] );
+					update_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, $order_files );
+				}
+				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
+			}
 		}
 		
 		if ( $local_session_started ) {

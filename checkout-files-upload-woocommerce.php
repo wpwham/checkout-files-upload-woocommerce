@@ -114,6 +114,7 @@ final class Alg_WC_Checkout_Files_Upload {
 
 		// Admin
 		if ( is_admin() ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			// Settings
@@ -134,6 +135,33 @@ final class Alg_WC_Checkout_Files_Upload {
 			}
 		}
 
+	}
+	
+	/**
+	 * @since   2.1.0
+	 */
+	public function enqueue_scripts() {
+		global $pagenow;
+		
+		// check if its a page where we need this
+		if ( $pagenow === 'post.php' ) {
+			wp_enqueue_script(
+				'wpwham-checkout-files-upload-admin',
+				$this->plugin_url() . '/includes/js/admin.js',
+				array( 'jquery' ),
+				WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION,
+				false
+			);
+			wp_localize_script(
+				'wpwham-checkout-files-upload-admin',
+				'wpwham_checkout_files_upload_admin',
+				array(
+					'i18n' => array(
+						'confirmation_message' => __( 'Are you sure you want to delete this file? This cannot be undone.', 'checkout-files-upload-woocommerce' ),
+					),
+				)
+			);
+		}
 	}
 
 	/**
