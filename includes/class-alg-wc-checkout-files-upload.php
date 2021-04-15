@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.0.4
+ * @version 2.1.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -313,7 +313,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_upload.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.0
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_upload() {
@@ -444,7 +444,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.0
 	 * @since   1.0.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
@@ -549,7 +549,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_image_dimensions.
 	 *
-	 * @version 1.4.1
+	 * @version 2.1.0
 	 * @since   1.4.1
 	 */
 	function validate_image_dimensions( $i, $_file ) {
@@ -602,7 +602,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 1.4.1
+	 * @version 2.1.0
 	 * @since   1.0.0
 	 */
 	function validate_on_checkout( $posted ) {
@@ -701,7 +701,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.0
 	 * @since   1.0.0
 	 */
 	public function create_file_admin_order_meta_box() {
@@ -875,7 +875,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.0.4
+	 * @version 2.1.0
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {
@@ -1211,7 +1211,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_the_form_part_label.
 	 *
-	 * @version 1.4.5
+	 * @version 2.1.0
 	 * @since   1.3.0
 	 * @todo    [dev] add `do_shortcode()` to all notices
 	 */
@@ -1298,7 +1298,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 2.0.2
+	 * @version 2.1.0
 	 * @since   1.3.0
 	 * @todo    [feature] more options for "delete" button styling (i.e. `&times;`)
 	 */

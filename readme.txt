@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 5.6
-Stable tag: 2.0.4
+Tested up to: 5.7
+Stable tag: 2.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,15 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.1.0 - 2021-04-15 =
+* NEW: added more options to "validate image dimensions" setting: "greater than or equal", and "less than or equal".
+* NEW: added button to delete file attachments on admin "edit order" page. (If you don't want the ability to delete files, you can use the filter `wpwham_checkout_files_upload_allow_admin_delete_files` to disable it).
+* FIX: check if server's temporary directory is writeable. If not, display an error message. (Solves an issue with 0-byte files being uploaded).
+* FIX: bug where sometimes 0-byte files were attached to order emails.
+* UPDATE: for text labels/notices, made it possible for a translated string to take precedence over stored settings. (Previously it was the other way around. This should now make things easier if you use a translation plugin like LocoTranslate, Polylang, etc).
+* UPDATE: performance improvement -- load our admin assets only when needed.
+* UPDATE: updated .pot file for translations.
 
 = 2.0.4 - 2021-01-12 =
 * FIX: clean output buffer before downloads (solves conflict with some 3rd-party plugins which interfere with the output buffer, causing downloads to appear as empty or corrupt).
