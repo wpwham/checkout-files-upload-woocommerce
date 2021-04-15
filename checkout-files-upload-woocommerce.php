@@ -144,7 +144,10 @@ final class Alg_WC_Checkout_Files_Upload {
 		global $pagenow;
 		
 		// check if its a page where we need this
-		if ( $pagenow === 'post.php' ) {
+		if (
+			$pagenow === 'post.php'
+			|| ( $pagenow === 'admin.php' && isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === 'alg_wc_checkout_files_upload' )
+		) {
 			wp_enqueue_script(
 				'wpwham-checkout-files-upload-admin',
 				$this->plugin_url() . '/includes/js/admin.js',

@@ -324,90 +324,84 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		if ( isset( $_FILES['file'] ) && '' != $_FILES['file']['tmp_name'] && isset( $_POST['file_uploader'] ) ) {
 			
 			$file_uploader = sanitize_text_field( $_POST['file_uploader'] );
-			
-			// Validate
-			$is_valid = true;
-			if ( '' != ( $file_accept = get_option( 'alg_checkout_files_upload_file_accept_' . $file_uploader, '.jpg,.jpeg,.png' ) ) ) {
-				// Validate file type
-				$file_accept = array_map( 'trim', explode( ',', $file_accept ) );
-				if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-					$real_file_name = $_FILES['file']['name'];
-					$file_type      = '.' . pathinfo( $real_file_name, PATHINFO_EXTENSION );
-					if ( ! in_array( strtolower( $file_type ), array_map( 'strtolower', $file_accept ) ) ) {
-						$error = sprintf(
-							( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
-								get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
-								: __( 'Wrong file type: "%s"!', 'checkout-files-upload-woocommerce' ) ),
-							$real_file_name 
-						);
-						$is_valid = false;
-					}
-				}
-			}
-			
-			// Maybe validate image dimensions
-			if ( true !== ( $error_message = $this->validate_image_dimensions( $file_uploader, $_FILES['file'] ) ) ) {
-				$error    = $error_message;
-				$is_valid = false;
-			}
-			
-			if ( $is_valid ) {
-				
-				$file = $_FILES['file'];
-				$tmp_dest_file = tempnam( sys_get_temp_dir(), 'alg' );
-				if ( $tmp_dest_file === false ) {
-					// Error
-					echo json_encode( array(
-						'result'  => 0,
-						'message' => sprintf( 
-							__( 'Server\'s temporary directory (%s) is not writeable. If you are the site owner, please check your permissions.', 'checkout-files-upload-woocommerce' ),
-							sys_get_temp_dir()
-						),
-					) );
-					die();
-				}
-				move_uploaded_file( $file['tmp_name'], $tmp_dest_file );
-				$file['tmp_name'] = $tmp_dest_file;
-				
-				if ( ! empty( $_POST['order_id'] ) ) {
-					// Add to existing order
-					$order_id = sanitize_text_field( $_POST['order_id'] );
-					$file_key = $this->add_file_to_order( $file_uploader, $file, $order_id );
-					$this->maybe_send_admin_notification( 'upload_file', $order_id, $file['name'], $file_uploader, $file_key );
-				} else {
-					// Add to session
-					$order_id = 0;
-					$_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][] = $file;
-					end( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ] );
-					$file_key = key( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ] );
-				}
-				
-				// Success
-				$template = get_option( 'wpw_cfu_form_template_uploaded_file', '<tr><td colspan="2">%image% %file_name% %remove_button%</td></tr>' );
-				echo json_encode( array(
-					'result'   => 1,
-					'data'     => '<a href="' . $this->get_file_download_link( $file_uploader, $file_key, $order_id ) . '" data-file-key="' . $file_key . '">' .
-						$file['name'] . '</a>',
-					'data_img' => ( false !== strpos( $template, '%image%' ) ? $this->maybe_get_image( $file_uploader, $file_key, $order_id, true ) : '' ),
-					'message'  => (
-						get_option( 'alg_checkout_files_upload_use_ajax_alert_success_upload', 'no' ) === 'yes' ?
-							sprintf(
-								( get_option( 'alg_checkout_files_upload_notice_success_upload_' . $file_uploader ) > '' ?
-									get_option( 'alg_checkout_files_upload_notice_success_upload_' . $file_uploader )
-									: __( 'File "%s" was successfully uploaded.', 'checkout-files-upload-woocommerce' ) ),
-								$file['name']
-							)
-							: ''
-					),
-				) );
+			if ( ! empty( $_POST['order_id'] ) ) {
+				$order_id = sanitize_text_field( $_POST['order_id'] );
 			} else {
+				$order_id = 0;
+			}
+			
+			// Validate file type
+			$validated_type = $this->validate_file_type( $file_uploader, $_FILES['file'] );
+			if ( $validated_type !== true ) {
+				// Error occurred
+				echo json_encode( array(
+					'result'     => 0,
+					'message'    => $validated_type['message'],
+					'error_code' => $validated_type['code'],
+				) );
+				die();
+			}
+			
+			// Validate image dimensions
+			$validated_dimensions = $this->validate_image_dimensions( $file_uploader, $_FILES['file'] );
+			if ( $validated_dimensions !== true ) {
+				// Error occurred
+				echo json_encode( array(
+					'result'  => 0,
+					'message'    => $validated_dimensions['message'],
+					'error_code' => $validated_dimensions['code'],
+				) );
+				die();
+			}
+			
+			// Handle upload
+			$file = $_FILES['file'];
+			$tmp_dest_file = tempnam( sys_get_temp_dir(), 'alg' );
+			if ( $tmp_dest_file === false ) {
 				// Error
 				echo json_encode( array(
 					'result'  => 0,
-					'message' => $error,
+					'message' => sprintf( 
+						__( 'Server\'s temporary directory (%s) is not writeable. If you are the site owner, please check your permissions.', 'checkout-files-upload-woocommerce' ),
+						sys_get_temp_dir()
+					),
 				) );
+				die();
 			}
-			die();
+			move_uploaded_file( $file['tmp_name'], $tmp_dest_file );
+			$file['tmp_name'] = $tmp_dest_file;
+			
+			if ( $order_id ) {
+				// Add to existing order
+				$file_key = $this->add_file_to_order( $file_uploader, $file, $order_id );
+				$this->maybe_send_admin_notification( 'upload_file', $order_id, $file['name'], $file_uploader, $file_key );
+			} else {
+				// Add to session
+				$_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][] = $file;
+				end( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ] );
+				$file_key = key( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ] );
+			}
+			
+			// Success
+			$template = get_option( 'wpw_cfu_form_template_uploaded_file', '<tr><td colspan="2">%image% %file_name% %remove_button%</td></tr>' );
+			echo json_encode( array(
+				'result'   => 1,
+				'data'     => '<a href="' . $this->get_file_download_link( $file_uploader, $file_key, $order_id ) . '" data-file-key="' . $file_key . '">' .
+					$file['name'] . '</a>',
+				'data_img' => ( false !== strpos( $template, '%image%' ) ? $this->maybe_get_image( $file_uploader, $file_key, $order_id, true ) : '' ),
+				'message'  => (
+					get_option( 'alg_checkout_files_upload_use_ajax_alert_success_upload', 'no' ) === 'yes' ?
+						sprintf(
+							( get_option( 'alg_checkout_files_upload_notice_success_upload_' . $file_uploader ) > '' ?
+								get_option( 'alg_checkout_files_upload_notice_success_upload_' . $file_uploader )
+								: __( 'File "%s" was successfully uploaded.', 'checkout-files-upload-woocommerce' ) ),
+							$file['name']
+						)
+						: ''
+				),
+			) );
+			exit();
+			
 		} else {
 			// Error
 			echo json_encode( array(
@@ -516,7 +510,42 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		}
 		echo apply_filters( 'wpw_cfu_add_files_to_order_display_html', $html );
 	}
-
+	
+	/**
+	 * validate_file_type.
+	 *
+	 * @version 2.1.0
+	 * @since   2.1.0
+	 * @author  WP Wham
+	 *
+	 * @param int|string $file_uploader The numeric key of the File Uploader #X to pull settings from.
+	 * @param array      $file          The file to validate.
+	 *
+	 * @return bool|array Returns true on success, or else an array containing an error code and error message.
+	 */
+	public function validate_file_type( $file_uploader, $file ) {
+		$result = true;
+		$files_accepted = get_option( 'alg_checkout_files_upload_file_accept_' . $file_uploader, '.jpg,.jpeg,.png' );
+		if ( $files_accepted > '' ) {
+			$files_accepted = array_map( 'trim', explode( ',', strtolower( $files_accepted ) ) );
+			if ( is_array( $files_accepted ) && ! empty( $files_accepted ) ) {
+				$file_type = strtolower( '.' . pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+				if ( ! in_array( $file_type, $files_accepted ) ) {
+					$result = array(
+						'code'    => 'fail_file_type',
+						'message' => sprintf(
+							( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
+								get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
+								: __( 'Wrong file type: "%s"', 'checkout-files-upload-woocommerce' ) ),
+							$file['name'] 
+						),
+					);
+				}
+			}
+		}
+		return $result;
+	}
+	
 	/**
 	 * validate_image_dimensions.
 	 *
@@ -524,7 +553,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @since   1.4.1
 	 */
 	function validate_image_dimensions( $i, $_file ) {
-		if ( '' != ( $validate_image_dimensions = get_option( 'alg_checkout_files_upload_file_validate_image_dimensions_' . $i, '' ) ) ) {
+		$result = true;
+		$validate_image_dimensions = get_option( 'alg_checkout_files_upload_file_validate_image_dimensions_' . $i, '' );
+		if ( $validate_image_dimensions > '' ) {
 			// Validate image dimensions
 			$file_name     = $_file['name'];
 			$tmp_file_name = $_file['tmp_name'];
@@ -540,7 +571,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				) {
 					$notice = ( get_option( 'alg_checkout_files_upload_notice_wrong_image_dimensions_' . $i ) > '' ?
 						get_option( 'alg_checkout_files_upload_notice_wrong_image_dimensions_' . $i )
-						: __( 'Wrong image dimensions: "%s"! Current: %current_width% x %current_height%. Required: %required_width% x %required_height%.', 'checkout-files-upload-woocommerce' ) );
+						: __( 'Wrong image dimensions for "%s". Current: %current_width% x %current_height%. Required: %required_width% x %required_height%.', 'checkout-files-upload-woocommerce' ) );
 					$replaced_values = array(
 						'%current_width%'   => $image_size[0],
 						'%current_height%'  => $image_size[1],
@@ -548,19 +579,24 @@ class Alg_WC_Checkout_Files_Upload_Main {
 						'%required_height%' => $h,
 					);
 					$notice = str_replace( array_keys( $replaced_values ), $replaced_values, $notice );
-					return sprintf( $notice, $file_name );
+					$result = array(
+						'code'    => 'fail_wrong_dimensions',
+						'message' => sprintf( $notice, $file_name ),
+					);
 				}
 			} else {
-				$notice = sprintf(
-					( get_option( 'alg_checkout_files_upload_notice_no_image_dimensions_' . $i ) > '' ?
-						get_option( 'alg_checkout_files_upload_notice_no_image_dimensions_' . $i )
-						: __( 'Couldn\'t get image dimensions: "%s"!', 'checkout-files-upload-woocommerce' ) ),
-					$file_name 
+				$result = array(
+					'code'    => 'fail_no_dimensions',
+					'message' => sprintf(
+						( get_option( 'alg_checkout_files_upload_notice_no_image_dimensions_' . $i ) > '' ?
+							get_option( 'alg_checkout_files_upload_notice_no_image_dimensions_' . $i )
+							: __( 'Couldn\'t get image dimensions: "%s"', 'checkout-files-upload-woocommerce' ) ),
+						$file_name 
+					),
 				);
-				return $notice;
 			}
 		}
-		return true;
+		return $result;
 	}
 
 	/**
@@ -568,7 +604,6 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 *
 	 * @version 1.4.1
 	 * @since   1.0.0
-	 * @todo    [dev] move "Validate file type" to separate function
 	 */
 	function validate_on_checkout( $posted ) {
 		
@@ -596,9 +631,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					wc_add_notice(
 						( get_option( 'alg_checkout_files_upload_notice_required_' . $i ) > '' ?
 							get_option( 'alg_checkout_files_upload_notice_required_' . $i )
-							: __( 'File is required!', 'checkout-files-upload-woocommerce' ) ),
+							: __( 'File is required.', 'checkout-files-upload-woocommerce' ) ),
 						'error' 
 					);
+					continue;
 				}
 				if (
 					! isset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] ) ||
@@ -609,34 +645,29 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				}
 				
 				// Validate file type
-				if (
-					( $file_accept = get_option( 'alg_checkout_files_upload_file_accept_' . $i, '.jpg,.jpeg,.png' ) ) != '' 
-				) {
-					$file_accept = explode( ',', $file_accept );
-					if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-						foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file_key => $file ) {
-							$file_type = '.' . pathinfo( $file['name'], PATHINFO_EXTENSION );
-							if ( ! in_array( strtolower( $file_type ), array_map( 'strtolower', $file_accept ) ) ) {
-								wc_add_notice(
-									sprintf(
-										( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $i ) > '' ?
-											get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $i )
-											: __( 'Wrong file type: "%s"!', 'checkout-files-upload-woocommerce' ) ),
-										$file['name'] ),
-									'error'
-								);
-							}
-						}
+				$passed_file_types = true;
+				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file ) {
+					$validated_type = $this->validate_file_type( $i, $file );
+					if ( $validated_type !== true ) {
+						wc_add_notice( $validated_type['message'], 'error' );
+						$passed_file_types = false;
 					}
+				}
+				if ( ! $passed_file_types ) {
+					continue;
 				}
 				
 				// Maybe validate image dimensions
-				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file_key => $file ) {
-					if (
-						( $error_message = $this->validate_image_dimensions( $i, $file ) ) !== true
-					) {
-						wc_add_notice( $error_message, 'error' );
+				$passed_image_dimensions = true;
+				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file ) {
+					$validated_dimensions = $this->validate_image_dimensions( $i, $file );
+					if ( $validated_dimensions !== true ) {
+						wc_add_notice( $validated_dimensions['message'], 'error' );
+						$passed_image_dimensions = false;
 					}
+				}
+				if ( ! $passed_image_dimensions ) {
+					continue;
 				}
 				
 			}
