@@ -533,8 +533,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$w = get_option( 'alg_checkout_files_upload_file_validate_image_dimensions_w_' . $i, 1 );
 				$h = get_option( 'alg_checkout_files_upload_file_validate_image_dimensions_h_' . $i, 1 );
 				if (
-					( 'validate_size'  === $validate_image_dimensions && ( $image_size[0] != $w || $image_size[1] != $h ) ) ||
-					( 'validate_ratio' === $validate_image_dimensions && ( $image_size[0] / $image_size[1] != $w / $h ) )
+					( 'validate_size'  === $validate_image_dimensions && ( $image_size[0] != $w || $image_size[1] != $h ) )
+					|| ( 'validate_ratio' === $validate_image_dimensions && ( $image_size[0] / $image_size[1] != $w / $h ) )
+					|| ( 'validate_min' === $validate_image_dimensions && ( $image_size[0] <= $w || $image_size[1] <= $h ) )
+					|| ( 'validate_max' === $validate_image_dimensions && ( $image_size[0] >= $w || $image_size[1] >= $h ) )
 				) {
 					$notice = ( get_option( 'alg_checkout_files_upload_notice_wrong_image_dimensions_' . $i ) > '' ?
 						get_option( 'alg_checkout_files_upload_notice_wrong_image_dimensions_' . $i )

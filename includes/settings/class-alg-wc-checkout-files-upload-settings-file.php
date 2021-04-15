@@ -128,6 +128,8 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 				'options'  => array(
 					''               => __( 'Do not validate', 'checkout-files-upload-woocommerce' ),
 					'validate_size'  => __( 'Validate exact size', 'checkout-files-upload-woocommerce' ),
+					'validate_min'   => __( 'Validate greater than or equal to', 'checkout-files-upload-woocommerce' ),
+					'validate_max'   => __( 'Validate less than or equal to', 'checkout-files-upload-woocommerce' ),
 					'validate_ratio' => __( 'Validate ratio', 'checkout-files-upload-woocommerce' ),
 				),
 			),
