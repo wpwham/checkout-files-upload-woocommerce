@@ -1185,18 +1185,22 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @todo    [dev] add `do_shortcode()` to all notices
 	 */
 	function get_the_form_part_label( $i ) {
-		if ( '' != ( $the_label = do_shortcode( get_option( 'alg_checkout_files_upload_label_' . $i, __( 'Please select file to upload', 'checkout-files-upload-woocommerce' ) ) ) ) ) {
+		$label = get_option( 'alg_checkout_files_upload_label_' . $i ) > '' ?
+			get_option( 'alg_checkout_files_upload_label_' . $i )
+			: __( 'Please select file to upload', 'checkout-files-upload-woocommerce' );
+		$label = do_shortcode( $label );
+		if ( $label > '' ) {
 			$template = get_option( 'alg_checkout_files_upload_form_template_label',
 				'<tr><td colspan="2"><label for="%field_id%">%field_label%</label>%required_html%</td></tr>' );
 			$required_html = ( 'yes' === get_option( 'alg_checkout_files_upload_required_' . $i, 'no' ) ) ?
 				'&nbsp;<abbr class="required" title="required">*</abbr>' : '';
 			return str_replace(
 				array( '%field_id%', '%field_label%', '%required_html%' ),
-				array( 'alg_checkout_files_upload_' . $i, $the_label, $required_html ),
+				array( 'alg_checkout_files_upload_' . $i, $label, $required_html ),
 				$template
 			);
 		}
-		return '';
+		return $label;
 	}
 
 	/**
@@ -1280,7 +1284,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			'id="alg_checkout_files_upload_button_' . $file_uploader . '" ' .
 			'class="alg_checkout_files_upload_button" ' .
 			'data-file-uploader="' . $file_uploader . '" ' .
-			'value="' . get_option( 'alg_checkout_files_upload_label_button_single_' . $file_uploader, __( 'Choose File', 'checkout-files-upload-woocommerce' ) ) . '" ' .
+			'value="' . ( get_option( 'alg_checkout_files_upload_label_button_single_' . $file_uploader ) > '' ?
+				get_option( 'alg_checkout_files_upload_label_button_single_' . $file_uploader )
+				: __( 'Choose File', 'checkout-files-upload-woocommerce' ) ) . '" ' .
 			'style="' . ( $files ? 'display: none;' : '' ). '" />';
 		$button_html .= '<input type="file" data-file-uploader="' . $file_uploader . '" ' .
 			'name="alg_checkout_files_upload_' . $file_uploader . '" ' .
