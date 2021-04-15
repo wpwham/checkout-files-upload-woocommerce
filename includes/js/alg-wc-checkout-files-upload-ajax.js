@@ -14,6 +14,33 @@
 	
 	var $container;
 	
+	var queue = [];
+	var activeQueue = [];
+	var maxWorkers = 4;
+	var suppressedErrors = {
+		fail_max_files: false
+	}
+	
+	var processQueue = function() {
+		
+		var key;
+		
+		for ( var i = 0; i < queue.length; i++ ) {
+			if ( activeQueue.length < maxWorkers ) {
+				activeQueue.push( queue.shift() );
+				key = activeQueue.length - 1;
+				activeQueue[key].upload.doUpload( activeQueue[key].fileUploader, key );
+			}
+		}
+		
+		if ( queue.length ) {
+			setTimeout( processQueue, 100 );
+		} else {
+			suppressedErrors.fail_max_files = false;
+		}
+		
+	}
+	
 	var blockCheckout = function() {
 		$container.block({
 			message: null,
@@ -40,7 +67,7 @@
 	Upload.prototype.getName = function() {
 		return this.file.name;
 	};
-	Upload.prototype.doUpload = function ( fileUploader ) {
+	Upload.prototype.doUpload = function ( fileUploader, queuePosition ) {
 		
 		blockCheckout();
 		
@@ -116,11 +143,24 @@
 					}
 				}
 				if ( data_decoded['message'] != '' ) {
-					alert( data_decoded['message'] );
+					if (
+						typeof data_decoded['error_code'] !== "undefined"
+						&& data_decoded['error_code'] === 'fail_max_files'
+					) {
+						if ( ! suppressedErrors.fail_max_files ) {
+							alert( data_decoded['message'] );
+						}
+						suppressedErrors.fail_max_files = true;
+						queue = [];
+					} else {
+						alert( data_decoded['message'] );
+					}
 				}
+				activeQueue.splice( queuePosition, 1);
 				unblockCheckout();
 			},
 			error: function (error) {
+				activeQueue.splice( queuePosition, 1);
 				unblockCheckout();
 			},
 			async: true,
@@ -144,6 +184,9 @@
 		$( document ).on( 'change', '.alg_checkout_files_upload_file_input', function() {
 			var files = $( this )[0].files;
 			var fileUploader = $( this ).data( 'file-uploader' );
+			if ( ! files.length ) {
+				return;
+			}
 			for ( var i = 0; i < files.length; i++ ) {
 				var file = files[i];
 				var upload = new Upload( file );
@@ -151,9 +194,10 @@
 				if ( max_file_size > 0 && upload.getSize() > max_file_size ) {
 					alert( alg_wc_checkout_files_upload.max_file_size_exceeded_message );
 				} else {
-					upload.doUpload( fileUploader );
+					queue.push({ 'fileUploader': fileUploader, 'upload': upload });
 				}
 			}
+			processQueue();
 			$( this ).val('');
 		});
 		
