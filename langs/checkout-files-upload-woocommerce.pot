@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Checkout Files Upload for WooCommerce\n"
-"POT-Creation-Date: 2021-04-15 03:11-0700\n"
+"POT-Creation-Date: 2021-09-16 01:38-0700\n"
 "PO-Revision-Date: 2018-10-08 05:26-0700\n"
 "Last-Translator: \n"
 "Language-Team: WP Wham <support@wpwham.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: checkout-files-upload-woocommerce.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: includes/class-alg-wc-checkout-files-upload.php:203
 #: includes/class-alg-wc-checkout-files-upload.php:217
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:339
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:280
 #, php-format
 msgid "File \"%s\" was successfully removed."
 msgstr ""
@@ -74,93 +74,76 @@ msgstr ""
 msgid "Unknown error on file remove."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:387
+#: includes/class-alg-wc-checkout-files-upload.php:365
 #, php-format
 msgid ""
 "Server's temporary directory (%s) is not writeable. If you are the site "
 "owner, please check your permissions."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:419
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:330
+#: includes/class-alg-wc-checkout-files-upload.php:397
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:271
 #, php-format
 msgid "File \"%s\" was successfully uploaded."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:431
+#: includes/class-alg-wc-checkout-files-upload.php:409
 msgid "Unknown error on upload."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:456
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:109
+#: includes/class-alg-wc-checkout-files-upload.php:434
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:102
 msgid "Allowed file size exceeded (maximum %max_file_size% MB)."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:519
-#: includes/class-alg-wc-checkout-files-upload.php:526
+#: includes/class-alg-wc-checkout-files-upload.php:497
+#: includes/class-alg-wc-checkout-files-upload.php:504
 msgid "File"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:559
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:321
-#, php-format
-msgid "Too many files uploaded. Maximum %s file(s) are allowed."
-msgstr ""
-
-#: includes/class-alg-wc-checkout-files-upload.php:569
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:312
-#, php-format
-msgid "Too few files uploaded. Minimum %s file(s) are required."
-msgstr ""
-
-#: includes/class-alg-wc-checkout-files-upload.php:603
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:276
+#: includes/class-alg-wc-checkout-files-upload.php:539
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:235
 #, php-format
 msgid "Wrong file type: \"%s\""
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:638
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:286
+#: includes/class-alg-wc-checkout-files-upload.php:574
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:245
 msgid ""
 "Wrong image dimensions for \"%s\". Current: %current_width% x %current_height"
 "%. Required: %required_width% x %required_height%."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:657
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:295
+#: includes/class-alg-wc-checkout-files-upload.php:593
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:254
 #, php-format
 msgid "Couldn't get image dimensions: \"%s\""
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:698
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:303
+#: includes/class-alg-wc-checkout-files-upload.php:634
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:262
 msgid "File is required."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:764
+#: includes/class-alg-wc-checkout-files-upload.php:693
 msgid "Uploaded Files"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:855
+#: includes/class-alg-wc-checkout-files-upload.php:784
 msgid "No files uploaded."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:1292
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:242
+#: includes/class-alg-wc-checkout-files-upload.php:1221
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:209
 msgid "Please select file to upload"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:1394
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:259
-msgid "Choose Files"
-msgstr ""
-
-#: includes/class-alg-wc-checkout-files-upload.php:1397
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:251
+#: includes/class-alg-wc-checkout-files-upload.php:1320
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:218
 msgid "Choose File"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:1425
+#: includes/class-alg-wc-checkout-files-upload.php:1346
 msgid "Remove"
 msgstr ""
 
@@ -275,7 +258,7 @@ msgid "Required"
 msgstr ""
 
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:100
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:107
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:106
 msgid "Yes"
 msgstr ""
 
@@ -283,307 +266,196 @@ msgstr ""
 msgid "Allow multiple files"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:114
-msgid "Minimum number of files"
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:110
+#, php-format
+msgid "%s adds the ability to upload multiple files."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:115
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:123
-msgid "Leave blank for no restriction"
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:112
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:64
+msgid "Checkout Files Upload for WooCommerce Pro"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:122
-msgid "Maximum number of files"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:130
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:117
 msgid "Accepted file types"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:131
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:118
 msgid ""
 "Accepted file types. E.g.: \".jpg,.jpeg,.png\". Leave blank to accept all "
 "files"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:137
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:124
 msgid "Validate image dimensions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:142
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:129
 msgid "Do not validate"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:143
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:130
 msgid "Validate exact size"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:144
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:131
 msgid "Validate greater than or equal to"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:145
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:132
 msgid "Validate less than or equal to"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:146
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:133
 msgid "Validate ratio"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:152
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:139
 msgid "Width"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:159
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:146
 msgid "Height"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:170
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:157
 msgid "Positions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:175
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:162
 msgid "Checkout page"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:176
-msgid "What do these mean? Click here for a visual explanation."
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:176
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:163
+#, php-format
 msgid ""
-"Note: not all positions may be displayed, depending on your theme and/or "
-"settings."
+"<a href=\"%s\" target=\"_blank\">Checkout Files Upload for WooCommerce Pro</"
+"a> adds 20 more positions to choose from."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:182
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:169
 msgid "Before checkout form"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:183
-msgid "Before customer details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:184
-msgid "Before billing details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:185
-msgid "After billing details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:186
-msgid "Before shipping details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:187
-msgid "After shipping details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:188
-msgid "Before order notes"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:189
-msgid "After order notes"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:190
-msgid "After customer details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:191
-msgid "Before order review"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:192
-msgid "Before order review / cart contents"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:193
-msgid "After order review / cart contents"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:194
-msgid "Before order review / shipping"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:195
-msgid "After order review / shipping"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:196
-msgid "Before order review / total"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:197
-msgid "After order review / total"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:198
-msgid "After order review"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:199
-msgid "Before payment details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:200
-msgid "After payment details"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:201
-msgid "Before submit button"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:202
-msgid "After submit button"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:203
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:170
 msgid "After checkout form"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:204
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:171
 msgid "Do not add on checkout"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:208
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:175
 msgid "Position order (i.e. priority)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:215
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:182
 msgid "\"Thank You\" page"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:217
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:224
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:184
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:191
 msgid "Add"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:222
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:189
 msgid "\"My Account\" page"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:233
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:200
 msgid "Labels"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:238
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:205
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-template.php:51
 msgid "Label"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:239
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:249
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:257
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:206
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:216
 msgid "You can use shortcodes here."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:240
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:207
 msgid "Leave blank to disable label."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:248
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:215
 msgid "Upload button (single)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:256
-msgid "Upload button (multiple)"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:268
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:227
 msgid "Notices"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:273
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:232
 msgid "Wrong file type"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:274
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:283
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:293
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:328
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:337
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:233
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:242
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:252
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:269
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:278
 #, php-format
 msgid "%s will be replaced with file name"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:282
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:241
 msgid "Wrong image dimensions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:284
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:243
 msgid ""
 "Other replaced values: %current_width%, %current_height%, %required_width%, "
 "%required_height%"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:292
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:251
 msgid "Couldn't get image dimensions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:301
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:260
 msgid "File is required"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:309
-#, php-format
-msgid "Too few files uploaded. Minimum %s file(s) are required"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:310
-#, php-format
-msgid "%s will be replaced with the minimum number of files"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:318
-#, php-format
-msgid "Too many files uploaded. Maximum %s file(s) are allowed"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:319
-#, php-format
-msgid "%s will be replaced with the maximum number of files"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:327
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:268
 msgid "File was successfully uploaded"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:336
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:277
 msgid "File was successfully removed"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:349
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:290
 msgid "Advanced"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:354
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:295
 msgid "Require products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:355
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:296
 msgid ""
 "To show this field only if at least one selected product is in cart, enter "
 "products here. Leave blank to show for all products."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:363
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:304
 msgid "Require product categories"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:364
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:305
 msgid ""
 "To show this field only if at least one product of selected category is in "
 "cart, enter categories here. Leave blank to show for all products."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:372
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:313
 msgid "Require product tags"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:373
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:314
 msgid ""
 "To show this field only if at least one product of selected tag is in cart, "
 "enter tags here. Leave blank to show for all products."
@@ -610,74 +482,59 @@ msgstr ""
 msgid "Enable plugin"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:46
-msgid "Checkout Files Upload for WooCommerce."
+#. Plugin Name of the plugin/theme
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:47
+msgid "Checkout Files Upload for WooCommerce"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:52
-msgid "License Key"
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:50
+msgid "Documentation"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:54
-msgid "Enter the license key from your purchase to enable updates and support."
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:58
-msgid "Save changes"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:59
-msgid "Update"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:63
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:56
 msgid "Total file uploaders"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:65
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:58
 msgid ""
 "<em>Save changes</em>, after you change this number, to see new settings "
 "sections."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:69
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:62
 #, php-format
 msgid "You will need %s plugin to setup more than one file uploader."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:71
-msgid "Checkout Files Upload for WooCommerce Pro"
-msgstr ""
-
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:76
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:69
 msgid "Form extras"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:77
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:70
 msgid "Add progress bar"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:84
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:77
 msgid "Enable alert on successful file upload"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:91
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:84
 msgid "Enable alert on successful file remove"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:98
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:91
 msgid "Max file size"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:99
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:92
 msgid "MB"
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:100
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:93
 msgid "Leave zero to disable."
 msgstr ""
 
-#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:107
+#: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:100
 msgid "Message on exceeded. Replaced value: %max_file_size%."
 msgstr ""
 
@@ -746,10 +603,6 @@ msgstr ""
 
 #: includes/settings/class-wc-settings-checkout-files-upload.php:68
 msgid "Reset"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Checkout Files Upload for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
