@@ -43,7 +43,11 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 			array(
 				'title'    => __( 'WooCommerce Checkout Files Upload', 'checkout-files-upload-woocommerce' ),
 				'desc'     => '<strong>' . __( 'Enable plugin', 'checkout-files-upload-woocommerce' ) . '</strong>',
-				'desc_tip' => __( 'Checkout Files Upload for WooCommerce.', 'checkout-files-upload-woocommerce' ),
+				'desc_tip' => 
+					__( 'Checkout Files Upload for WooCommerce', 'checkout-files-upload-woocommerce' )
+					. ' v' . WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION . '.<br />'
+					. '<a href="https://wpwham.com/documentation/checkout-files-upload-for-woocommerce/?utm_source=documentation_link&utm_campaign=free&utm_medium=checkout_files_upload" target="_blank" class="button">' .
+					__( 'Documentation', 'checkout-files-upload-woocommerce' ) . '</a>',
 				'id'       => 'alg_wc_checkout_files_upload_enabled',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
