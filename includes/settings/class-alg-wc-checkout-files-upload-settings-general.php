@@ -60,7 +60,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 				'type'     => 'number',
 				'desc'     => apply_filters( 'alg_wc_checkout_files_upload_option', '<br>' . sprintf(
 					__( 'You will need %s plugin to setup more than one file uploader.', 'checkout-files-upload-woocommerce' ),
-					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_general&utm_campaign=free&utm_medium=plugin' ) . '">' .
+					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_general&utm_campaign=free&utm_medium=checkout_files_upload' ) . '">' .
 						__( 'Checkout Files Upload for WooCommerce Pro', 'checkout-files-upload-woocommerce' ) . '</a>'
 					), 'settings_total_files_button' ),
 				'custom_attributes' => apply_filters( 'alg_wc_checkout_files_upload_option', array( 'readonly' => 'readonly' ), 'settings_total_files' ),

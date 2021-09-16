@@ -179,7 +179,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		$custom_links = array();
 		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=alg_wc_checkout_files_upload' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>';
 		if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
-			$custom_links[] = '<a target="_blank" href="https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=plugins_page&utm_campaign=free&utm_medium=plugin">' .
+			$custom_links[] = '<a target="_blank" href="https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=plugins_page&utm_campaign=free&utm_medium=checkout_files_upload">' .
 				__( 'Unlock all', 'checkout-files-upload-woocommerce' ) . '</a>';
 		}
 		return array_merge( $custom_links, $links );
