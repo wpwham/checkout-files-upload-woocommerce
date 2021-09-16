@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 5.7
-Stable tag: 2.1.0
+Tested up to: 5.8
+Stable tag: 2.1.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,10 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.1.1 - 2021-09-16 =
+* UPDATE: PHP 8 now officially supported.
+* UPDATE: updated .pot file for translations.
 
 = 2.1.0 - 2021-04-15 =
 * NEW: added more options to "validate image dimensions" setting: "greater than or equal", and "less than or equal".
