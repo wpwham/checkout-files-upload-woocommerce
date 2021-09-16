@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - File Section Settings
  *
- * @version 2.1.0
+ * @version 2.1.1
  * @since   1.3.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -30,7 +30,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.1.0
+	 * @version 2.1.1
 	 * @since   1.3.0
 	 * @todo    [dev] re-do settings as array, i.e. `alg_checkout_files_upload_enabled[{$i}]` etc.
 	 * @todo    [feature] products, cats and tags as comma separated ID list (e.g. from WPML)
@@ -108,7 +108,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 				'default'  => 'no',
 				'desc'     => '<em>' . sprintf(
 					__( '%s adds the ability to upload multiple files.', 'checkout-files-upload-woocommerce' ),
-					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_file&utm_campaign=free&utm_medium=plugin' ) . '">' .
+					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_file&utm_campaign=free&utm_medium=checkout_files_upload' ) . '">' .
 						__( 'Checkout Files Upload for WooCommerce Pro', 'checkout-files-upload-woocommerce' ) . '</a>'
 				) . '</em>',
 				'custom_attributes' => array( 'disabled' => 'disabled' ),
@@ -160,7 +160,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 			),
 			array(
 				'title'    => __( 'Checkout page', 'checkout-files-upload-woocommerce' ),
-				'desc'     => sprintf( __( '<a href="%s" target="_blank">Checkout Files Upload for WooCommerce Pro</a> adds 20 more positions to choose from.', 'checkout-files-upload-woocommerce' ), 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_file&utm_campaign=free&utm_medium=plugin' ),
+				'desc'     => sprintf( __( '<a href="%s" target="_blank">Checkout Files Upload for WooCommerce Pro</a> adds 20 more positions to choose from.', 'checkout-files-upload-woocommerce' ), 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_file&utm_campaign=free&utm_medium=checkout_files_upload' ),
 				'id'       => 'alg_checkout_files_upload_hook_' . $i,
 				'default'  => 'woocommerce_before_checkout_form',
 				'type'     => 'select',

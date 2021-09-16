@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.1.0
+ * @version 2.1.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -237,10 +237,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_file_delete_link.
 	 *
-	 * @version 2.1.0
+	 * @version 2.1.1
 	 * @since   2.1.0
 	 */
-	public function get_file_delete_link( $file_uploader, $file_key = null, $order_id ) {
+	public function get_file_delete_link( $file_uploader, $file_key = null, $order_id = 0 ) {
 		
 		$args = array(
 			'_wpnonce' => wp_create_nonce( 'wpwham_cfu_checkout_file_delete' ),
@@ -271,10 +271,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_file_download_link.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.1
 	 * @since   1.4.0
 	 */
-	public function get_file_download_link( $file_uploader, $file_key = null, $order_id, $add_timestamp = false, $force_download = false ) {
+	public function get_file_download_link( $file_uploader, $file_key = null, $order_id = 0, $add_timestamp = false, $force_download = false ) {
 		
 		$args = array(
 			'_wpnonce' => wp_create_nonce( 'alg_download_checkout_file' ),

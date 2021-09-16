@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - General Section Settings
  *
- * @version 2.1.0
+ * @version 2.1.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -29,7 +29,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.1.0
+	 * @version 2.1.1
 	 * @since   1.0.0
 	 */
 	public static function get_settings() {
@@ -43,7 +43,11 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 			array(
 				'title'    => __( 'WooCommerce Checkout Files Upload', 'checkout-files-upload-woocommerce' ),
 				'desc'     => '<strong>' . __( 'Enable plugin', 'checkout-files-upload-woocommerce' ) . '</strong>',
-				'desc_tip' => __( 'Checkout Files Upload for WooCommerce.', 'checkout-files-upload-woocommerce' ),
+				'desc_tip' => 
+					__( 'Checkout Files Upload for WooCommerce', 'checkout-files-upload-woocommerce' )
+					. ' v' . WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION . '.<br />'
+					. '<a href="https://wpwham.com/documentation/checkout-files-upload-for-woocommerce/?utm_source=documentation_link&utm_campaign=free&utm_medium=checkout_files_upload" target="_blank" class="button">' .
+					__( 'Documentation', 'checkout-files-upload-woocommerce' ) . '</a>',
 				'id'       => 'alg_wc_checkout_files_upload_enabled',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
@@ -56,7 +60,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 				'type'     => 'number',
 				'desc'     => apply_filters( 'alg_wc_checkout_files_upload_option', '<br>' . sprintf(
 					__( 'You will need %s plugin to setup more than one file uploader.', 'checkout-files-upload-woocommerce' ),
-					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_general&utm_campaign=free&utm_medium=plugin' ) . '">' .
+					'<a target="_blank" href="' . esc_url( 'https://wpwham.com/products/checkout-files-upload-for-woocommerce/?utm_source=settings_general&utm_campaign=free&utm_medium=checkout_files_upload' ) . '">' .
 						__( 'Checkout Files Upload for WooCommerce Pro', 'checkout-files-upload-woocommerce' ) . '</a>'
 					), 'settings_total_files_button' ),
 				'custom_attributes' => apply_filters( 'alg_wc_checkout_files_upload_option', array( 'readonly' => 'readonly' ), 'settings_total_files' ),
