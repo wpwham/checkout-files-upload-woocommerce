@@ -115,6 +115,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		// Admin
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 			add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			// Settings
@@ -163,6 +164,27 @@ final class Alg_WC_Checkout_Files_Upload {
 						'confirmation_message' => __( 'Are you sure you want to delete this file? This cannot be undone.', 'checkout-files-upload-woocommerce' ),
 					),
 				)
+			);
+		}
+	}
+	
+	/**
+	 * @since   x.x.x
+	 */
+	public function enqueue_styles() {
+		global $pagenow;
+		
+		// check we are on the settings page
+		if (
+			$pagenow === 'admin.php'
+			&& isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === 'alg_wc_checkout_files_upload'
+		) {
+			wp_enqueue_style(
+				'wpwham-checkout-files-upload-admin',
+				$this->plugin_url() . '/includes/css/admin.css',
+				array(),
+				WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION,
+				'all'
 			);
 		}
 	}
