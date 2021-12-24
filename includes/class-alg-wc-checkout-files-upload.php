@@ -387,7 +387,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			echo json_encode( array(
 				'result'   => 1,
 				'data'     => '<a href="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id ) ) . '" data-file-key="' . $file_key . '">' .
-					$file['name'] . '</a>',
+					esc_html( $file['name'] ) . '</a>',
 				'data_img' => ( false !== strpos( $template, '%image%' ) ? $this->maybe_get_image( $file_uploader, $file_key, $order_id, true ) : '' ),
 				'message'  => (
 					get_option( 'alg_checkout_files_upload_use_ajax_alert_success_upload', 'no' ) === 'yes' ?
@@ -718,7 +718,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$html .= '<tr>' .
 						'<td style="width:' . ( $allow_delete ? '139' : '174' ) . 'px; word-break: break-word;">' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, false ) ) . '">' .
-						$file['name'] . '</a>' .
+						esc_html( $file['name'] ) . '</a>' .
 						'</td>' .
 						'<td style="width:' . ( $allow_delete ? '105' : '70' ) . 'px;">' .
 						( $allow_delete ?
@@ -752,7 +752,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$html .= '<tr>' .
 						'<td style="width:139px; word-break: break-word;">' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '">' .
-						$real_file_name . '</a>' .
+						esc_html( $real_file_name ) . '</a>' .
 						'</td>' .
 						'<td style="width:105px;">' .
 						'<a href="' . esc_url( $this->get_file_delete_link( $i, null, $order_id ) ) . '" ' .
@@ -1361,7 +1361,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					'<span class="alg_checkout_files_upload_result_file_name" style="vertical-align: middle;">' .
 					'<a href="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id ) ) . '" ' .
 					'data-file-key="' . $file_key . '" target="_blank">' .
-					$file['name'] .
+					esc_html( $file['name'] ) .
 					'</a>' .
 					'</span> '
 					: '';
@@ -1382,7 +1382,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				'<span class="alg_checkout_files_upload_result_file_name" style="vertical-align: middle;">' .
 				'<a href="' . esc_url( $this->get_file_download_link( $file_uploader, null, $order_id ) ) . '" ' .
 				'data-file-key="false" target="_blank">' .
-				$files .
+				esc_html( $files ) .
 				'</a>' .
 				'</span> '
 				: '';
