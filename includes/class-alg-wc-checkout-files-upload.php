@@ -386,7 +386,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			$template = get_option( 'wpw_cfu_form_template_uploaded_file', '<tr><td colspan="2">%image% %file_name% %remove_button%</td></tr>' );
 			echo json_encode( array(
 				'result'   => 1,
-				'data'     => '<a href="' . $this->get_file_download_link( $file_uploader, $file_key, $order_id ) . '" data-file-key="' . $file_key . '">' .
+				'data'     => '<a href="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id ) ) . '" data-file-key="' . $file_key . '">' .
 					$file['name'] . '</a>',
 				'data_img' => ( false !== strpos( $template, '%image%' ) ? $this->maybe_get_image( $file_uploader, $file_key, $order_id, true ) : '' ),
 				'message'  => (
@@ -717,25 +717,25 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$files_exists = true;
 					$html .= '<tr>' .
 						'<td style="width:' . ( $allow_delete ? '139' : '174' ) . 'px; word-break: break-word;">' .
-						'<a href="' . $this->get_file_download_link( $i, $file_key, $order_id, false, false ) . '">' .
+						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, false ) ) . '">' .
 						$file['name'] . '</a>' .
 						'</td>' .
 						'<td style="width:' . ( $allow_delete ? '105' : '70' ) . 'px;">' .
 						( $allow_delete ?
-							'<a href="' . $this->get_file_delete_link( $i, $file_key, $order_id ) . '" ' .
+							'<a href="' . esc_url( $this->get_file_delete_link( $i, $file_key, $order_id ) ) . '" ' .
 							'class="button wpwham-checkout-files-upload-file-delete-button"' .
 							'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
 							'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 							'</a>&nbsp;'
 							: ''
 						) .
-						'<a href="' . $this->get_file_download_link( $i, $file_key, $order_id, false, false ) . '" ' .
+						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, false ) ) . '" ' .
 						'class="button" ' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;" ' .
 						'target="_blank">' .
 						'<span class="dashicons dashicons-external" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
-						'<a href="' . $this->get_file_download_link( $i, $file_key, $order_id, false, true ) . '" ' .
+						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, true ) ) . '" ' .
 						'class="button" ' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
 						'<span class="dashicons dashicons-download" style="line-height: 30px; font-size: 16px;"></span>' .
@@ -751,22 +751,22 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$files_exists = true;
 					$html .= '<tr>' .
 						'<td style="width:139px; word-break: break-word;">' .
-						'<a href="' . $this->get_file_download_link( $i, null, $order_id, false, false ) . '">' .
+						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '">' .
 						$real_file_name . '</a>' .
 						'</td>' .
 						'<td style="width:105px;">' .
-						'<a href="' . $this->get_file_delete_link( $i, null, $order_id ) . '" ' .
+						'<a href="' . esc_url( $this->get_file_delete_link( $i, null, $order_id ) ) . '" ' .
 						'class="button wpwham-checkout-files-upload-file-delete-button"' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
 						'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
-						'<a href="' . $this->get_file_download_link( $i, null, $order_id, false, false ) . '" ' .
+						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '" ' .
 						'class="button" ' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;" ' .
 						'target="_blank">' .
 						'<span class="dashicons dashicons-external" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
-						'<a href="' . $this->get_file_download_link( $i, null, $order_id, false, true ) . '" ' .
+						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, true ) ) . '" ' .
 						'class="button" ' .
 						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
 						'<span class="dashicons dashicons-download" style="line-height: 30px; font-size: 16px;"></span>' .
@@ -1287,7 +1287,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		}
 		
 		if ( $tmp_file_name && @is_array( getimagesize( $tmp_file_name ) ) ) {
-			$image = '<img style="display: inline-block; margin: 10px; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . $this->get_file_download_link( $file_uploader, $file_key, $order_id, $add_timestamp ) . '">';
+			$image = '<img style="display: inline-block; margin: 10px; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id, $add_timestamp ) ) . '">';
 		} else {
 			$image = '<img style="display: inline-block; margin: 10px; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . alg_wc_checkout_files_upload()->plugin_url() . '/assets/images/default_file_image.png' . '">';
 		}
@@ -1359,7 +1359,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					: '';
 				$replaced_values['%file_name%'] = strpos( $uploaded_file_template, '%file_name%' ) !== false ?
 					'<span class="alg_checkout_files_upload_result_file_name" style="vertical-align: middle;">' .
-					'<a href="' . $this->get_file_download_link( $file_uploader, $file_key, $order_id ) . '" ' .
+					'<a href="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id ) ) . '" ' .
 					'data-file-key="' . $file_key . '" target="_blank">' .
 					$file['name'] .
 					'</a>' .
@@ -1380,7 +1380,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				: '';
 			$replaced_values['%file_name%'] = strpos( $uploaded_file_template, '%file_name%' ) !== false ?
 				'<span class="alg_checkout_files_upload_result_file_name" style="vertical-align: middle;">' .
-				'<a href="' . $this->get_file_download_link( $file_uploader, null, $order_id ) . '" ' .
+				'<a href="' . esc_url( $this->get_file_download_link( $file_uploader, null, $order_id ) ) . '" ' .
 				'data-file-key="false" target="_blank">' .
 				$files .
 				'</a>' .
