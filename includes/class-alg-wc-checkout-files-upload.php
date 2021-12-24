@@ -313,7 +313,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_upload.
 	 *
-	 * @version 2.1.0
+	 * @version 2.1.2
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_upload() {
@@ -701,7 +701,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.1.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 */
 	public function create_file_admin_order_meta_box() {
@@ -1237,7 +1237,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * maybe_get_image.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.2
 	 * @since   1.4.0
 	 * @todo    [dev] use another way to check if it's an image (i.e. not `getimagesize()`)
 	 */
@@ -1298,7 +1298,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 2.1.0
+	 * @version 2.1.2
 	 * @since   1.3.0
 	 * @todo    [feature] more options for "delete" button styling (i.e. `&times;`)
 	 */
