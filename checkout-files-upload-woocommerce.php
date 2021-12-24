@@ -3,13 +3,13 @@
 Plugin Name: Checkout Files Upload for WooCommerce
 Plugin URI: https://wpwham.com/products/checkout-files-upload-for-woocommerce/
 Description: Let your customers upload files on (or after) WooCommerce checkout.
-Version: 2.1.1
+Version: 2.1.2
 Author: WP Wham
 Author URI: https://wpwham.com
 Text Domain: checkout-files-upload-woocommerce
 Domain Path: /langs
 Copyright: © 2018-2021 WP Wham
-WC tested up to: 5.6
+WC tested up to: 6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -38,7 +38,7 @@ if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
 }
 
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION' ) ) {
-	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.1.1' );
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.1.2' );
 }
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION' ) ) {
 	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION', '2' );
@@ -61,7 +61,7 @@ if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload' ) ) :
  * Main Alg_WC_Checkout_Files_Upload Class
  *
  * @class   Alg_WC_Checkout_Files_Upload
- * @version 2.1.1
+ * @version 2.1.2
  * @since   1.0.0
  */
 final class Alg_WC_Checkout_Files_Upload {
@@ -72,7 +72,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.1.1';
+	public $version = '2.1.2';
 
 	/**
 	 * @var   Alg_WC_Checkout_Files_Upload The single instance of the class
@@ -115,6 +115,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		// Admin
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 			add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			// Settings
@@ -163,6 +164,27 @@ final class Alg_WC_Checkout_Files_Upload {
 						'confirmation_message' => __( 'Are you sure you want to delete this file? This cannot be undone.', 'checkout-files-upload-woocommerce' ),
 					),
 				)
+			);
+		}
+	}
+	
+	/**
+	 * @since   2.1.2
+	 */
+	public function enqueue_styles() {
+		global $pagenow;
+		
+		// check we are on the settings page
+		if (
+			$pagenow === 'admin.php'
+			&& isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === 'alg_wc_checkout_files_upload'
+		) {
+			wp_enqueue_style(
+				'wpwham-checkout-files-upload-admin',
+				$this->plugin_url() . '/includes/css/admin.css',
+				array(),
+				WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION,
+				'all'
 			);
 		}
 	}
