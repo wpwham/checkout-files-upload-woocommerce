@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.1.1
+ * @version 2.1.3
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -481,7 +481,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order_display.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.3
 	 * @since   1.0.0
 	 */
 	function add_files_to_order_display( $order ) {
@@ -494,14 +494,14 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			if ( is_array( $files ) ) {
 				foreach ( $files as $file_key => $file ) {
 					$has_files = true;
-					$html .= __( 'File', 'checkout-files-upload-woocommerce' ) . ': ' . $file['name'] . '<br />';
+					$html .= __( 'File', 'checkout-files-upload-woocommerce' ) . ': ' . esc_html( $file['name'] ) . '<br />';
 				}
 			} else {
 				// Backwards compatibility for < v2.0.0
 				$real_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i, true );
 				if ( $real_file_name > '' ) {
 					$has_files = true;
-					$html .= __( 'File', 'checkout-files-upload-woocommerce' ) . ': ' . $real_file_name . '<br />';
+					$html .= __( 'File', 'checkout-files-upload-woocommerce' ) . ': ' . esc_html( $real_file_name ) . '<br />';
 				}
 			}
 		}
