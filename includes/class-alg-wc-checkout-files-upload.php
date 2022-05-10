@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.1.1
+ * @version 2.1.3
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -481,7 +481,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order_display.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.3
 	 * @since   1.0.0
 	 */
 	function add_files_to_order_display( $order ) {
