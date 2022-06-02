@@ -77,6 +77,7 @@
 		formData.append( 'file_uploader', fileUploader );
 		formData.append( 'order_id', $( '#alg_checkout_files_upload_order_id_' + fileUploader ).val() );
 		formData.append( 'key', $( '#alg_checkout_files_upload_order_key_' + fileUploader ).val() );
+		formData.append( 'nonce', $( '#wpwham-checkout-files-upload-nonce-' + fileUploader ).val() );
 		
 		if ( alg_wc_checkout_files_upload.progress_bar_enabled ) {
 			var progressBarId = 'wpw_cfu_' + Date.now();
@@ -213,6 +214,7 @@
 			formData.append( 'file_uploader', fileUploader );
 			formData.append( 'file_key', fileKey );
 			formData.append( 'order_id', $( '#alg_checkout_files_upload_order_id_' + fileUploader ).val() );
+			formData.append( 'nonce', $( '#wpwham-checkout-files-upload-nonce-' + fileUploader ).val() );
 			$.ajax({
 				type: "POST",
 				url: ajax_object.ajax_url,
