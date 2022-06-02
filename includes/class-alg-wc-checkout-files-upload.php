@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.1.3
+ * @version 2.1.4
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -160,13 +160,29 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_delete.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.4
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_delete() {
 		
 		// Always start session for this
 		@session_start();
+		
+		if ( ! empty( $_POST['order_id'] ) ) {
+			$order_id = sanitize_text_field( $_POST['order_id'] );
+		} else {
+			$order_id = 0; // pending order
+		}
+		
+		// Check nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wpwham-checkout-files-upload-' . $order_id ) ) {
+			// Error
+			echo json_encode( array(
+				'result'  => 0,
+				'message' => __( 'The link you followed has expired.', 'checkout-files-upload-woocommerce' )
+			) );
+			die();
+		}
 		
 		if ( isset( $_POST['file_uploader'] ) && isset( $_POST['file_key'] ) ) {
 			
@@ -313,7 +329,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_upload.
 	 *
-	 * @version 2.1.2
+	 * @version 2.1.4
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_upload() {
@@ -321,14 +337,25 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		// Always start session for this
 		@session_start();
 		
+		if ( ! empty( $_POST['order_id'] ) ) {
+			$order_id = sanitize_text_field( $_POST['order_id'] );
+		} else {
+			$order_id = 0; // pending order
+		}
+		
+		// Check nonce
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wpwham-checkout-files-upload-' . $order_id ) ) {
+			// Error
+			echo json_encode( array(
+				'result'  => 0,
+				'message' => __( 'The link you followed has expired.', 'checkout-files-upload-woocommerce' )
+			) );
+			die();
+		}
+		
 		if ( isset( $_FILES['file'] ) && '' != $_FILES['file']['tmp_name'] && isset( $_POST['file_uploader'] ) ) {
 			
 			$file_uploader = sanitize_text_field( $_POST['file_uploader'] );
-			if ( ! empty( $_POST['order_id'] ) ) {
-				$order_id = sanitize_text_field( $_POST['order_id'] );
-			} else {
-				$order_id = 0;
-			}
 			
 			// Validate file type
 			$validated_type = $this->validate_file_type( $file_uploader, $_FILES['file'] );
@@ -1298,7 +1325,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 2.1.2
+	 * @version 2.1.4
 	 * @since   1.3.0
 	 * @todo    [feature] more options for "delete" button styling (i.e. `&times;`)
 	 */
@@ -1405,6 +1432,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$html .= '<input type="hidden" id="alg_checkout_files_upload_order_id_' . $file_uploader  . '"  name="alg_checkout_files_upload_order_id_' . $file_uploader  . '" value="' . $order_id . '">';
 		$html .= '<input type="hidden" id="alg_checkout_files_upload_order_key_' . $file_uploader . '"  name="alg_checkout_files_upload_order_key_' . $file_uploader . '" value="' .
 			( isset( $_REQUEST['key'] ) ? esc_html( $_REQUEST['key'] ) : 0 ) . '">';
+		$html .= '<input type="hidden" id="wpwham-checkout-files-upload-nonce-' . $file_uploader  . '"  name="wpwham-checkout-files-upload-nonce-' . $file_uploader  . '" value="' . wp_create_nonce( 'wpwham-checkout-files-upload-' . $order_id ) . '">';
 		$html .= '</div>';
 		if ( get_option( 'alg_checkout_files_upload_use_ajax_progress_bar', 'no' ) === 'yes' ) {
 			$html .= '<div id="alg-wc-checkout-files-upload-progress-wrapper-' . $file_uploader . '" ' .

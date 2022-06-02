@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Checkout Files Upload for WooCommerce\n"
-"POT-Creation-Date: 2021-09-16 01:38-0700\n"
+"POT-Creation-Date: 2022-06-02 00:20-0700\n"
 "PO-Revision-Date: 2018-10-08 05:26-0700\n"
 "Last-Translator: \n"
 "Language-Team: WP Wham <support@wpwham.com>\n"
@@ -20,19 +20,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: checkout-files-upload-woocommerce.php:163
+#: checkout-files-upload-woocommerce.php:164
 msgid "Are you sure you want to delete this file? This cannot be undone."
 msgstr ""
 
-#: checkout-files-upload-woocommerce.php:180
+#: checkout-files-upload-woocommerce.php:202
 msgid "Settings"
 msgstr ""
 
-#: checkout-files-upload-woocommerce.php:183
+#: checkout-files-upload-woocommerce.php:205
 msgid "Unlock all"
 msgstr ""
 
-#: checkout-files-upload-woocommerce.php:216
+#: checkout-files-upload-woocommerce.php:238
 msgid "Checkout Files Upload Settings"
 msgstr ""
 
@@ -63,87 +63,92 @@ msgstr ""
 msgid "File uploaded"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:203
-#: includes/class-alg-wc-checkout-files-upload.php:217
+#: includes/class-alg-wc-checkout-files-upload.php:182
+#: includes/class-alg-wc-checkout-files-upload.php:351
+msgid "The link you followed has expired."
+msgstr ""
+
+#: includes/class-alg-wc-checkout-files-upload.php:219
+#: includes/class-alg-wc-checkout-files-upload.php:233
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:280
 #, php-format
 msgid "File \"%s\" was successfully removed."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:229
+#: includes/class-alg-wc-checkout-files-upload.php:245
 msgid "Unknown error on file remove."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:365
+#: includes/class-alg-wc-checkout-files-upload.php:392
 #, php-format
 msgid ""
 "Server's temporary directory (%s) is not writeable. If you are the site "
 "owner, please check your permissions."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:397
+#: includes/class-alg-wc-checkout-files-upload.php:424
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:271
 #, php-format
 msgid "File \"%s\" was successfully uploaded."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:409
+#: includes/class-alg-wc-checkout-files-upload.php:436
 msgid "Unknown error on upload."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:434
+#: includes/class-alg-wc-checkout-files-upload.php:461
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-general.php:102
 msgid "Allowed file size exceeded (maximum %max_file_size% MB)."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:497
-#: includes/class-alg-wc-checkout-files-upload.php:504
+#: includes/class-alg-wc-checkout-files-upload.php:524
+#: includes/class-alg-wc-checkout-files-upload.php:531
 msgid "File"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:539
+#: includes/class-alg-wc-checkout-files-upload.php:566
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:235
 #, php-format
 msgid "Wrong file type: \"%s\""
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:574
+#: includes/class-alg-wc-checkout-files-upload.php:601
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:245
 msgid ""
 "Wrong image dimensions for \"%s\". Current: %current_width% x %current_height"
 "%. Required: %required_width% x %required_height%."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:593
+#: includes/class-alg-wc-checkout-files-upload.php:620
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:254
 #, php-format
 msgid "Couldn't get image dimensions: \"%s\""
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:634
+#: includes/class-alg-wc-checkout-files-upload.php:661
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:262
 msgid "File is required."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:693
+#: includes/class-alg-wc-checkout-files-upload.php:720
 msgid "Uploaded Files"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:784
+#: includes/class-alg-wc-checkout-files-upload.php:811
 msgid "No files uploaded."
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:1221
+#: includes/class-alg-wc-checkout-files-upload.php:1248
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:209
 msgid "Please select file to upload"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:1320
+#: includes/class-alg-wc-checkout-files-upload.php:1347
 #: includes/settings/class-alg-wc-checkout-files-upload-settings-file.php:218
 msgid "Choose File"
 msgstr ""
 
-#: includes/class-alg-wc-checkout-files-upload.php:1346
+#: includes/class-alg-wc-checkout-files-upload.php:1373
 msgid "Remove"
 msgstr ""
 

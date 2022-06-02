@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 5.9
-Stable tag: 2.1.3
+Tested up to: 6.0
+Stable tag: 2.1.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,10 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.1.4 - 2022-06-02 =
+* FIX: add nonce checks to AJAX actions.
+* UPDATE: updated .pot file for translations.
 
 = 2.1.3 - 2022-05-10 =
 * FIX: escape filenames on order confirmation/thank you pages.
