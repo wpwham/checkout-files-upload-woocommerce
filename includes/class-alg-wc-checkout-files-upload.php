@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.1.3
+ * @version 2.1.4
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -160,7 +160,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_delete.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.4
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_delete() {
@@ -329,7 +329,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_upload.
 	 *
-	 * @version 2.1.2
+	 * @version 2.1.4
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_upload() {
@@ -1325,7 +1325,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 2.1.2
+	 * @version 2.1.4
 	 * @since   1.3.0
 	 * @todo    [feature] more options for "delete" button styling (i.e. `&times;`)
 	 */
