@@ -13,7 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload_Settings_File' ) ) :
 
 class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_Upload_Settings_Section {
-
+	
+	public $id   = '';
+	public $nr   = '';
+	public $desc = '';
+	
 	/**
 	 * Constructor.
 	 *

@@ -65,6 +65,9 @@ if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload' ) ) :
  * @since   1.0.0
  */
 final class Alg_WC_Checkout_Files_Upload {
+	
+	public $core       = null;
+	public $settings   = null;
 
 	/**
 	 * Plugin version.
