@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - File Section Settings
  *
- * @version 2.1.1
+ * @version 2.1.5
  * @since   1.3.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
