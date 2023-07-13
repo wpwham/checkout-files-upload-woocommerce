@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - General Section Settings
  *
- * @version 2.1.1
+ * @version 2.1.5
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -13,7 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload_Settings_General' ) ) :
 
 class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_Files_Upload_Settings_Section {
-
+	
+	public $id   = '';
+	public $desc = '';
+	
 	/**
 	 * Constructor.
 	 *
