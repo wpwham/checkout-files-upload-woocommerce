@@ -50,6 +50,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			add_action( 'wp_ajax_'        . 'alg_ajax_file_delete',    array( $this, 'alg_ajax_file_delete' ) );
 			add_action( 'wp_ajax_nopriv_' . 'alg_ajax_file_delete',    array( $this, 'alg_ajax_file_delete' ) );
 			add_shortcode( 'alg_wc_cfu_translate', array( $this, 'language_shortcode' ) );
+			add_shortcode( 'wpwham_checkout_files_uploader', array( $this, 'uploader_shortcode' ) );
 		}
 	}
 
@@ -71,7 +72,56 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			( ! empty( $atts['not_lang'] ) &&     defined( 'ICL_LANGUAGE_CODE' ) &&   in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['not_lang'] ) ) ) ) )
 		) ? '' : $content;
 	}
+	
 
+	/**
+	 * uploader_shortcode.
+	 *
+	 * @version x.x.x
+	 * @since   x.x.x
+	 */
+	function uploader_shortcode( $atts = array() ) {
+		
+		// Maybe start session
+		$local_session_started = false;
+		if ( ! session_id() && ! headers_sent() ) {
+			session_start();
+			$local_session_started = true;
+		}
+		
+		$html = '';
+		
+		$uploader_ids = array();
+		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
+		
+		if ( isset( $atts['id'] ) ) {
+			if ( intval( $atts['id'] ) <= $total_number ) {
+				$uploader_ids[] = intval( $atts['id'] );
+			}
+		} else {
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				$uploader_ids[] = $i;
+			}
+		}
+		
+		foreach ( $uploader_ids as $i ) {
+			if (
+				get_option( 'alg_checkout_files_upload_enabled_' . $i, 'yes' ) === 'yes' &&
+				$this->is_visible( $i )
+			) {
+				$files = isset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] ) ? $_SESSION[ 'alg_checkout_files_upload_' . $i ] : false;
+				$html .= $this->get_the_form( $i, $files );
+			}
+		}
+		
+		if ( $local_session_started ) {
+			session_write_close();
+		}
+		
+		return $html;
+	}
+	
+	
 	/**
 	 * maybe_send_admin_notification.
 	 *
