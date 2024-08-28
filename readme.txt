@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 6.2
-Stable tag: 2.1.5
+Tested up to: 6.6
+Stable tag: 2.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,11 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.2.0 - 2024-08-28 =
+* NEW: added shortcode 'wpwham_checkout_files_uploader'.
+* FIX: issue with uploads sometimes not being processed.
+* FIX: issue with metabox not displaying on admin Order page when "HPOS" enabled.
 
 = 2.1.5 - 2023-07-13 =
 * FIX: PHP 8.2 notices.

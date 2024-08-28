@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.1.4
+ * @version 2.2.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -17,7 +17,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 * @todo    [dev] split this file into smaller ones
 	 * @todo    [feature] max file size on per file basis
@@ -77,8 +77,8 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * uploader_shortcode.
 	 *
-	 * @version x.x.x
-	 * @since   x.x.x
+	 * @version 2.2.0
+	 * @since   2.2.0
 	 */
 	function uploader_shortcode( $atts = array() ) {
 		
@@ -758,7 +758,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_file_admin_order_meta_box.
 	 *
-	 * @version 1.0.0
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 */
 	function add_file_admin_order_meta_box() {
@@ -778,7 +778,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.1.2
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 */
 	public function create_file_admin_order_meta_box() {
@@ -865,7 +865,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 */
 	function add_files_to_order( $order_id, $order ) {
