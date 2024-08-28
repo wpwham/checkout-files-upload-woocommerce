@@ -3,13 +3,13 @@
 Plugin Name: Checkout Files Upload for WooCommerce
 Plugin URI: https://wpwham.com/products/checkout-files-upload-for-woocommerce/
 Description: Let your customers upload files on (or after) WooCommerce checkout.
-Version: 2.1.5
+Version: 2.2.0
 Author: WP Wham
 Author URI: https://wpwham.com
 Text Domain: checkout-files-upload-woocommerce
 Domain Path: /langs
-Copyright: © 2018-2023 WP Wham
-WC tested up to: 7.8
+Copyright: Â© 2018-2024 WP Wham
+WC tested up to: 9.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -38,7 +38,7 @@ if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
 }
 
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION' ) ) {
-	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.1.5' );
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.2.0' );
 }
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION' ) ) {
 	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION', '2' );
@@ -55,13 +55,19 @@ if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_FILE' ) ) {
  */
 require_once( plugin_dir_path( __FILE__ ) . 'includes/checkout-files-upload-woocommerce-update.php' );
 
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
+
 if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload' ) ) :
 
 /**
  * Main Alg_WC_Checkout_Files_Upload Class
  *
  * @class   Alg_WC_Checkout_Files_Upload
- * @version 2.1.5
+ * @version 2.2.0
  * @since   1.0.0
  */
 final class Alg_WC_Checkout_Files_Upload {
@@ -75,7 +81,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.1.5';
+	public $version = '2.2.0';
 
 	/**
 	 * @var   Alg_WC_Checkout_Files_Upload The single instance of the class
