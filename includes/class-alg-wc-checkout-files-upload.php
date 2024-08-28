@@ -39,7 +39,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					add_action( 'woocommerce_view_order', array( $this, 'add_files_upload_form_to_thankyou_and_myaccount_page' ), PHP_INT_MAX, 1 );
 				}
 			}
-			add_action( 'woocommerce_checkout_order_processed',        array( $this, 'add_files_to_order' ), PHP_INT_MAX, 2 );
+			add_action( 'woocommerce_new_order',                       array( $this, 'add_files_to_order' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'validate_on_checkout' ) );
 			add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_files_to_order_display' ), PHP_INT_MAX );
 			add_action( 'woocommerce_email_after_order_table',         array( $this, 'add_files_to_order_display' ), PHP_INT_MAX );
@@ -818,7 +818,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @version 2.0.0
 	 * @since   1.0.0
 	 */
-	function add_files_to_order( $order_id, $posted ) {
+	function add_files_to_order( $order_id, $order ) {
 		
 		// Always start session for this
 		@session_start();
