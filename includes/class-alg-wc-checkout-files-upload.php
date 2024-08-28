@@ -10,8 +10,6 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
-
 if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload_Main' ) ) :
 
 class Alg_WC_Checkout_Files_Upload_Main {
@@ -714,9 +712,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @since   1.0.0
 	 */
 	function add_file_admin_order_meta_box() {
-		$screen = class_exists( '\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) && wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled()
-		? wc_get_page_screen_id( 'shop-order' )
-		: 'shop_order';
+		$screen   = function_exists( 'wc_get_page_screen_id' ) ? wc_get_page_screen_id( 'shop_order' ) : 'shop_order';
 		$context  = 'side';
 		$priority = 'high';
 		add_meta_box(
