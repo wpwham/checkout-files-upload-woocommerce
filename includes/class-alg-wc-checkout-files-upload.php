@@ -699,8 +699,6 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			if (
 				'yes' === get_option( 'alg_checkout_files_upload_enabled_' . $i, 'yes' ) &&
 				$this->is_visible( $i ) &&
-				'disable' != get_option( 'alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' )
-				&&
 				(
 					'disable' !== get_option('alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form') ||
 					$has_shortcode 
