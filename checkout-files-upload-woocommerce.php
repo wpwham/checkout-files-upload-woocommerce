@@ -116,7 +116,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	function __construct() {
 
 		// Set up localisation
-		load_plugin_textdomain( 'checkout-files-upload-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
+		add_action( 'init', array( $this, 'load_localization' ) );
 
 		// Include required files
 		$this->includes();
@@ -145,6 +145,13 @@ final class Alg_WC_Checkout_Files_Upload {
 			}
 		}
 
+	}
+
+	/**
+	 * @since   2.2.1
+	 */
+	public function load_localization() {
+		load_plugin_textdomain( 'checkout-files-upload-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
 	}
 	
 	/**
