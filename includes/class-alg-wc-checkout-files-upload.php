@@ -64,13 +64,13 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		// E.g.: `[alg_wc_cfu_translate lang="EN,DE" lang_text="Translation for EN and DE" not_lang_text="Translation for other languages"]`
 		if ( isset( $atts['lang_text'] ) && isset( $atts['not_lang_text'] ) && ! empty( $atts['lang'] ) ) {
 			return ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ?
-				$atts['not_lang_text'] : $atts['lang_text'];
+				esc_html( $atts['not_lang_text'] ) : esc_html( $atts['lang_text'] );
 		}
 		// E.g.: `[alg_wc_cfu_translate lang="EN,DE"]Translation for EN and DE[/alg_wc_cfu_translate][alg_wc_cfu_translate not_lang="EN,DE"]Translation for other languages[/alg_wc_cfu_translate]`
 		return (
 			( ! empty( $atts['lang'] )     && ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ) ||
 			( ! empty( $atts['not_lang'] ) &&     defined( 'ICL_LANGUAGE_CODE' ) &&   in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['not_lang'] ) ) ) ) )
-		) ? '' : $content;
+		) ? '' : esc_html( $content );
 	}
 	
 
