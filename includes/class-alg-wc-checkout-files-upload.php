@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.0
+ * @version 2.2.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -57,7 +57,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * language_shortcode.
 	 *
-	 * @version 1.4.5
+	 * @version 2.2.1
 	 * @since   1.4.5
 	 */
 	function language_shortcode( $atts, $content = '' ) {
@@ -679,7 +679,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.1
 	 * @since   1.0.0
 	 */
 	function validate_on_checkout( $posted ) {

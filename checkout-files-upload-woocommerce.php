@@ -3,13 +3,12 @@
 Plugin Name: Checkout Files Upload for WooCommerce
 Plugin URI: https://wpwham.com/products/checkout-files-upload-for-woocommerce/
 Description: Let your customers upload files on (or after) WooCommerce checkout.
-Version: 2.2.0
+Version: 2.2.1
 Author: WP Wham
-Author URI: https://wpwham.com
+Author URI: https://wpwham.com/
 Text Domain: checkout-files-upload-woocommerce
 Domain Path: /langs
-Copyright: © 2018-2024 WP Wham
-WC tested up to: 9.2
+Copyright: © 2018-2025 WP Wham
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -38,7 +37,7 @@ if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
 }
 
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION' ) ) {
-	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.2.0' );
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.2.1' );
 }
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION' ) ) {
 	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION', '2' );
@@ -67,7 +66,7 @@ if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload' ) ) :
  * Main Alg_WC_Checkout_Files_Upload Class
  *
  * @class   Alg_WC_Checkout_Files_Upload
- * @version 2.2.0
+ * @version 2.2.1
  * @since   1.0.0
  */
 final class Alg_WC_Checkout_Files_Upload {
@@ -81,7 +80,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.2.0';
+	public $version = '2.2.1';
 
 	/**
 	 * @var   Alg_WC_Checkout_Files_Upload The single instance of the class
@@ -109,7 +108,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	/**
 	 * Alg_WC_Checkout_Files_Upload Constructor.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.1
 	 * @since   1.0.0
 	 * @access  public
 	 */
