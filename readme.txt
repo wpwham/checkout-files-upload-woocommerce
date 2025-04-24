@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 6.6
-Stable tag: 2.2.0
+Tested up to: 6.8
+Stable tag: 2.2.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,11 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.2.1 - 2025-04-24 =
+* FIX: "file required" not working if uploader placed outside of main checkout form via shortcode (#89416).
+* FIX: PHP notice.
+* FIX: escape text in translation shortcodes.
 
 = 2.2.0 - 2024-08-28 =
 * NEW: added shortcode 'wpwham_checkout_files_uploader'.

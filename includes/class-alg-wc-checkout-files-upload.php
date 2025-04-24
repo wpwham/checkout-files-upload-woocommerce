@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.0
+ * @version 2.2.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -57,20 +57,20 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * language_shortcode.
 	 *
-	 * @version 1.4.5
+	 * @version 2.2.1
 	 * @since   1.4.5
 	 */
 	function language_shortcode( $atts, $content = '' ) {
 		// E.g.: `[alg_wc_cfu_translate lang="EN,DE" lang_text="Translation for EN and DE" not_lang_text="Translation for other languages"]`
 		if ( isset( $atts['lang_text'] ) && isset( $atts['not_lang_text'] ) && ! empty( $atts['lang'] ) ) {
 			return ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ?
-				$atts['not_lang_text'] : $atts['lang_text'];
+				esc_html( $atts['not_lang_text'] ) : esc_html( $atts['lang_text'] );
 		}
 		// E.g.: `[alg_wc_cfu_translate lang="EN,DE"]Translation for EN and DE[/alg_wc_cfu_translate][alg_wc_cfu_translate not_lang="EN,DE"]Translation for other languages[/alg_wc_cfu_translate]`
 		return (
 			( ! empty( $atts['lang'] )     && ( ! defined( 'ICL_LANGUAGE_CODE' ) || ! in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['lang'] ) ) ) ) ) ) ||
 			( ! empty( $atts['not_lang'] ) &&     defined( 'ICL_LANGUAGE_CODE' ) &&   in_array( strtolower( ICL_LANGUAGE_CODE ), array_map( 'trim', explode( ',', strtolower( $atts['not_lang'] ) ) ) ) )
-		) ? '' : $content;
+		) ? '' : esc_html( $content );
 	}
 	
 
@@ -679,7 +679,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.1
 	 * @since   1.0.0
 	 */
 	function validate_on_checkout( $posted ) {
@@ -690,13 +690,19 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			session_start();
 			$local_session_started = true;
 		}
-		
+
+		$checkout_content = get_post_field( 'post_content', get_option( 'woocommerce_checkout_page_id' ) );
+		$has_shortcode = has_shortcode( $checkout_content, 'wpwham_checkout_files_uploader' );
+
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
 				'yes' === get_option( 'alg_checkout_files_upload_enabled_' . $i, 'yes' ) &&
 				$this->is_visible( $i ) &&
-				'disable' != get_option( 'alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' )
+				(
+					get_option( 'alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) !== 'disable' ||
+					$has_shortcode 
+				)
 			) {
 			
 				// validate if file is required
