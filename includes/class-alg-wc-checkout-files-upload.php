@@ -690,13 +690,19 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			session_start();
 			$local_session_started = true;
 		}
-		
+
+		$checkout_content = get_post_field( 'post_content', get_option( 'woocommerce_checkout_page_id' ) );
+		$has_shortcode = has_shortcode( $checkout_content, 'wpwham_checkout_files_uploader' );
+
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
 				'yes' === get_option( 'alg_checkout_files_upload_enabled_' . $i, 'yes' ) &&
 				$this->is_visible( $i ) &&
-				'disable' != get_option( 'alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' )
+				(
+					'disable' !== get_option('alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form') ||
+					$has_shortcode 
+				)
 			) {
 			
 				// validate if file is required
