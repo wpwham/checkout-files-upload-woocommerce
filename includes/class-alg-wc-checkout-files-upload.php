@@ -606,15 +606,21 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		if ( $files_accepted > '' ) {
 			$files_accepted = array_map( 'trim', explode( ',', strtolower( $files_accepted ) ) );
 			if ( is_array( $files_accepted ) && ! empty( $files_accepted ) ) {
-				$file_type = strtolower( '.' . pathinfo( $file['name'], PATHINFO_EXTENSION ) );
-				if ( ! in_array( $file_type, $files_accepted ) ) {
+				$checked_file = wp_check_filetype_and_ext(
+					$file['tmp_name'],
+					$file['name']
+				);
+
+				$file_ext = strtolower( '.' . $checked_file['ext'] );
+
+				if ( empty( $checked_file['ext'] ) || ! in_array( $file_ext, $files_accepted ) ) {
 					$result = array(
 						'code'    => 'fail_file_type',
 						'message' => sprintf(
 							( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
 								get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
 								: __( 'Wrong file type: "%s"', 'checkout-files-upload-woocommerce' ) ),
-							$file['name'] 
+							$file['name']
 						),
 					);
 				}
