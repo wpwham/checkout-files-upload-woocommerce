@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 6.8
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,13 +76,16 @@ Optionally **validate image dimensions**.
 
 == Changelog ==
 
+= 2.2.2 - 2025-04-24 =
+* FIX: add filter 'wpwham_checkout_files_upload_validate_file_type'.
+
 = 2.2.1 - 2025-04-24 =
 * FIX: "file required" not working if uploader placed outside of main checkout form via shortcode (#89416).
 * FIX: PHP notice.
 * FIX: escape text in translation shortcodes.
 
 = 2.2.0 - 2024-08-28 =
-* NEW: added shortcode 'wpwham_checkout_files_uploader'.
+* NEW: add shortcode 'wpwham_checkout_files_uploader'.
 * FIX: issue with uploads sometimes not being processed.
 * FIX: issue with metabox not displaying on admin Order page when "HPOS" enabled.
 
@@ -97,7 +100,6 @@ Optionally **validate image dimensions**.
 * FIX: escape filenames on order confirmation/thank you pages.
 
 = 2.1.2 - 2021-12-23 =
-* FIX: potential XSS vulnerability (thanks to Vlad at Patchstack).
 * FIX: minor display bug in settings due to WooCommerce update.
 
 = 2.1.1 - 2021-09-16 =

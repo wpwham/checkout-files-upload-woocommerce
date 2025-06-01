@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.1
+ * @version 2.2.2
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -591,7 +591,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_file_type.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.2
 	 * @since   2.1.0
 	 * @author  WP Wham
 	 *
