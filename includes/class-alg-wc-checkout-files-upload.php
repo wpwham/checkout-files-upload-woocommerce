@@ -610,9 +610,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$file['tmp_name'],
 					$file['name']
 				);
-
 				$file_ext = strtolower( '.' . $checked_file['ext'] );
-
 				if ( empty( $checked_file['ext'] ) || ! in_array( $file_ext, $files_accepted ) ) {
 					$result = array(
 						'code'    => 'fail_file_type',
@@ -626,7 +624,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				}
 			}
 		}
-		return $result;
+		return apply_filters( 'wpwham_checkout_files_upload_validate_file_type', $result, $file_uploader, $file );
 	}
 	
 	/**
