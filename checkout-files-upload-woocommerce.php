@@ -138,6 +138,8 @@ final class Alg_WC_Checkout_Files_Upload {
 				$this->settings[ 'file_' . $i ]  = new Alg_WC_Checkout_Files_Upload_Settings_File( $i );
 			}
 			add_action( 'woocommerce_system_status_report', array( $this, 'add_settings_to_status_report' ) );
+			// Review suggestion
+			require_once( 'includes/class-alg-wc-checkout-files-upload-review.php' );
 			// Version updated
 			if ( get_option( 'alg_checkout_files_upload_version', '' ) !== $this->version ) {
 				add_action( 'admin_init', array( $this, 'version_updated' ) );
