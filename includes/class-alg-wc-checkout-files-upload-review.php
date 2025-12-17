@@ -86,13 +86,27 @@ class Alg_WC_Checkout_Files_Upload_Review {
 	}
 
 	/**
-	 * Check if file upload field is configured.
+	 * Check if any order has checkout files upload meta in post meta.
 	 *
 	 * @version 2.2.3
 	 * @since   2.2.3
 	 */
 	function has_minimum_usage() {
-		return 'disable' != get_option( 'alg_checkout_files_upload_hook_1', 'woocommerce_before_checkout_form' );
+		$order_ids = wc_get_orders( array(
+			'limit'  => -1,
+			'return' => 'ids',
+			'status' => 'any',
+		) );
+
+		foreach ( $order_ids as $order_id ) {
+			$meta = get_post_meta( $order_id, '_alg_checkout_files_upload_1', true );
+
+			if ( $meta ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 
