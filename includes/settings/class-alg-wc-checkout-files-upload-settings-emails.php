@@ -25,7 +25,10 @@ class Alg_WC_Checkout_Files_Upload_Settings_Emails extends Alg_WC_Checkout_Files
 	 */
 	function __construct() {
 		$this->id   = 'emails';
-		$this->desc = __( 'Emails', 'checkout-files-upload-woocommerce' );
+		$this->desc = 'Emails';
+		add_action( 'init', function() {
+			$this->desc = __( 'Emails', 'checkout-files-upload-woocommerce' );
+		} );
 		parent::__construct();
 	}
 

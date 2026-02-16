@@ -25,7 +25,10 @@ class Alg_WC_Checkout_Files_Upload_Settings_Template extends Alg_WC_Checkout_Fil
 	 */
 	function __construct() {
 		$this->id   = 'template';
-		$this->desc = __( 'Template', 'checkout-files-upload-woocommerce' );
+		$this->desc = 'Template';
+		add_action( 'init', function() {
+			$this->desc = __( 'Template', 'checkout-files-upload-woocommerce' );
+		} );
 		parent::__construct();
 	}
 

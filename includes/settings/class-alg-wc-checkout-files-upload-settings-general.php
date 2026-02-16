@@ -25,7 +25,10 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 	 */
 	function __construct() {
 		$this->id   = '';
-		$this->desc = __( 'General', 'checkout-files-upload-woocommerce' );
+		$this->desc = 'General';
+		add_action( 'init', function() {
+			$this->desc = __( 'General', 'checkout-files-upload-woocommerce' );
+		} );
 		parent::__construct();
 	}
 

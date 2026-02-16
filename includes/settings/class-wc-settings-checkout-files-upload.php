@@ -21,7 +21,10 @@ class Alg_WC_Settings_Checkout_Files_Upload extends WC_Settings_Page {
 	 */
 	function __construct() {
 		$this->id    = 'alg_wc_checkout_files_upload';
-		$this->label = __( 'Checkout Files Upload', 'checkout-files-upload-woocommerce' );
+		$this->label = 'Checkout Files Upload';
+		add_action( 'init', function() {
+			$this->label = __( 'Checkout Files Upload', 'checkout-files-upload-woocommerce' );
+		} );
 		parent::__construct();
 		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'maybe_unsanitize_option' ), PHP_INT_MAX, 3 );
 		add_action( 'admin_notices',                              array( $this, 'settings_saved_admin_notice' ) );

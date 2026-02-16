@@ -27,7 +27,10 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 	function __construct( $id ) {
 		$this->id   = 'file_' . $id;
 		$this->nr   = $id;
-		$this->desc = sprintf( __( 'File Uploader #%s', 'checkout-files-upload-woocommerce' ), $id );
+		$this->desc = 'File Uploader #' . $id;
+		add_action( 'init', function() {
+			$this->desc = sprintf( __( 'File Uploader #%s', 'checkout-files-upload-woocommerce' ), $this->nr );
+		} );
 		parent::__construct();
 	}
 
