@@ -113,45 +113,28 @@ final class Alg_WC_Checkout_Files_Upload {
 	 * @access  public
 	 */
 	function __construct() {
-
-		// Set up localisation
-		add_action( 'init', array( $this, 'load_localization' ) );
-
+		
 		// Include required files
-		$this->includes();
-
+		require_once( 'includes/alg-wc-checkout-files-upload-functions.php' );
+		$this->core = require_once( 'includes/class-alg-wc-checkout-files-upload.php' );
+		
+		// Global
+		add_action( 'init', array( $this, 'includes' ) );
+		
 		// Admin
-		if ( is_admin() ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-			add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
-			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
-			// Settings
-			require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-section.php' );
-			require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-file.php' );
-			$this->settings = array();
-			$this->settings['general']  = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-general.php' );
-			$this->settings['emails']   = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-emails.php' );
-			$this->settings['template'] = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-template.php' );
-			$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
-			for ( $i = 1; $i <= $total_number; $i++ ) {
-				$this->settings[ 'file_' . $i ]  = new Alg_WC_Checkout_Files_Upload_Settings_File( $i );
-			}
-			add_action( 'woocommerce_system_status_report', array( $this, 'add_settings_to_status_report' ) );
-			// Version updated
-			if ( get_option( 'alg_checkout_files_upload_version', '' ) !== $this->version ) {
-				add_action( 'admin_init', array( $this, 'version_updated' ) );
-			}
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'woocommerce_system_status_report', array( $this, 'add_settings_to_status_report' ) );
+		add_filter( 'woocommerce_get_settings_pages', array( $this, 'add_woocommerce_settings_tab' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
+		
+		// Updates
+		if ( get_option( 'alg_checkout_files_upload_version', '' ) !== $this->version ) {
+			add_action( 'admin_init', array( $this, 'version_updated' ) );
 		}
-
+		
 	}
-
-	/**
-	 * @since   2.2.1
-	 */
-	public function load_localization() {
-		load_plugin_textdomain( 'checkout-files-upload-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
-	}
+	
 	
 	/**
 	 * @since   2.1.0
@@ -285,20 +268,34 @@ final class Alg_WC_Checkout_Files_Upload {
 		<?php
 		#endregion add_settings_to_status_report
 	}
-
+	
+	
 	/**
 	 * Include required core files used in admin and on the frontend.
 	 *
 	 * @version 1.4.0
 	 * @since   1.0.0
 	 */
-	function includes() {
-		// Functions
-		require_once( 'includes/alg-wc-checkout-files-upload-functions.php' );
-		// Core
-		$this->core = require_once( 'includes/class-alg-wc-checkout-files-upload.php' );
+	public function includes() {
+		
+		// Localization
+		load_plugin_textdomain( 'checkout-files-upload-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
+		
+		// Settings
+		require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-section.php' );
+		require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-file.php' );
+		$this->settings = array();
+		$this->settings['general']  = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-general.php' );
+		$this->settings['emails']   = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-emails.php' );
+		$this->settings['template'] = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-template.php' );
+		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$this->settings[ 'file_' . $i ]  = new Alg_WC_Checkout_Files_Upload_Settings_File( $i );
+		}
+		
 	}
-
+	
+	
 	/**
 	 * version_updated.
 	 *
