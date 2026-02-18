@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 6.8
-Stable tag: 2.2.2
+Tested up to: 6.9
+Stable tag: 2.2.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,7 +76,10 @@ Optionally **validate image dimensions**.
 
 == Changelog ==
 
-= 2.2.2 - 2025-04-24 =
+= 2.2.3 - 2026-02-18 =
+* FIX: PHP notice.
+
+= 2.2.2 - 2025-05-31 =
 * FIX: add filter 'wpwham_checkout_files_upload_validate_file_type'.
 
 = 2.2.1 - 2025-04-24 =
