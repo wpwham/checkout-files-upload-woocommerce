@@ -1236,6 +1236,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 			} else {
+				if ( ! function_exists( 'WC' ) || ! WC() || ! WC()->cart ) {
+					return false;
+				}
 				$the_items = WC()->cart->get_cart();
 			}
 			foreach ( $the_items as $cart_item_key => $values ) {
@@ -1254,6 +1257,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 			} else {
+				if ( ! function_exists( 'WC' ) || ! WC() || ! WC()->cart ) {
+					return false;
+				}
 				$the_items = WC()->cart->get_cart();
 			}
 			foreach ( $the_items as $cart_item_key => $values ) {
@@ -1277,6 +1283,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 			} else {
+				if ( ! function_exists( 'WC' ) || ! WC() || ! WC()->cart ) {
+					return false;
+				}
 				$the_items = WC()->cart->get_cart();
 			}
 			foreach ( $the_items as $cart_item_key => $values ) {
