@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.2
+ * @version 2.2.4
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -1224,7 +1224,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * is_visible.
 	 *
-	 * @version 1.3.0
+	 * @version 2.2.4
 	 * @since   1.0.0
 	 */
 	function is_visible( $i, $order_id = 0 ) {
@@ -1563,7 +1563,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_upload_form_to_checkout_frontend_all.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.4
 	 * @since   1.0.0
 	 */
 	function add_files_upload_form_to_checkout_frontend_all( $is_direct_call = false ) {
