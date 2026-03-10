@@ -114,12 +114,12 @@ final class Alg_WC_Checkout_Files_Upload {
 	 */
 	function __construct() {
 		
+		// Global
+		add_action( 'init', array( $this, 'includes' ) );
+				
 		// Include required files
 		require_once( 'includes/alg-wc-checkout-files-upload-functions.php' );
 		$this->core = require_once( 'includes/class-alg-wc-checkout-files-upload.php' );
-		
-		// Global
-		add_action( 'init', array( $this, 'includes' ) );
 		
 		// Admin
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
