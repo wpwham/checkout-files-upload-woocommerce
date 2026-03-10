@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.2
+ * @version 2.2.4
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -1224,7 +1224,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * is_visible.
 	 *
-	 * @version 1.3.0
+	 * @version 2.2.4
 	 * @since   1.0.0
 	 */
 	function is_visible( $i, $order_id = 0 ) {
@@ -1236,6 +1236,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 			} else {
+				if ( ! function_exists( 'WC' ) || ! WC() || ! WC()->cart ) {
+					return false;
+				}
 				$the_items = WC()->cart->get_cart();
 			}
 			foreach ( $the_items as $cart_item_key => $values ) {
@@ -1254,6 +1257,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 			} else {
+				if ( ! function_exists( 'WC' ) || ! WC() || ! WC()->cart ) {
+					return false;
+				}
 				$the_items = WC()->cart->get_cart();
 			}
 			foreach ( $the_items as $cart_item_key => $values ) {
@@ -1277,6 +1283,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 			} else {
+				if ( ! function_exists( 'WC' ) || ! WC() || ! WC()->cart ) {
+					return false;
+				}
 				$the_items = WC()->cart->get_cart();
 			}
 			foreach ( $the_items as $cart_item_key => $values ) {
@@ -1554,11 +1563,14 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_upload_form_to_checkout_frontend_all.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.4
 	 * @since   1.0.0
 	 */
 	function add_files_upload_form_to_checkout_frontend_all( $is_direct_call = false ) {
 		
+		// Maybe skip if already rendered (page builders may fire the same hook multiple times).
+		static $rendered = array();
+
 		// Maybe start session
 		$local_session_started = false;
 		if ( ! session_id() && ! headers_sent() ) {
@@ -1573,6 +1585,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			$current_filter_priority = alg_current_filter_priority();
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( isset( $rendered[ $i ] ) ) {
+				continue;
+			}
 			$is_filter_ok = ( $is_direct_call ) ? true : (
 				$current_filter === get_option( 'alg_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) &&
 				$current_filter_priority == get_option( 'alg_checkout_files_upload_hook_priority_' . $i, 20 )
@@ -1584,6 +1599,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			) {
 				$files = isset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] ) ? $_SESSION[ 'alg_checkout_files_upload_' . $i ] : false;
 				$html .= $this->get_the_form( $i, $files );
+				$rendered[ $i ] = true;
 			}
 		}
 		echo $html;

@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 6.9
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,10 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.2.4 - 2026-03-10 =
+* FIX: preventing multiple uploaders from appearing (#106708).
+* FIX: potential conflict with Divi theme (#106397).
 
 = 2.2.3 - 2026-02-18 =
 * FIX: PHP notice.
