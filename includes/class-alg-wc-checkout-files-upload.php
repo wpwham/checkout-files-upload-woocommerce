@@ -999,7 +999,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
 						return;
 					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
+				} elseif ( ! current_user_can( 'edit_shop_orders' ) ) {
 					// My Account
 					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
 						require_once( ABSPATH . 'wp-includes/pluggable.php' );
@@ -1067,7 +1067,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
 						return;
 					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
+				} elseif ( ! current_user_can( 'edit_shop_orders' ) ) {
 					// My Account
 					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
 						require_once( ABSPATH . 'wp-includes/pluggable.php' );
@@ -1135,7 +1135,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
 						return;
 					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
+				} elseif ( ! current_user_can( 'edit_shop_orders' ) ) {
 					// My Account
 					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
 						require_once( ABSPATH . 'wp-includes/pluggable.php' );
@@ -1185,7 +1185,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
 						return;
 					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
+				} elseif ( ! current_user_can( 'edit_shop_orders' ) ) {
 					// My Account
 					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
 						require_once( ABSPATH . 'wp-includes/pluggable.php' );
