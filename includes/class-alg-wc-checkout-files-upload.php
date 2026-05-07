@@ -694,10 +694,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			session_start();
 			$local_session_started = true;
 		}
-
+		
 		$checkout_content = get_post_field( 'post_content', get_option( 'woocommerce_checkout_page_id' ) );
 		$has_shortcode = has_shortcode( $checkout_content, 'wpwham_checkout_files_uploader' );
-
+		
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
@@ -994,19 +994,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) ) {
-					// Thank you page
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
-					// My Account
-					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
-						require_once( ABSPATH . 'wp-includes/pluggable.php' );
-					}
-					if ( ! is_user_logged_in() || $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 				$tmp_file_name   = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
@@ -1062,19 +1054,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) ) {
-					// Thank you page
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
-					// My Account
-					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
-						require_once( ABSPATH . 'wp-includes/pluggable.php' );
-					}
-					if ( ! is_user_logged_in() || $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_files     = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 				$order_file      = $order_files[ $file_key ];
@@ -1130,19 +1114,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) ) {
-					// Thank you page
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
-					// My Account
-					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
-						require_once( ABSPATH . 'wp-includes/pluggable.php' );
-					}
-					if ( ! is_user_logged_in() || $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( ! $order_file_name ) {
@@ -1180,19 +1156,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) ) {
-					// Thank you page
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( ! function_exists( 'is_admin' ) || ! is_admin() ) {
-					// My Account
-					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
-						require_once( ABSPATH . 'wp-includes/pluggable.php' );
-					}
-					if ( ! is_user_logged_in() || $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, true );
 				if ( ! isset( $order_files[ $file_key ] ) ) {
@@ -1350,19 +1318,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		if ( 0 != $order_id ) {
 			$passed = false;
 			if ( $order = wc_get_order( $order_id ) ) {
-				if ( ! empty( $_REQUEST['key'] ) ) {
-					// Thank you page
-					if ( $order->key_is_valid( $_REQUEST['key'] ) ) {
-						$passed = true;
-					}
-				} else {
-					// My Account
-					if ( ! function_exists( 'is_user_logged_in' ) || ! function_exists( 'get_current_user_id' ) ) {
-						require_once( ABSPATH . 'wp-includes/pluggable.php' );
-					}
-					if ( is_user_logged_in() && $order->get_customer_id() == get_current_user_id() ) {
-						$passed = true;
-					}
+				if ( ! empty( $_REQUEST['key'] ) && $order->key_is_valid( $_REQUEST['key'] ) ) {
+					$passed = true;
+				} elseif ( current_user_can( 'edit_shop_orders' ) || $order->get_customer_id() == get_current_user_id() ) {
+					$passed = true;
 				}
 			}
 			if ( $passed ) {
