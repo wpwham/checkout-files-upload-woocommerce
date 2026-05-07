@@ -994,25 +994,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				// Where are we?
-				if ( isset( $_GET['key'] ) ) {
-					// must be Thank You page -- make sure 'key' is valid
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( is_admin() ) {
-					// either wp_admin or AJAX -- make sure user has sufficient permissions
-					if (
-						! current_user_can( 'edit_shop_orders' )
-						&& $order->get_customer_id() != get_current_user_id()
-					) {
-						return;
-					}
-				} else {
-					// must be My Account page -- make sure user is viewing their own order only
-					if ( $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 				$tmp_file_name   = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
@@ -1068,25 +1054,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				// Where are we?
-				if ( isset( $_GET['key'] ) ) {
-					// must be Thank You page -- make sure 'key' is valid
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( is_admin() ) {
-					// either wp_admin or AJAX -- make sure user has sufficient permissions
-					if (
-						! current_user_can( 'edit_shop_orders' )
-						&& $order->get_customer_id() != get_current_user_id()
-					) {
-						return;
-					}
-				} else {
-					// must be My Account page -- make sure user is viewing their own order only
-					if ( $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_files     = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 				$order_file      = $order_files[ $file_key ];
@@ -1142,25 +1114,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				// Where are we?
-				if ( isset( $_GET['key'] ) ) {
-					// must be Thank You page -- make sure 'key' is valid
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( is_admin() ) {
-					// either wp_admin or AJAX -- make sure user has sufficient permissions
-					if (
-						! current_user_can( 'edit_shop_orders' )
-						&& $order->get_customer_id() != get_current_user_id()
-					) {
-						return;
-					}
-				} else {
-					// must be My Account page -- make sure user is viewing their own order only
-					if ( $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( ! $order_file_name ) {
@@ -1198,25 +1156,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				// Where are we?
-				if ( isset( $_GET['key'] ) ) {
-					// must be Thank You page -- make sure 'key' is valid
-					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
-						return;
-					}
-				} elseif ( is_admin() ) {
-					// either wp_admin or AJAX -- make sure user has sufficient permissions
-					if (
-						! current_user_can( 'edit_shop_orders' )
-						&& $order->get_customer_id() != get_current_user_id()
-					) {
-						return;
-					}
-				} else {
-					// must be My Account page -- make sure user is viewing their own order only
-					if ( $order->get_customer_id() != get_current_user_id() ) {
-						return;
-					}
+				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
+					return;
+				}
+				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+					return;
 				}
 				$order_files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, true );
 				if ( ! isset( $order_files[ $file_key ] ) ) {
@@ -1374,17 +1318,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		if ( 0 != $order_id ) {
 			$passed = false;
 			if ( $order = wc_get_order( $order_id ) ) {
-				// Where are we?
-				if ( ! empty( $_REQUEST['key'] ) ) {
-					// must be Thank You page -- make sure 'key' is valid
-					if ( $order->key_is_valid( $_REQUEST['key'] ) ) {
-						$passed = true;
-					}
-				} else {
-					// must be My Account page -- make sure user is viewing their own order only
-					if ( $order->get_customer_id() == get_current_user_id() ) {
-						$passed = true;
-					}
+				if ( ! empty( $_REQUEST['key'] ) && $order->key_is_valid( $_REQUEST['key'] ) ) {
+					$passed = true;
+				} elseif ( current_user_can( 'edit_shop_orders' ) || $order->get_customer_id() == get_current_user_id() ) {
+					$passed = true;
 				}
 			}
 			if ( $passed ) {
