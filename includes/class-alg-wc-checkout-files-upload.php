@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.4
+ * @version 2.2.5
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -494,7 +494,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.5
 	 * @since   1.3.0
 	 */
 	function enqueue_scripts() {
@@ -962,7 +962,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.5
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {
@@ -1301,7 +1301,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * maybe_get_image.
 	 *
-	 * @version 2.1.2
+	 * @version 2.2.5
 	 * @since   1.4.0
 	 * @todo    [dev] use another way to check if it's an image (i.e. not `getimagesize()`)
 	 */
