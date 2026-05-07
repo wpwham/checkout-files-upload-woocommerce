@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 6.9
-Stable tag: 2.2.4
+Tested up to: 7.0
+Stable tag: 2.2.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,10 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.2.5 - 2026-05-06 =
+* FIX: error when "Max file size" setting is empty on PHP 8 (#107736).
+* FIX: add capability check.
 
 = 2.2.4 - 2026-03-10 =
 * FIX: preventing multiple uploaders from appearing (#106708).
