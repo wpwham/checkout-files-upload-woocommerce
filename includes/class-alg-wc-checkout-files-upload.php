@@ -500,7 +500,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	function enqueue_scripts() {
 		wp_enqueue_script( 'alg-wc-checkout-files-upload-ajax', alg_wc_checkout_files_upload()->plugin_url() . '/includes/js/alg-wc-checkout-files-upload-ajax.js',
 			array( 'jquery' ), alg_wc_checkout_files_upload()->version, false );
-		$max_file_size_mb = get_option( 'alg_checkout_files_upload_max_file_size_mb', 0 );
+		$max_file_size_mb = (float) get_option( 'alg_checkout_files_upload_max_file_size_mb', 0 );
 		wp_localize_script( 'alg-wc-checkout-files-upload-ajax', 'ajax_object', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 		) );
