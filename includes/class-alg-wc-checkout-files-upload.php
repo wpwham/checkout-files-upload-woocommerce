@@ -793,12 +793,13 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 */
 	public function create_file_admin_order_meta_box() {
 		$order_id = isset( $_GET['post'] ) ? (int) $_GET['post'] : (int) $_GET['id'];
+		$order    = wc_get_order( $order_id );
 		$html = '';
-		$total_files = get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
+		$total_files = ( $order ? $order->get_meta( '_alg_checkout_files_total_files' ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
 		$files_exists = false;
 		$allow_delete = apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true );
 		for ( $i = 1; $i <= $total_files; $i++ ) {
-			$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
 				foreach ( $files as $file_key => $file ) {
 					$files_exists = true;
@@ -833,7 +834,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			} else {
 				// backwards compatibility for orders created < v2.0.0
 				$order_file_name = $files;
-				$real_file_name  = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
+				$real_file_name = ( $order ? $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
 				if ( '' != $order_file_name ) {
 					$files_exists = true;
 					$html .= '<tr>' .
@@ -888,6 +889,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			mkdir( $upload_dir, 0755, true );
 		}
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
+		$legacy_wc    = version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] ) ) {
 				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file_key => $file ) {
@@ -901,17 +903,26 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					unlink( $tmp_file_name );
 					$_SESSION[ 'alg_checkout_files_upload_' . $i ][ $file_key ]['tmp_name'] = $download_file_name;
 				}
-				update_post_meta(
-					$order_id,
-					'_' . 'alg_checkout_files_upload_' . $i,
-					$_SESSION[ 'alg_checkout_files_upload_' . $i ]
-				);
+				if ( $legacy_wc ) {
+					update_post_meta(
+						$order_id,
+						'_' . 'alg_checkout_files_upload_' . $i,
+						$_SESSION[ 'alg_checkout_files_upload_' . $i ]
+					);
+				} else {
+					$order->update_meta_data( '_alg_checkout_files_upload_' . $i, $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
+				}
 			}
 			unset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
 		}
 		
 		// this is not really the "total files", but rather the total # of file uploaders
-		update_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', $total_number );
+		if ( $legacy_wc ) {
+			update_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', $total_number );
+		} else {
+			$order->update_meta_data( '_alg_checkout_files_total_files', $total_number );
+			$order->save_meta_data();
+		}
 		
 		session_write_close();
 	}
