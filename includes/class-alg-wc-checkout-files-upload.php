@@ -241,6 +241,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			
 			if ( isset( $_POST['order_id'] ) && $_POST['order_id'] > 0 ) {
 				$order_id = sanitize_text_field( $_POST['order_id'] );
+				$order    = wc_get_order( $order_id );
 				$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 				if ( is_array( $files ) ) {
 					if ( isset( $files[ $file_key ]['tmp_name'] ) && $files[ $file_key ]['tmp_name'] ) {
@@ -250,6 +251,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$file_name = $files[ $file_key ]['name'];
 					unset( $files[ $file_key ] );
 					update_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, $files );
+					if ( $order ) {
+						$order->update_meta_data( '_alg_checkout_files_upload_' . $file_uploader, $files );
+						$order->save_meta_data();
+					}
 				} elseif ( $files > '' ) {
 					// backwards compatibility for < v2.0.0
 					$file_path = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files;
@@ -257,6 +262,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader, true );
 					delete_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader );
 					delete_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader );
+					if ( $order ) {
+						$order->delete_meta_data( '_alg_checkout_files_upload_' . $file_uploader );
+						$order->delete_meta_data( '_alg_checkout_files_upload_real_name_' . $file_uploader );
+						$order->save_meta_data();
+					}
 				}
 				$this->maybe_send_admin_notification( 'remove_file', $order_id, $file_name, $file_uploader );
 				echo json_encode( array(
@@ -1147,6 +1157,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( $order_id ) {
 					delete_post_meta( $order_id, '_alg_checkout_files_upload_' . $i );
 					delete_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i );
+					if ( $order ) {
+						$order->delete_meta_data( '_alg_checkout_files_upload_' . $i );
+						$order->delete_meta_data( '_alg_checkout_files_upload_real_name_' . $i );
+						$order->save_meta_data();
+					}
 				}
 				unset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
 			}
@@ -1190,6 +1205,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( $order_files ) {
 					unset( $order_files[ $file_key ] );
 					update_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, $order_files );
+					if ( $order ) {
+						$order->update_meta_data( '_alg_checkout_files_upload_' . $file_uploader, $order_files );
+						$order->save_meta_data();
+					}
 				}
 				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
 			}
