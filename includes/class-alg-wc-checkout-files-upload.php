@@ -149,7 +149,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			$action !== 'remove_file' &&
 			get_option( 'alg_checkout_files_upload_emails_do_attach_on_upload', 'yes' ) !== 'no'
 		) {
-			$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_num, true );
+			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $file_num ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_num, true );
 			if ( is_array( $files ) && isset( $files[ $file_key ] ) ) {
 				$attachments = array( alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files[ $file_key ]['tmp_name'] );
 			}
@@ -241,7 +241,8 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			
 			if ( isset( $_POST['order_id'] ) && $_POST['order_id'] > 0 ) {
 				$order_id = sanitize_text_field( $_POST['order_id'] );
-				$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
+				$order    = wc_get_order( $order_id );
+				$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 				if ( is_array( $files ) ) {
 					if ( isset( $files[ $file_key ]['tmp_name'] ) && $files[ $file_key ]['tmp_name'] ) {
 						$file_path = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files[ $file_key ]['tmp_name'];
@@ -250,13 +251,22 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$file_name = $files[ $file_key ]['name'];
 					unset( $files[ $file_key ] );
 					update_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, $files );
+					if ( $order ) {
+						$order->update_meta_data( '_alg_checkout_files_upload_' . $file_uploader, $files );
+						$order->save_meta_data();
+					}
 				} elseif ( $files > '' ) {
 					// backwards compatibility for < v2.0.0
 					$file_path = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files;
 					unlink( $file_path );
-					$file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader, true );
+					$file_name = ( $order ? $order->get_meta( '_alg_checkout_files_upload_real_name_' . $file_uploader ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader, true );
 					delete_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader );
 					delete_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader );
+					if ( $order ) {
+						$order->delete_meta_data( '_alg_checkout_files_upload_' . $file_uploader );
+						$order->delete_meta_data( '_alg_checkout_files_upload_real_name_' . $file_uploader );
+						$order->save_meta_data();
+					}
 				}
 				$this->maybe_send_admin_notification( 'remove_file', $order_id, $file_name, $file_uploader );
 				echo json_encode( array(
@@ -536,16 +546,16 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			)
 		) {
 			$order_id = ( version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' ) ? $order->id : $order->get_id() );
-			$total_files = get_post_meta( $order_id, '_alg_checkout_files_total_files', true );
+			$total_files = ( $order->get_meta( '_alg_checkout_files_total_files' ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_total_files', true );
 			for ( $i = 1; $i <= $total_files; $i++ ) {
-				$files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
+				$files = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( is_array( $files ) ) {
 					foreach ( $files as $file_key => $file ) {
 						$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
 					}
 				} else {
 					// Backwards compatibility for < v2.0.0
-					$file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
+					$file_name = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 					if ( $file_name > '' ) {
 						$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file_name;
 					}
@@ -565,9 +575,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$order_id = ( version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' ) ? $order->id : $order->get_id() );
 		$html = '';
 		$has_files = false;
-		$total_files = get_post_meta( $order_id, '_alg_checkout_files_total_files', true );
+		$total_files = ( $order->get_meta( '_alg_checkout_files_total_files' ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_total_files', true );
 		for ( $i = 1; $i <= $total_files; $i++ ) {
-			$files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
+			$files = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
 				foreach ( $files as $file_key => $file ) {
 					$has_files = true;
@@ -575,7 +585,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				}
 			} else {
 				// Backwards compatibility for < v2.0.0
-				$real_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i, true );
+				$real_file_name = ( $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i, true );
 				if ( $real_file_name > '' ) {
 					$has_files = true;
 					$html .= __( 'File', 'checkout-files-upload-woocommerce' ) . ': ' . esc_html( $real_file_name ) . '<br />';
@@ -793,12 +803,13 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 */
 	public function create_file_admin_order_meta_box() {
 		$order_id = isset( $_GET['post'] ) ? (int) $_GET['post'] : (int) $_GET['id'];
+		$order    = wc_get_order( $order_id );
 		$html = '';
-		$total_files = get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
+		$total_files = ( $order ? $order->get_meta( '_alg_checkout_files_total_files' ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
 		$files_exists = false;
 		$allow_delete = apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true );
 		for ( $i = 1; $i <= $total_files; $i++ ) {
-			$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
 				foreach ( $files as $file_key => $file ) {
 					$files_exists = true;
@@ -833,7 +844,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			} else {
 				// backwards compatibility for orders created < v2.0.0
 				$order_file_name = $files;
-				$real_file_name  = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
+				$real_file_name = ( $order ? $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
 				if ( '' != $order_file_name ) {
 					$files_exists = true;
 					$html .= '<tr>' .
@@ -888,6 +899,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			mkdir( $upload_dir, 0755, true );
 		}
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
+		$legacy_wc    = version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] ) ) {
 				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file_key => $file ) {
@@ -901,17 +913,26 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					unlink( $tmp_file_name );
 					$_SESSION[ 'alg_checkout_files_upload_' . $i ][ $file_key ]['tmp_name'] = $download_file_name;
 				}
-				update_post_meta(
-					$order_id,
-					'_' . 'alg_checkout_files_upload_' . $i,
-					$_SESSION[ 'alg_checkout_files_upload_' . $i ]
-				);
+				if ( $legacy_wc ) {
+					update_post_meta(
+						$order_id,
+						'_' . 'alg_checkout_files_upload_' . $i,
+						$_SESSION[ 'alg_checkout_files_upload_' . $i ]
+					);
+				} else {
+					$order->update_meta_data( '_alg_checkout_files_upload_' . $i, $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
+				}
 			}
 			unset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
 		}
 		
 		// this is not really the "total files", but rather the total # of file uploaders
-		update_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', $total_number );
+		if ( $legacy_wc ) {
+			update_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', $total_number );
+		} else {
+			$order->update_meta_data( '_alg_checkout_files_total_files', $total_number );
+			$order->save_meta_data();
+		}
 		
 		session_write_close();
 	}
@@ -932,8 +953,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			mkdir( $upload_dir, 0755, true );
 		}
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
+		$legacy_wc    = version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' );
 		
-		$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
+		$order = wc_get_order( $order_id );
+		$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 		if ( ! is_array( $files ) ) {
 			$files = array();
 		}
@@ -952,9 +975,19 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$files[ $file_key ]['tmp_name'] = $download_file_name;
 		
 		update_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, $files );
+		if ( $order ) {
+			$order->update_meta_data( '_alg_checkout_files_upload_' . $file_uploader, $files );
+			$order->update_meta_data( '_alg_checkout_files_total_files', $total_number );
+			$order->save_meta_data();
+		}
 		
 		// this is not really the "total files", but rather the total # of file uploaders
-		update_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', $total_number );
+		if ( $legacy_wc ) {
+			update_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', $total_number );
+		} else {
+			$order->update_meta_data( '_alg_checkout_files_total_files', $total_number );
+			$order->save_meta_data();
+		}
 		
 		return $file_key;
 	}
@@ -1000,12 +1033,12 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
 					return;
 				}
-				$order_file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+				$order_file_name = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 				$tmp_file_name   = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
 				$file_name       = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
 			} else {
 				$tmp_file_name   = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'];
-				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['name'];
+				$file_name       = ( $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
 			}
 			
 			$mime_type = false;
@@ -1060,7 +1093,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
 					return;
 				}
-				$order_files     = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
+				$order_files     = ( $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 				$order_file      = $order_files[ $file_key ];
 				$tmp_file_name   = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file['tmp_name'];
 				$file_name       = $order_file['name'];
@@ -1120,7 +1153,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
 					return;
 				}
-				$order_file_name = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
+				$order_file_name = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( ! $order_file_name ) {
 					return;
 				}
@@ -1136,6 +1169,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( $order_id ) {
 					delete_post_meta( $order_id, '_alg_checkout_files_upload_' . $i );
 					delete_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i );
+					if ( $order ) {
+						$order->delete_meta_data( '_alg_checkout_files_upload_' . $i );
+						$order->delete_meta_data( '_alg_checkout_files_upload_real_name_' . $i );
+						$order->save_meta_data();
+					}
 				}
 				unset( $_SESSION[ 'alg_checkout_files_upload_' . $i ] );
 			}
@@ -1162,7 +1200,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
 					return;
 				}
-				$order_files = get_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, true );
+				$order_files = ( $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, true );
 				if ( ! isset( $order_files[ $file_key ] ) ) {
 					return;
 				}
@@ -1179,6 +1217,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( $order_files ) {
 					unset( $order_files[ $file_key ] );
 					update_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, $order_files );
+					if ( $order ) {
+						$order->update_meta_data( '_alg_checkout_files_upload_' . $file_uploader, $order_files );
+						$order->save_meta_data();
+					}
 				}
 				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
 			}
@@ -1325,7 +1367,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				}
 			}
 			if ( $passed ) {
-				$files = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
+				$files = ( $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
 				if ( $file_key !== null ) {
 					$tmp_file_name = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files[ $file_key ]['tmp_name'];
 				} else {
@@ -1486,14 +1528,15 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$html = '';
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
 		$current_filter = current_filter();
+		$order = wc_get_order( $order_id );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'alg_checkout_files_upload_enabled_' . $i, 'yes' ) && $this->is_visible( $i, $order_id ) ) {
 				if (
 					( 'yes' === get_option( 'alg_checkout_files_upload_add_to_thankyou_'  . $i, 'no' ) && 'woocommerce_thankyou'   === $current_filter ) ||
 					( 'yes' === get_option( 'alg_checkout_files_upload_add_to_myaccount_' . $i, 'no' ) && 'woocommerce_view_order' === $current_filter )
 				) {
-					$files     = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
-					$file_name = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
+					$files     = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
+					$file_name = ( $order ? $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
 					if ( is_array( $files ) ) {
 						$html .= $this->get_the_form( $i, $files, $order_id );
 					} elseif ( $file_name ) {
