@@ -1027,10 +1027,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
-					return;
-				}
-				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+				$has_valid_key   = isset( $_GET['key'] ) && $order->key_is_valid( $_GET['key'] );
+				$current_user_id = get_current_user_id();
+				$is_owner        = $current_user_id !== 0 && $order->get_customer_id() == $current_user_id;
+				if ( ! current_user_can( 'edit_shop_orders' ) && ! $is_owner && ! $has_valid_key ) {
 					return;
 				}
 				$order_file_name = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
@@ -1087,10 +1087,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
-					return;
-				}
-				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+				$has_valid_key   = isset( $_GET['key'] ) && $order->key_is_valid( $_GET['key'] );
+				$current_user_id = get_current_user_id();
+				$is_owner        = $current_user_id !== 0 && $order->get_customer_id() == $current_user_id;
+				if ( ! current_user_can( 'edit_shop_orders' ) && ! $is_owner && ! $has_valid_key ) {
 					return;
 				}
 				$order_files     = ( $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, true );
@@ -1147,10 +1147,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
-					return;
-				}
-				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+				$has_valid_key   = isset( $_GET['key'] ) && $order->key_is_valid( $_GET['key'] );
+				$current_user_id = get_current_user_id();
+				$is_owner        = $current_user_id !== 0 && $order->get_customer_id() == $current_user_id;
+				if ( ! current_user_can( 'edit_shop_orders' ) && ! $is_owner && ! $has_valid_key ) {
 					return;
 				}
 				$order_file_name = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
@@ -1194,10 +1194,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
 				}
-				if ( isset( $_GET['key'] ) && ! $order->key_is_valid( $_GET['key'] ) ) {
-					return;
-				}
-				if ( ! current_user_can( 'edit_shop_orders' ) && $order->get_customer_id() != get_current_user_id() ) {
+				$has_valid_key   = isset( $_GET['key'] ) && $order->key_is_valid( $_GET['key'] );
+				$current_user_id = get_current_user_id();
+				$is_owner        = $current_user_id !== 0 && $order->get_customer_id() == $current_user_id;
+				if ( ! current_user_can( 'edit_shop_orders' ) && ! $is_owner && ! $has_valid_key ) {
 					return;
 				}
 				$order_files = ( $order->get_meta( '_alg_checkout_files_upload_' . $file_uploader ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, true );
