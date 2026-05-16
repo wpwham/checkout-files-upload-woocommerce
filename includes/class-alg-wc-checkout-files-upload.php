@@ -1035,10 +1035,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				}
 				$order_file_name = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 				$tmp_file_name   = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
-				$file_name       = get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
+				$file_name       = ( $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
 			} else {
 				$tmp_file_name   = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'];
-				$file_name       = ( $order->get_meta( '_alg_checkout_files_upload_real_name_' . $i ) ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $i, true );
+				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['name'];
 			}
 			
 			$mime_type = false;
