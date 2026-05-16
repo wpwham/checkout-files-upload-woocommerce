@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.5
+ * @version 2.2.6
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -125,7 +125,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * maybe_send_admin_notification.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.6
 	 * @since   1.4.4
 	 * @todo    [feature] add "Email type" option (i.e. Plain text / HTML / Multipart)
 	 * @todo    [feature] (maybe) add `{admin_email}` replaced value in `$address` (in case of comma separated input)
@@ -210,7 +210,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_delete.
 	 *
-	 * @version 2.1.4
+	 * @version 2.2.6
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_delete() {
@@ -531,7 +531,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.6
 	 * @since   1.0.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
@@ -568,7 +568,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order_display.
 	 *
-	 * @version 2.1.3
+	 * @version 2.2.6
 	 * @since   1.0.0
 	 */
 	function add_files_to_order_display( $order ) {
@@ -798,7 +798,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.2.0
+	 * @version 2.2.6
 	 * @since   1.0.0
 	 */
 	public function create_file_admin_order_meta_box() {
@@ -886,7 +886,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order.
 	 *
-	 * @version 2.2.0
+	 * @version 2.2.6
 	 * @since   1.0.0
 	 */
 	function add_files_to_order( $order_id, $order ) {
@@ -943,7 +943,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * Unlike add_files_to_order(), adds only a single file at a time.
 	 * Needed for uploads from My Account / Thank You pages.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.6
 	 * @since   2.0.0
 	 */
 	function add_file_to_order( $file_uploader, $file, $order_id ) {
@@ -995,7 +995,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.2.5
+	 * @version 2.2.6
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {
@@ -1343,7 +1343,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * maybe_get_image.
 	 *
-	 * @version 2.2.5
+	 * @version 2.2.6
 	 * @since   1.4.0
 	 * @todo    [dev] use another way to check if it's an image (i.e. not `getimagesize()`)
 	 */
@@ -1521,7 +1521,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_upload_form_to_thankyou_and_myaccount_page.
 	 *
-	 * @version 2.0.0
+	 * @version 2.2.6
 	 * @since   1.0.0
 	 */
 	function add_files_upload_form_to_thankyou_and_myaccount_page( $order_id ) {
