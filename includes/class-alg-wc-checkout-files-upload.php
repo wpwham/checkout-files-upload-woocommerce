@@ -246,7 +246,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( is_array( $files ) ) {
 					if ( isset( $files[ $file_key ]['tmp_name'] ) && $files[ $file_key ]['tmp_name'] ) {
 						$file_path = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files[ $file_key ]['tmp_name'];
-						unlink( $file_path );
+						wp_delete_file( $file_path );
 					}
 					$file_name = $files[ $file_key ]['name'];
 					unset( $files[ $file_key ] );
@@ -258,7 +258,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				} elseif ( $files > '' ) {
 					// backwards compatibility for < v2.0.0
 					$file_path = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files;
-					unlink( $file_path );
+					wp_delete_file( $file_path );
 					$file_name = ( $order ? $order->get_meta( '_alg_checkout_files_upload_real_name_' . $file_uploader ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader, true );
 					delete_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader );
 					delete_post_meta( $order_id, '_' . 'alg_checkout_files_upload_real_name_' . $file_uploader );
@@ -282,7 +282,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					),
 				) );
 			} else {
-				unlink( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'] );
+				wp_delete_file( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'] );
 				echo json_encode( array(
 					'result'  => 1,
 					'message' => (
@@ -912,7 +912,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					$tmp_file_name      = $file['tmp_name'];
 					$file_data          = file_get_contents( $tmp_file_name );
 					file_put_contents( $file_path, $file_data );
-					unlink( $tmp_file_name );
+					wp_delete_file( $tmp_file_name );
 					$_SESSION[ 'alg_checkout_files_upload_' . $i ][ $file_key ]['tmp_name'] = $download_file_name;
 				}
 				if ( $legacy_wc ) {
@@ -973,7 +973,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$tmp_file_name      = $file['tmp_name'];
 		$file_data          = file_get_contents( $tmp_file_name );
 		file_put_contents( $file_path, $file_data );
-		unlink( $tmp_file_name );
+		wp_delete_file( $tmp_file_name );
 		$files[ $file_key ]['tmp_name'] = $download_file_name;
 		
 		update_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_uploader, $files );
@@ -1167,7 +1167,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$tmp_file_name = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'];
 			}
 			
-			if ( unlink( $tmp_file_name ) ) {
+			if ( wp_delete_file( $tmp_file_name ) || ! file_exists( $tmp_file_name ) ) {
 				if ( $order_id ) {
 					delete_post_meta( $order_id, '_alg_checkout_files_upload_' . $i );
 					delete_post_meta( $order_id, '_alg_checkout_files_upload_real_name_' . $i );
@@ -1215,7 +1215,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$tmp_file_name = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'];
 			}
 			
-			if ( unlink( $tmp_file_name ) ) {
+			if ( wp_delete_file( $tmp_file_name ) || ! file_exists( $tmp_file_name ) ) {
 				if ( $order_files ) {
 					unset( $order_files[ $file_key ] );
 					update_post_meta( $order_id, '_alg_checkout_files_upload_' . $file_uploader, $order_files );
