@@ -145,6 +145,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		// check if its a page where we need this
 		if (
 			$pagenow === 'post.php'
+			|| ( $pagenow === 'admin.php' && isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'wc-orders' )
 			|| ( $pagenow === 'admin.php' && isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === 'alg_wc_checkout_files_upload' )
 		) {
 			wp_enqueue_script(
