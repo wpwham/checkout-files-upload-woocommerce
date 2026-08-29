@@ -807,7 +807,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$html = '';
 		$total_files = ( $order ? $order->get_meta( '_alg_checkout_files_total_files' ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
 		$files_exists = false;
-		$allow_delete = apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true );
+		$allow_delete = apply_filters(
+			'wpwham_checkout_files_upload_allow_admin_delete_files', 
+			get_option( 'wpwham_checkout_files_upload_allow_admin_delete', 'yes' ) === 'yes'
+		);
 		for ( $i = 1; $i <= $total_files; $i++ ) {
 			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
@@ -1139,7 +1142,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			isset( $_GET['alg_download_checkout_file'] )
 			&& isset( $_GET['_wpnonce'] )
 			&& wp_verify_nonce( $_GET['_wpnonce'], 'wpwham_cfu_checkout_file_delete' ) !== false
-			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true )
+			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', get_option( 'wpwham_checkout_files_upload_allow_admin_delete', 'yes' ) === 'yes' )
 		) {
 			$i = sanitize_text_field( $_GET['alg_download_checkout_file'] );
 			if ( ! empty( $_GET['alg_download_checkout_file_order_id'] ) ) {
@@ -1185,7 +1188,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			isset( $_GET['wpw_cfu_download_file_key'] ) &&
 			isset( $_GET['_wpnonce'] ) &&
 			wp_verify_nonce( $_GET['_wpnonce'], 'wpwham_cfu_checkout_file_delete' ) !== false
-			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true )
+			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', get_option( 'wpwham_checkout_files_upload_allow_admin_delete', 'yes' ) === 'yes' )
 		) {
 			$file_uploader = sanitize_text_field( $_GET['wpw_cfu_download_file_uploader'] );
 			$file_key      = sanitize_text_field( $_GET['wpw_cfu_download_file_key'] );
