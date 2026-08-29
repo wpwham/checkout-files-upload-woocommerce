@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.6
+ * @version 2.3.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -210,7 +210,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_delete.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_delete() {
@@ -805,7 +805,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 */
 	public function create_file_admin_order_meta_box() {
@@ -1005,7 +1005,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {

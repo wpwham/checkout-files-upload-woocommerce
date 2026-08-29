@@ -2,8 +2,8 @@
 Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
-Tested up to: 7.0
-Stable tag: 2.2.6
+Tested up to: 7.1
+Stable tag: 2.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,12 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.3.0 - 2024-08-28 =
+* NEW: add setting "Allow delete" (allows users with access to WooCommerce/Orders to delete files from orders -- previously this was always true).
+* FIX: prevent upload progress bars from having duplicate IDs (minor UI glitch).
+* FIX: potential bug when deleting pending checkout uploads (thanks to Tobias -- #110420).
+* UPDATE: updated .pot file for translations.
 
 = 2.2.6 - 2026-05-15 =
 * FIX: recent Woocommerce changes breaking HPOS compatibility mode.
