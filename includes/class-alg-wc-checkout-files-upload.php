@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.2.6
+ * @version 2.3.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -210,7 +210,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * alg_ajax_file_delete.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 * @since   1.3.0
 	 */
 	function alg_ajax_file_delete() {
@@ -282,7 +282,16 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					),
 				) );
 			} else {
+				if ( ! isset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] ) ) {
+					echo json_encode( array(
+						'result'  => 0,
+						'message' => __( 'File not found. Please refresh the page and try again.', 'checkout-files-upload-woocommerce' )
+					) );
+					die();
+				}
+				$file_name = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'];
 				unlink( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'] );
+				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
 				echo json_encode( array(
 					'result'  => 1,
 					'message' => (
@@ -291,12 +300,12 @@ class Alg_WC_Checkout_Files_Upload_Main {
 								( get_option( 'alg_checkout_files_upload_notice_success_remove_' . $file_uploader ) > '' ?
 									get_option( 'alg_checkout_files_upload_notice_success_remove_' . $file_uploader )
 									: __( 'File "%s" was successfully removed.', 'checkout-files-upload-woocommerce' ) ),
-								$_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'] )
+								$file_name )
 							: '' 
 					),
 				) );
-				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
 			}
+			session_write_close();
 			die();
 		} else {
 			// Error
@@ -306,8 +315,6 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			) );
 			die();
 		}
-		
-		session_write_close();
 	}
 
 	/**
@@ -798,7 +805,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 */
 	public function create_file_admin_order_meta_box() {
@@ -807,7 +814,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$html = '';
 		$total_files = ( $order ? $order->get_meta( '_alg_checkout_files_total_files' ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_total_files', true );
 		$files_exists = false;
-		$allow_delete = apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true );
+		$allow_delete = apply_filters(
+			'wpwham_checkout_files_upload_allow_admin_delete_files', 
+			get_option( 'wpwham_checkout_files_upload_allow_admin_delete', 'yes' ) === 'yes'
+		);
 		for ( $i = 1; $i <= $total_files; $i++ ) {
 			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $i ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $i, true );
 			if ( is_array( $files ) ) {
@@ -822,7 +832,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 						( $allow_delete ?
 							'<a href="' . esc_url( $this->get_file_delete_link( $i, $file_key, $order_id ) ) . '" ' .
 							'class="button wpwham-checkout-files-upload-file-delete-button"' .
-							'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
+							'style="padding: 0 5px; line-height: 30px; text-decoration: none; color: #b32d2e; border-color: #b32d2e;">' .
 							'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 							'</a>&nbsp;'
 							: ''
@@ -855,7 +865,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 						'<td style="width:105px;">' .
 						'<a href="' . esc_url( $this->get_file_delete_link( $i, null, $order_id ) ) . '" ' .
 						'class="button wpwham-checkout-files-upload-file-delete-button"' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
+						'style="padding: 0 5px; line-height: 30px; text-decoration: none; color: #b32d2e; border-color: #b32d2e;">' .
 						'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '" ' .
@@ -995,7 +1005,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {
@@ -1139,7 +1149,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			isset( $_GET['alg_download_checkout_file'] )
 			&& isset( $_GET['_wpnonce'] )
 			&& wp_verify_nonce( $_GET['_wpnonce'], 'wpwham_cfu_checkout_file_delete' ) !== false
-			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true )
+			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', get_option( 'wpwham_checkout_files_upload_allow_admin_delete', 'yes' ) === 'yes' )
 		) {
 			$i = sanitize_text_field( $_GET['alg_download_checkout_file'] );
 			if ( ! empty( $_GET['alg_download_checkout_file_order_id'] ) ) {
@@ -1185,7 +1195,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			isset( $_GET['wpw_cfu_download_file_key'] ) &&
 			isset( $_GET['_wpnonce'] ) &&
 			wp_verify_nonce( $_GET['_wpnonce'], 'wpwham_cfu_checkout_file_delete' ) !== false
-			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', true )
+			&& apply_filters( 'wpwham_checkout_files_upload_allow_admin_delete_files', get_option( 'wpwham_checkout_files_upload_allow_admin_delete', 'yes' ) === 'yes' )
 		) {
 			$file_uploader = sanitize_text_field( $_GET['wpw_cfu_download_file_uploader'] );
 			$file_key      = sanitize_text_field( $_GET['wpw_cfu_download_file_key'] );

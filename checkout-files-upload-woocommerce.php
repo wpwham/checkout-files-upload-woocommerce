@@ -3,7 +3,7 @@
 Plugin Name: Checkout Files Upload for WooCommerce
 Plugin URI: https://wpwham.com/products/checkout-files-upload-for-woocommerce/
 Description: Let your customers upload files on (or after) WooCommerce checkout.
-Version: 2.2.6
+Version: 2.3.0
 Author: WP Wham
 Author URI: https://wpwham.com/
 Text Domain: checkout-files-upload-woocommerce
@@ -37,7 +37,7 @@ if ( 'checkout-files-upload-woocommerce.php' === basename( __FILE__ ) ) {
 }
 
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION' ) ) {
-	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.2.6' );
+	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_VERSION', '2.3.0' );
 }
 if ( ! defined( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION' ) ) {
 	define( 'WPWHAM_CHECKOUT_FILES_UPLOAD_DBVERSION', '2' );
@@ -66,7 +66,7 @@ if ( ! class_exists( 'Alg_WC_Checkout_Files_Upload' ) ) :
  * Main Alg_WC_Checkout_Files_Upload Class
  *
  * @class   Alg_WC_Checkout_Files_Upload
- * @version 2.2.6
+ * @version 2.3.0
  * @since   1.0.0
  */
 final class Alg_WC_Checkout_Files_Upload {
@@ -80,7 +80,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.2.6';
+	public $version = '2.3.0';
 
 	/**
 	 * @var   Alg_WC_Checkout_Files_Upload The single instance of the class
@@ -137,6 +137,7 @@ final class Alg_WC_Checkout_Files_Upload {
 	
 	
 	/**
+	 * @version 2.3.0
 	 * @since   2.1.0
 	 */
 	public function enqueue_scripts() {
@@ -145,6 +146,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		// check if its a page where we need this
 		if (
 			$pagenow === 'post.php'
+			|| ( $pagenow === 'admin.php' && isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'wc-orders' )
 			|| ( $pagenow === 'admin.php' && isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === 'alg_wc_checkout_files_upload' )
 		) {
 			wp_enqueue_script(

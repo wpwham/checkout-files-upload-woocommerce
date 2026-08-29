@@ -1,7 +1,7 @@
 /**
  * alg-wc-checkout-files-upload-ajax.js
  *
- * @version 2.1.4
+ * @version 2.3.0
  * @since   1.3.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -13,6 +13,7 @@
 	"use strict";
 	
 	var $container;
+	var counter = 0;
 	
 	var queue = [];
 	var activeQueue = [];
@@ -80,7 +81,7 @@
 		formData.append( 'nonce', $( '#wpwham-checkout-files-upload-nonce-' + fileUploader ).val() );
 		
 		if ( alg_wc_checkout_files_upload.progress_bar_enabled ) {
-			var progressBarId = 'wpw_cfu_' + Date.now();
+			var progressBarId = 'wpw_cfu_progress_' + counter++;
 			// grab template div, copy, and populate with stuff needed for this file upload
 			var $progressBarTemplate = $( '#alg-wc-checkout-files-upload-progress-wrapper-' + fileUploader );
 			var $progressBar = $progressBarTemplate.clone();
@@ -130,6 +131,7 @@
 					if ( alg_wc_checkout_files_upload.progress_bar_enabled ) {
 						$result.data( 'progress-bar-id', progressBarId );
 						$( '#' + progressBarId ).before( $result.show() );
+						window.setTimeout( function(){ $( '#' + progressBarId ).fadeOut(); }, 1000 );
 					} else {
 						$( '.alg_checkout_files_upload_result_' + fileUploader ).last()
 							.after( $result.show() );

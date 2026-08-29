@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - General Section Settings
  *
- * @version 2.1.5
+ * @version 2.3.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -32,7 +32,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.1.1
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 */
 	public static function get_settings() {
@@ -106,6 +106,13 @@ class Alg_WC_Checkout_Files_Upload_Settings_General extends Alg_WC_Checkout_File
 				'type'     => 'textarea',
 				'css'      => 'width:100%',
 				'alg_wc_cfu_raw' => true,
+			),
+			array(
+				'title'    => __( 'Allow delete', 'checkout-files-upload-woocommerce' ),
+				'desc'     => __( 'Allow users with access to WooCommerce/Orders to delete files from orders', 'checkout-files-upload-woocommerce' ),
+				'id'       => 'wpwham_checkout_files_upload_allow_admin_delete',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',
