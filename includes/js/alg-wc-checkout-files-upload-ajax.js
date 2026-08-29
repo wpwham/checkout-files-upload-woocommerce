@@ -13,6 +13,7 @@
 	"use strict";
 	
 	var $container;
+	var counter = 0;
 	
 	var queue = [];
 	var activeQueue = [];
@@ -80,7 +81,7 @@
 		formData.append( 'nonce', $( '#wpwham-checkout-files-upload-nonce-' + fileUploader ).val() );
 		
 		if ( alg_wc_checkout_files_upload.progress_bar_enabled ) {
-			var progressBarId = 'wpw_cfu_' + Date.now();
+			var progressBarId = 'wpw_cfu_progress_' + counter++;
 			// grab template div, copy, and populate with stuff needed for this file upload
 			var $progressBarTemplate = $( '#alg-wc-checkout-files-upload-progress-wrapper-' + fileUploader );
 			var $progressBar = $progressBarTemplate.clone();
