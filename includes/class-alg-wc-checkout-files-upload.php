@@ -822,8 +822,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 						( $allow_delete ?
 							'<a href="' . esc_url( $this->get_file_delete_link( $i, $file_key, $order_id ) ) . '" ' .
 							'class="button wpwham-checkout-files-upload-file-delete-button"' .
-							'style="padding: 0 5px; line-height: 30px; text-decoration: none;"' .
-							'onclick="return confirm(\'' . __( 'Are you sure? The file will be permanently deleted.', 'checkout-files-upload-woocommerce' ) . '\');">' .
+							'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
 							'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 							'</a>&nbsp;'
 							: ''
@@ -856,8 +855,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 						'<td style="width:105px;">' .
 						'<a href="' . esc_url( $this->get_file_delete_link( $i, null, $order_id ) ) . '" ' .
 						'class="button wpwham-checkout-files-upload-file-delete-button"' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none;"' .
-						'onclick="return confirm(\'' . __( 'Are you sure? The file will be permanently deleted.', 'checkout-files-upload-woocommerce' ) . '\');">' .
+						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
 						'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '" ' .
