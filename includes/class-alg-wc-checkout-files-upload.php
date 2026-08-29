@@ -282,7 +282,16 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					),
 				) );
 			} else {
+				if ( ! isset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] ) ) {
+					echo json_encode( array(
+						'result'  => 0,
+						'message' => __( 'File not found. Please refresh the page and try again.', 'checkout-files-upload-woocommerce' )
+					) );
+					die();
+				}
+				$file_name = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'];
 				unlink( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'] );
+				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
 				echo json_encode( array(
 					'result'  => 1,
 					'message' => (
@@ -291,12 +300,12 @@ class Alg_WC_Checkout_Files_Upload_Main {
 								( get_option( 'alg_checkout_files_upload_notice_success_remove_' . $file_uploader ) > '' ?
 									get_option( 'alg_checkout_files_upload_notice_success_remove_' . $file_uploader )
 									: __( 'File "%s" was successfully removed.', 'checkout-files-upload-woocommerce' ) ),
-								$_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'] )
+								$file_name )
 							: '' 
 					),
 				) );
-				unset( $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ] );
 			}
+			session_write_close();
 			die();
 		} else {
 			// Error
@@ -306,8 +315,6 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			) );
 			die();
 		}
-		
-		session_write_close();
 	}
 
 	/**
