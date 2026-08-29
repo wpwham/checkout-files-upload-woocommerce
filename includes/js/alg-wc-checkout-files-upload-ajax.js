@@ -131,6 +131,7 @@
 					if ( alg_wc_checkout_files_upload.progress_bar_enabled ) {
 						$result.data( 'progress-bar-id', progressBarId );
 						$( '#' + progressBarId ).before( $result.show() );
+						window.setTimeout( function(){ $( '#' + progressBarId ).fadeOut(); }, 1000 );
 					} else {
 						$( '.alg_checkout_files_upload_result_' + fileUploader ).last()
 							.after( $result.show() );
