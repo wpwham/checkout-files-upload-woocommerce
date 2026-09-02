@@ -515,8 +515,8 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @since   1.3.0
 	 */
 	function enqueue_scripts() {
-		wp_enqueue_script( 'alg-wc-checkout-files-upload-ajax', alg_wc_checkout_files_upload()->plugin_url() . '/includes/js/alg-wc-checkout-files-upload-ajax.js',
-			array( 'jquery' ), alg_wc_checkout_files_upload()->version, false );
+		wp_register_script( 'alg-wc-checkout-files-upload-ajax', alg_wc_checkout_files_upload()->plugin_url() . '/includes/js/alg-wc-checkout-files-upload-ajax.js',
+			array( 'jquery' ), alg_wc_checkout_files_upload()->version, true );
 		$max_file_size_mb = (float) get_option( 'alg_checkout_files_upload_max_file_size_mb', 0 );
 		wp_localize_script( 'alg-wc-checkout-files-upload-ajax', 'ajax_object', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -530,7 +530,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			'progress_bar_enabled'           => ( get_option( 'alg_checkout_files_upload_use_ajax_progress_bar', 'no' ) === 'yes' ),
 		) );
 		if ( get_option( 'alg_checkout_files_upload_use_ajax_progress_bar', 'no' ) === 'yes' ) {
-			wp_enqueue_style( 'alg-wc-checkout-files-upload-ajax', alg_wc_checkout_files_upload()->plugin_url() . '/includes/css/alg-wc-checkout-files-upload-ajax.css',
+			wp_register_style( 'alg-wc-checkout-files-upload-ajax', alg_wc_checkout_files_upload()->plugin_url() . '/includes/css/alg-wc-checkout-files-upload-ajax.css',
 				array(), alg_wc_checkout_files_upload()->version, 'all' );
 		}
 	}
@@ -1410,7 +1410,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @todo    [feature] more options for "delete" button styling (i.e. `&times;`)
 	 */
 	public function get_the_form( $file_uploader, $files, $order_id = 0 ) {
-		
+		wp_enqueue_script( 'alg-wc-checkout-files-upload-ajax' );
+		if ( get_option( 'alg_checkout_files_upload_use_ajax_progress_bar', 'no' ) === 'yes' ) {
+			wp_enqueue_style( 'alg-wc-checkout-files-upload-ajax' );
+		}
+
 		$html = '';
 		$html .= '<div id="alg_checkout_files_upload_form_' . $file_uploader . '">';
 		$html .= get_option( 'alg_checkout_files_upload_form_template_before', '<table>' );
