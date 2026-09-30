@@ -1055,7 +1055,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			if ( function_exists( 'finfo_open' ) ) {
 				$finfo = finfo_open( FILEINFO_MIME_TYPE );
 				$mime_type = finfo_file( $finfo, $tmp_file_name );
-				finfo_close( $finfo );
+				if ( PHP_VERSION_ID < 80100 ) { // finfo_close() has no effect as of PHP 8.1.
+					finfo_close( $finfo );
+				}
 			} elseif ( function_exists( 'mime_content_type' ) ) {
 				$mime_type = mime_content_type( $tmp_file_name );
 			}
@@ -1116,7 +1118,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			if ( function_exists( 'finfo_open' ) ) {
 				$finfo = finfo_open( FILEINFO_MIME_TYPE );
 				$mime_type = finfo_file( $finfo, $tmp_file_name );
-				finfo_close( $finfo );
+				if ( PHP_VERSION_ID < 80100 ) { // finfo_close() has no effect as of PHP 8.1.
+					finfo_close( $finfo );
+				}
 			} elseif ( function_exists( 'mime_content_type' ) ) {
 				$mime_type = mime_content_type( $tmp_file_name );
 			}
