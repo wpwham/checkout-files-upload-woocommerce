@@ -620,27 +620,25 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	public function validate_file_type( $file_uploader, $file ) {
 		$result = true;
 		$files_accepted = get_option( 'alg_checkout_files_upload_file_accept_' . $file_uploader, '.jpg,.jpeg,.png' );
+		$file_ext = strtolower( '.' . pathinfo( $file['name'], PATHINFO_EXTENSION ) );
 		if ( $files_accepted > '' ) {
+			// "File types to accept" setting has been explicitly defined. Test if this file matches:
 			$files_accepted = array_map( 'trim', explode( ',', strtolower( $files_accepted ) ) );
 			if ( is_array( $files_accepted ) && ! empty( $files_accepted ) ) {
-				$checked_file = wp_check_filetype_and_ext(
-					$file['tmp_name'],
-					$file['name']
-				);
-				$file_ext = strtolower( '.' . $checked_file['ext'] );
-				if ( empty( $checked_file['ext'] ) || ! in_array( $file_ext, $files_accepted ) ) {
+				if ( ! in_array( $file_ext, $files_accepted ) ) {
 					$result = array(
 						'code'    => 'fail_file_type',
 						'message' => sprintf(
 							( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
 								get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
 								: __( 'Wrong file type: "%s"', 'checkout-files-upload-woocommerce' ) ),
-							$file['name']
+							$file_ext
 						),
 					);
 				}
 			}
 		} else {
+			// "File types to accept" setting is blank.  Test if this file matches one of WordPress' approved types:
 			$checked_file = wp_check_filetype_and_ext(
 				$file['tmp_name'],
 				$file['name']
@@ -652,7 +650,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 						( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
 							get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
 							: __( 'Wrong file type: "%s"', 'checkout-files-upload-woocommerce' ) ),
-						$file['name']
+						$file_ext
 					),
 				);
 			}
