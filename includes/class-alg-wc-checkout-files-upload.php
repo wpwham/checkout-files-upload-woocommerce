@@ -640,6 +640,22 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					);
 				}
 			}
+		} else {
+			$checked_file = wp_check_filetype_and_ext(
+				$file['tmp_name'],
+				$file['name']
+			);
+			if ( empty( $checked_file['ext'] ) ) {
+				$result = array(
+					'code'    => 'fail_file_type',
+					'message' => sprintf(
+						( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
+							get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
+							: __( 'Wrong file type: "%s"', 'checkout-files-upload-woocommerce' ) ),
+						$file['name']
+					),
+				);
+			}
 		}
 		return apply_filters( 'wpwham_checkout_files_upload_validate_file_type', $result, $file_uploader, $file );
 	}
