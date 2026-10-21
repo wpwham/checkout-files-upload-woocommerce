@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 7.1
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,7 +76,10 @@ Optionally **validate image dimensions**.
 
 == Changelog ==
 
-= 2.3.0 - 2024-08-28 =
+= 2.4.0 - 2026-10-20 =
+* NEW: **Breaking Change** Leaving blank the "accepted file types" setting no longer means all files are allowed.  Only certain file types allowed by WordPress are accepted.  If you want to allow other file types (for example: .svg, .psd, .ttf, etc) you MUST specifically enter them in this setting, along with all other types you wish to accept.
+
+= 2.3.0 - 2026-08-28 =
 * NEW: add setting "Allow delete" (allows users with access to WooCommerce/Orders to delete files from orders -- previously this was always true).
 * FIX: prevent upload progress bars from having duplicate IDs (minor UI glitch).
 * FIX: potential bug when deleting pending checkout uploads (thanks to Tobias -- #110420).
@@ -237,6 +240,9 @@ Optionally **validate image dimensions**.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 2.4.0 =
+There is a breaking change in the "accepted file types" setting.  Leaving this setting blank no longer means all files are allowed.  Now only the default file types allowed by WordPress are accepted.  If you want to allow other file types (for example: .svg, .psd, .ttf, etc) you MUST explicitly enter them in this setting, along with all other types you wish to accept.
 
 = 2.0.0 =
 This is a major update.  There are some possibly breaking changes in the template settings.  If you use the default template you have nothing to worry about, however if you customized your template please read the changelog carefully and double check your settings to make sure everything is correct.
