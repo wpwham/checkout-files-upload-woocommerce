@@ -119,7 +119,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 			),
 			array(
 				'title'    => __( 'Accepted file types', 'checkout-files-upload-woocommerce' ),
-				'desc_tip' => __( 'Accepted file types. E.g.: ".jpg,.jpeg,.png". Leave blank to accept all files', 'checkout-files-upload-woocommerce' ),
+				'desc_tip' => __( 'Accepted file types. E.g.: ".jpg,.jpeg,.png". Leave blank to allow all the file types WordPress allows.', 'checkout-files-upload-woocommerce' ),
 				'id'       => 'alg_checkout_files_upload_file_accept_' . $i,
 				'default'  => '.jpg,.jpeg,.png',
 				'type'     => 'text',
