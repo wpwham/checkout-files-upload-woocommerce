@@ -622,17 +622,22 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$files_accepted = get_option( 'alg_checkout_files_upload_file_accept_' . $file_uploader, '.jpg,.jpeg,.png' );
 		$file_ext = strtolower( '.' . pathinfo( $file['name'], PATHINFO_EXTENSION ) );
 		if ( $files_accepted > '' ) {
-			// "File types to accept" setting has been explicitly defined. Test if this file matches:
+			// "File types to accept" setting has been explicitly defined. Test if this file matches the allowed types.
 			$files_accepted = array_map( 'trim', explode( ',', strtolower( $files_accepted ) ) );
 			if ( is_array( $files_accepted ) && ! empty( $files_accepted ) ) {
-				if ( ! in_array( $file_ext, $files_accepted ) ) {
+				$checked_file = $this->check_filetype_and_ext(
+					$file['tmp_name'],
+					$file['name']
+				);
+				$file_ext = strtolower( '.' . $checked_file['ext'] );
+				if ( empty( $checked_file['ext'] ) || ! in_array( $file_ext, $files_accepted ) ) {
 					$result = array(
 						'code'    => 'fail_file_type',
 						'message' => sprintf(
 							( get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader ) > '' ?
 								get_option( 'alg_checkout_files_upload_notice_wrong_file_type_' . $file_uploader )
 								: __( 'Wrong file type: "%s"', 'checkout-files-upload-woocommerce' ) ),
-							$file_ext
+							$file['name']
 						),
 					);
 				}
@@ -656,6 +661,257 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			}
 		}
 		return apply_filters( 'wpwham_checkout_files_upload_validate_file_type', $result, $file_uploader, $file );
+	}
+
+	/**
+	 * check_filetype_and_ext (wp_check_filetype_and_ext() but also checks for $extra_mimes)
+	 *
+	 * @version x.x.x
+	 * @since   x.x.x
+	 */
+	function check_filetype_and_ext( $file, $filename, $mimes = null ) {
+		$proper_filename = false;
+
+		// extra mimes that wp_check_filetype_and_ext() doesn't cover
+		$extra_mimes = array(
+			'psd'  => 'image/vnd.adobe.photoshop',
+			'ai'   => 'application/pdf',
+			'eps'  => 'application/postscript',
+			'indd' => 'application/x-indesign',
+		);
+		if ( empty( $mimes ) ) {
+			$mimes = get_allowed_mime_types();
+		}
+		$mimes = array_merge( $mimes, $extra_mimes );
+
+		// Do basic extension validation and MIME mapping.
+		$wp_filetype = wp_check_filetype( $filename, $mimes );
+		$ext         = $wp_filetype['ext'];
+		$type        = $wp_filetype['type'];
+
+		// We can't do any further validation without a file to work with.
+		if ( ! file_exists( $file ) ) {
+			return compact( 'ext', 'type', 'proper_filename' );
+		}
+
+		$real_mime = false;
+
+		// Validate image types.
+		if ( $type && str_starts_with( $type, 'image/' ) ) {
+
+			// Attempt to figure out what type of image it actually is.
+			$real_mime = wp_get_image_mime( $file );
+
+			$heic_images_extensions = array(
+				'heif',
+				'heics',
+				'heifs',
+			);
+
+			if ( $real_mime && ( $real_mime !== $type || in_array( $ext, $heic_images_extensions, true ) ) ) {
+				/**
+				 * Filters the list mapping image mime types to their respective extensions.
+				 *
+				 * @since 3.0.0
+				 *
+				 * @param array $mime_to_ext Array of image mime types and their matching extensions.
+				 */
+				$mime_to_ext = apply_filters(
+					'getimagesize_mimes_to_exts',
+					array(
+						'image/jpeg'          => 'jpg',
+						'image/png'           => 'png',
+						'image/gif'           => 'gif',
+						'image/bmp'           => 'bmp',
+						'image/tiff'          => 'tif',
+						'image/webp'          => 'webp',
+						'image/avif'          => 'avif',
+
+						/*
+						 * In theory there are/should be file extensions that correspond to the
+						 * mime types: .heif, .heics and .heifs. However it seems that HEIC images
+						 * with any of the mime types commonly have a .heic file extension.
+						 * Seems keeping the status quo here is best for compatibility.
+						 */
+						'image/heic'          => 'heic',
+						'image/heif'          => 'heic',
+						'image/heic-sequence' => 'heic',
+						'image/heif-sequence' => 'heic',
+					)
+				);
+
+				// Replace whatever is after the last period in the filename with the correct extension.
+				if ( ! empty( $mime_to_ext[ $real_mime ] ) ) {
+					$filename_parts = explode( '.', $filename );
+
+					array_pop( $filename_parts );
+					$filename_parts[] = $mime_to_ext[ $real_mime ];
+					$new_filename     = implode( '.', $filename_parts );
+
+					if ( $new_filename !== $filename ) {
+						$proper_filename = $new_filename; // Mark that it changed.
+					}
+
+					// Redefine the extension / MIME.
+					$wp_filetype = wp_check_filetype( $new_filename, $mimes );
+					$ext         = $wp_filetype['ext'];
+					$type        = $wp_filetype['type'];
+				} else {
+					// Reset $real_mime and try validating again.
+					$real_mime = false;
+				}
+			}
+		}
+
+		// Validate files that didn't get validated during previous checks.
+		if ( $type && ! $real_mime && extension_loaded( 'fileinfo' ) ) {
+			$finfo     = finfo_open( FILEINFO_MIME_TYPE );
+			$real_mime = finfo_file( $finfo, $file );
+
+			if ( PHP_VERSION_ID < 80100 ) { // finfo_close() has no effect as of PHP 8.1.
+				finfo_close( $finfo );
+			}
+
+			$google_docs_types = array(
+				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			);
+
+			foreach ( $google_docs_types as $google_docs_type ) {
+				/*
+				 * finfo_file() can return duplicate mime type for Google docs,
+				 * this conditional reduces it to a single instance.
+				 *
+				 * @see https://bugs.php.net/bug.php?id=77784
+				 * @see https://core.trac.wordpress.org/ticket/57898
+				 */
+				if ( 2 === substr_count( $real_mime, $google_docs_type ) ) {
+					$real_mime = $google_docs_type;
+				}
+			}
+
+			// fileinfo often misidentifies obscure files as one of these types.
+			$nonspecific_types = array(
+				'application/octet-stream',
+				'application/encrypted',
+				'application/CDFV2-encrypted',
+				'application/zip',
+			);
+
+			/*
+			 * If $real_mime doesn't match the content type we're expecting from the file's extension,
+			 * we need to do some additional vetting. Media types and those listed in $nonspecific_types are
+			 * allowed some leeway, but anything else must exactly match the real content type.
+			 */
+			if ( in_array( $real_mime, $nonspecific_types, true ) ) {
+				// File is a non-specific binary type. That's ok if it's a type that generally tends to be binary.
+				if ( ! in_array( substr( $type, 0, strcspn( $type, '/' ) ), array( 'application', 'video', 'audio' ), true )
+					&& ! in_array( $type, $extra_mimes, true )
+				) {
+					$type = false;
+					$ext  = false;
+				}
+			} elseif ( str_starts_with( $real_mime, 'video/' ) || str_starts_with( $real_mime, 'audio/' ) ) {
+				/*
+				 * For these types, only the major type must match the real value.
+				 * This means that common mismatches are forgiven: application/vnd.apple.numbers is often misidentified as application/zip,
+				 * and some media files are commonly named with the wrong extension (.mov instead of .mp4)
+				 */
+				if ( substr( $real_mime, 0, strcspn( $real_mime, '/' ) ) !== substr( $type, 0, strcspn( $type, '/' ) ) ) {
+					$type = false;
+					$ext  = false;
+				}
+			} elseif ( 'text/plain' === $real_mime ) {
+				// A few common file types are occasionally detected as text/plain; allow those.
+				if ( ! in_array(
+					$type,
+					array(
+						'text/plain',
+						'text/csv',
+						'application/csv',
+						'text/richtext',
+						'text/tsv',
+						'text/vtt',
+					),
+					true
+				)
+				) {
+					$type = false;
+					$ext  = false;
+				}
+			} elseif ( 'application/csv' === $real_mime ) {
+				// Special casing for CSV files.
+				if ( ! in_array(
+					$type,
+					array(
+						'text/csv',
+						'text/plain',
+						'application/csv',
+					),
+					true
+				)
+				) {
+					$type = false;
+					$ext  = false;
+				}
+			} elseif ( 'text/rtf' === $real_mime ) {
+				// Special casing for RTF files.
+				if ( ! in_array(
+					$type,
+					array(
+						'text/rtf',
+						'text/plain',
+						'application/rtf',
+					),
+					true
+				)
+				) {
+					$type = false;
+					$ext  = false;
+				}
+			} else {
+				if ( $type !== $real_mime ) {
+					/*
+					 * Everything else including image/* and application/*:
+					 * If the real content type doesn't match the file extension, assume it's dangerous.
+					 */
+					$type = false;
+					$ext  = false;
+				}
+			}
+		}
+
+		// The mime type must be allowed.
+		if ( $type ) {
+			$allowed = array_merge( get_allowed_mime_types(), $extra_mimes );
+
+			if ( ! in_array( $type, $allowed, true ) ) {
+				$type = false;
+				$ext  = false;
+			}
+		}
+
+		/**
+		 * Filters the "real" file type of the given file.
+		 *
+		 * @since 3.0.0
+		 * @since 5.1.0 The `$real_mime` parameter was added.
+		 *
+		 * @param array         $wp_check_filetype_and_ext {
+		 *     Values for the extension, mime type, and corrected filename.
+		 *
+		 *     @type string|false $ext             File extension, or false if the file doesn't match a mime type.
+		 *     @type string|false $type            File mime type, or false if the file doesn't match a mime type.
+		 *     @type string|false $proper_filename File name with its correct extension, or false if it cannot be determined.
+		 * }
+		 * @param string        $file                      Full path to the file.
+		 * @param string        $filename                  The name of the file (may differ from $file due to
+		 *                                                 $file being in a tmp directory).
+		 * @param string[]|null $mimes                     Array of mime types keyed by their file extension regex, or null if
+		 *                                                 none were provided.
+		 * @param string|false  $real_mime                 The actual mime type or false if the type cannot be determined.
+		 */
+		return apply_filters( 'wp_check_filetype_and_ext', compact( 'ext', 'type', 'proper_filename' ), $file, $filename, $mimes, $real_mime );
 	}
 	
 	/**
