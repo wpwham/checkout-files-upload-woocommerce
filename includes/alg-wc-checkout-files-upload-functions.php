@@ -48,6 +48,20 @@ if ( ! function_exists( 'alg_get_alg_uploads_dir' ) ) {
 }
 
 /**
+ * alg_create_alg_uploads_dir.
+ *
+ * @version x.x.x
+ * @since   x.x.x
+ */
+if ( ! function_exists( 'alg_create_alg_uploads_dir' ) ) {
+	function alg_create_alg_uploads_dir( $upload_dir ) {
+		mkdir( $upload_dir, 0755, true );
+		file_put_contents( $upload_dir . '/' . '.htaccess', "deny from all\n" );
+		file_put_contents( $upload_dir . '/' . 'index.php', '' );
+	}
+}
+
+/**
  * alg_is_user_role.
  *
  * @version 1.2.0

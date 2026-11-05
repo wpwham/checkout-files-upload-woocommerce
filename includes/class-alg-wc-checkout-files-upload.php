@@ -920,7 +920,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		
 		$upload_dir = alg_get_alg_uploads_dir( 'checkout_files_upload' );
 		if ( ! file_exists( $upload_dir ) ) {
-			mkdir( $upload_dir, 0755, true );
+			alg_create_alg_uploads_dir( $upload_dir );
 		}
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
 		$legacy_wc    = version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' );
@@ -974,7 +974,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		
 		$upload_dir = alg_get_alg_uploads_dir( 'checkout_files_upload' );
 		if ( ! file_exists( $upload_dir ) ) {
-			mkdir( $upload_dir, 0755, true );
+			alg_create_alg_uploads_dir( $upload_dir );
 		}
 		$total_number = apply_filters( 'alg_wc_checkout_files_upload_option', 1, 'total_number' );
 		$legacy_wc    = version_compare( get_option( 'woocommerce_version', null ), '3.0.0', '<' );
