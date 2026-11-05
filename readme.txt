@@ -74,6 +74,14 @@ Optionally **validate image dimensions**.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
+== Screenshots ==
+
+1. Checkout Files Upload for WooCommerce - Front End.
+2. Checkout Files Upload for WooCommerce - Settings: General.
+3. Checkout Files Upload for WooCommerce - Settings: Emails.
+4. Checkout Files Upload for WooCommerce - Settings: Template.
+5. Checkout Files Upload for WooCommerce - Settings: File Uploader.
+
 == Changelog ==
 
 = 2.4.1 - 2026-11-05 =
