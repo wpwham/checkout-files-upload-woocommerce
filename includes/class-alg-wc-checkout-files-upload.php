@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.4.0
+ * @version 2.4.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -608,7 +608,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_file_type.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.1
 	 * @since   2.1.0
 	 * @author  WP Wham
 	 *
@@ -911,7 +911,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.1
 	 * @since   1.0.0
 	 */
 	function add_files_to_order( $order_id, $order ) {
@@ -968,7 +968,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * Unlike add_files_to_order(), adds only a single file at a time.
 	 * Needed for uploads from My Account / Thank You pages.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.1
 	 * @since   2.0.0
 	 */
 	function add_file_to_order( $file_uploader, $file, $order_id ) {
@@ -1020,7 +1020,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.1
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {

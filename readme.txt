@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 7.1
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,9 @@ Optionally **validate image dimensions**.
 3. Start by visiting plugin settings at "WooCommerce > Settings > Checkout Files Upload".
 
 == Changelog ==
+
+= 2.4.1 - 2026-11-05 =
+* FIX: improved MIME type detection and handling for uploaded files.
 
 = 2.4.0 - 2026-10-20 =
 * NEW: **Breaking Change** Leaving blank the "accepted file types" setting no longer means all files are allowed.  Only certain file types allowed by WordPress are accepted.  If you want to allow other file types (for example: .svg, .psd, .ttf, etc) you MUST specifically enter them in this setting, along with all other types you wish to accept.
