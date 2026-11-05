@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload - File Section Settings
  *
- * @version 2.4.0
+ * @version 2.4.1
  * @since   1.3.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -34,7 +34,7 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.1
 	 * @since   1.3.0
 	 * @todo    [dev] re-do settings as array, i.e. `alg_checkout_files_upload_enabled[{$i}]` etc.
 	 * @todo    [feature] products, cats and tags as comma separated ID list (e.g. from WPML)
@@ -119,7 +119,8 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 			),
 			array(
 				'title'    => __( 'Accepted file types', 'checkout-files-upload-woocommerce' ),
-				'desc_tip' => __( 'Accepted file types. E.g.: ".jpg,.jpeg,.png". Leave blank to allow all the file types WordPress allows.', 'checkout-files-upload-woocommerce' ),
+				'desc'     => __( 'List of accepted file types, separated by commas. For example: ".jpg,.jpeg,.png". Leave blank to allow all the file types WordPress allows.', 'checkout-files-upload-woocommerce' )
+					. '<br/>' . __( 'Be careful allowing file types which may contain malicious code.', 'checkout-files-upload-woocommerce' ) . '  <a href="https://wpwham.com/documentation/checkout-files-upload-for-woocommerce/?utm_source=settings_file&utm_campaign=free&utm_medium=checkout_files_upload#File_Uploader_X" target="_blank">' . __( 'See the documentation for more info.', 'checkout-files-upload-woocommerce' ) . '</a>',
 				'id'       => 'alg_checkout_files_upload_file_accept_' . $i,
 				'default'  => '.jpg,.jpeg,.png',
 				'type'     => 'text',

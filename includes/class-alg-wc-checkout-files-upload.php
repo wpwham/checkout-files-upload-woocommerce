@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.4.0
+ * @version 2.4.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -608,7 +608,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_file_type.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.1
 	 * @since   2.1.0
 	 * @author  WP Wham
 	 *
@@ -622,7 +622,8 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$files_accepted = get_option( 'alg_checkout_files_upload_file_accept_' . $file_uploader, '.jpg,.jpeg,.png' );
 		$file_ext = strtolower( '.' . pathinfo( $file['name'], PATHINFO_EXTENSION ) );
 		if ( $files_accepted > '' ) {
-			// "File types to accept" setting has been explicitly defined. Test if this file matches:
+			// "File types to accept" setting has been explicitly defined. Test if this file's extension matches.
+			// Note: we're not checking MIME type at this stage.  This will be done later in process_checkout_files_upload()
 			$files_accepted = array_map( 'trim', explode( ',', strtolower( $files_accepted ) ) );
 			if ( is_array( $files_accepted ) && ! empty( $files_accepted ) ) {
 				if ( ! in_array( $file_ext, $files_accepted ) ) {
@@ -910,7 +911,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_order.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.1
 	 * @since   1.0.0
 	 */
 	function add_files_to_order( $order_id, $order ) {
@@ -929,7 +930,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file_key => $file ) {
 					$file_name          = $file['name'];
 					$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
-					$download_file_name = $order_id . '_' . $i . '_' . $file_key . '.' . $ext;
+					$download_file_name = $order_id . '_' . $i . '_' . $file_key . '.' . wp_generate_password( 32, false ) . '.bin';
 					$file_path          = $upload_dir . '/' . $download_file_name;
 					$tmp_file_name      = $file['tmp_name'];
 					$file_data          = file_get_contents( $tmp_file_name );
@@ -967,7 +968,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * Unlike add_files_to_order(), adds only a single file at a time.
 	 * Needed for uploads from My Account / Thank You pages.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.1
 	 * @since   2.0.0
 	 */
 	function add_file_to_order( $file_uploader, $file, $order_id ) {
@@ -990,7 +991,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		
 		$file_name          = $file['name'];
 		$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
-		$download_file_name = $order_id . '_' . $file_uploader . '_' . $file_key . '.' . $ext;
+		$download_file_name = $order_id . '_' . $file_uploader . '_' . $file_key . '.' . wp_generate_password( 32, false ) . '.bin';
 		$file_path          = $upload_dir . '/' . $download_file_name;
 		$tmp_file_name      = $file['tmp_name'];
 		$file_data          = file_get_contents( $tmp_file_name );
@@ -1019,7 +1020,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.1
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {
@@ -1065,14 +1066,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['name'];
 			}
 			
-			$mime_type = false;
-			if ( function_exists( 'finfo_open' ) ) {
-				$finfo = finfo_open( FILEINFO_MIME_TYPE );
-				$mime_type = finfo_file( $finfo, $tmp_file_name );
-				finfo_close( $finfo );
-			} elseif ( function_exists( 'mime_content_type' ) ) {
-				$mime_type = mime_content_type( $tmp_file_name );
-			}
+			$wp_mime_type = wp_check_filetype_and_ext( // only returns mime type for files on WP's approved "list"
+				$tmp_file_name,
+				$file_name
+			);
 			
 			// clean all levels of output buffering
 			// this is needed in case some 3rd-party plugin interferes with the output buffer
@@ -1087,12 +1084,18 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			header( "Cache-Control: private", false );
 			if ( isset( $_GET['force_download'] ) && $_GET['force_download'] === '1' ) {
 				header( 'Content-disposition: attachment; filename="' . $file_name . '"' );
+			} else {
+				header( 'Content-disposition: inline; filename="' . $file_name . '"' );
 			}
-			if ( $mime_type ) {
-				header( "Content-type: $mime_type" );
+			if ( ! empty( $wp_mime_type['type'] ) ) {
+				header( "Content-type: {$wp_mime_type['type']}" );  // file type is on WP's approved "list"
+			} else {
+				header( "Content-type: application/octet-stream" ); // safe fallback to prevent code execution by browser
 			}
 			header( "Content-Transfer-Encoding: binary" );
 			header( "Content-Length: ". filesize( $tmp_file_name ) );
+			header( "Content-Security-Policy: default-src 'none'; script-src 'none'; sandbox" );
+			header( "X-Content-Type-Options: nosniff" );
 			readfile( $tmp_file_name );
 			exit();
 		}
@@ -1126,14 +1129,10 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'];
 			}
 			
-			$mime_type = false;
-			if ( function_exists( 'finfo_open' ) ) {
-				$finfo = finfo_open( FILEINFO_MIME_TYPE );
-				$mime_type = finfo_file( $finfo, $tmp_file_name );
-				finfo_close( $finfo );
-			} elseif ( function_exists( 'mime_content_type' ) ) {
-				$mime_type = mime_content_type( $tmp_file_name );
-			}
+			$wp_mime_type = wp_check_filetype_and_ext( // only returns mime type for files on WP's approved "list"
+				$tmp_file_name,
+				$file_name
+			);
 			
 			// clean all levels of output buffering
 			// this is needed in case some 3rd-party plugin interferes with the output buffer
@@ -1148,12 +1147,18 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			header( "Cache-Control: private", false );
 			if ( isset( $_GET['force_download'] ) && $_GET['force_download'] === '1' ) {
 				header( 'Content-disposition: attachment; filename="' . $file_name . '"' );
+			} else {
+				header( 'Content-disposition: inline; filename="' . $file_name . '"' );
 			}
-			if ( $mime_type ) {
-				header( "Content-type: $mime_type" );
+			if ( ! empty( $wp_mime_type['type'] ) ) {
+				header( "Content-type: {$wp_mime_type['type']}" );  // file type is on WP's approved "list"
+			} else {
+				header( "Content-type: application/octet-stream" ); // safe fallback to prevent code execution by browser
 			}
 			header( "Content-Transfer-Encoding: binary" );
 			header( "Content-Length: ". filesize( $tmp_file_name ) );
+			header( "Content-Security-Policy: default-src 'none'; script-src 'none'; sandbox" );
+			header( "X-Content-Type-Options: nosniff" );
 			readfile( $tmp_file_name );
 			exit();
 		}
