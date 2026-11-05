@@ -930,7 +930,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file_key => $file ) {
 					$file_name          = $file['name'];
 					$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
-					$download_file_name = $order_id . '_' . $i . '_' . $file_key . '.' . $ext;
+					$download_file_name = $order_id . '_' . $i . '_' . $file_key . '.' . wp_generate_password( 32, false ) . '.bin';
 					$file_path          = $upload_dir . '/' . $download_file_name;
 					$tmp_file_name      = $file['tmp_name'];
 					$file_data          = file_get_contents( $tmp_file_name );
@@ -991,7 +991,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		
 		$file_name          = $file['name'];
 		$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
-		$download_file_name = $order_id . '_' . $file_uploader . '_' . $file_key . '.' . $ext;
+		$download_file_name = $order_id . '_' . $file_uploader . '_' . $file_key . '.' . wp_generate_password( 32, false ) . '.bin';
 		$file_path          = $upload_dir . '/' . $download_file_name;
 		$tmp_file_name      = $file['tmp_name'];
 		$file_data          = file_get_contents( $tmp_file_name );
