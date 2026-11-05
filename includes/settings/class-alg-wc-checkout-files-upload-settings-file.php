@@ -119,7 +119,8 @@ class Alg_WC_Checkout_Files_Upload_Settings_File extends Alg_WC_Checkout_Files_U
 			),
 			array(
 				'title'    => __( 'Accepted file types', 'checkout-files-upload-woocommerce' ),
-				'desc_tip' => __( 'Accepted file types. E.g.: ".jpg,.jpeg,.png". Leave blank to allow all the file types WordPress allows.', 'checkout-files-upload-woocommerce' ),
+				'desc'     => __( 'List of accepted file types, separated by commas. For example: ".jpg,.jpeg,.png". Leave blank to allow all the file types WordPress allows.', 'checkout-files-upload-woocommerce' )
+					. '<br/>' . __( 'Be careful allowing file types which may contain malicious code.', 'checkout-files-upload-woocommerce' ) . '  <a href="https://wpwham.com/documentation/checkout-files-upload-for-woocommerce/?utm_source=settings_file&utm_campaign=free&utm_medium=checkout_files_upload#File_Uploader_X" target="_blank">' . __( 'See the documentation for more info.', 'checkout-files-upload-woocommerce' ) . '</a>',
 				'id'       => 'alg_checkout_files_upload_file_accept_' . $i,
 				'default'  => '.jpg,.jpeg,.png',
 				'type'     => 'text',
