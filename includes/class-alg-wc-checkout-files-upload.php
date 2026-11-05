@@ -839,28 +839,30 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				foreach ( $files as $file_key => $file ) {
 					$files_exists = true;
 					$html .= '<tr>' .
-						'<td style="width:' . ( $allow_delete ? '139' : '174' ) . 'px; word-break: break-word;">' .
+						'<td style="width:' . ( $allow_delete ? '139' : '174' ) . 'px; word-break: break-word; vertical-align: top;">' .
+						$this->maybe_get_image( $i, $file_key, $order_id, false, '0' ) .
+						'<br>' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, false ) ) . '">' .
 						esc_html( $file['name'] ) . '</a>' .
 						'</td>' .
-						'<td style="width:' . ( $allow_delete ? '105' : '70' ) . 'px;">' .
+						'<td style="width:' . ( $allow_delete ? '105' : '70' ) . 'px; vertical-align: top;">' .
 						( $allow_delete ?
 							'<a href="' . esc_url( $this->get_file_delete_link( $i, $file_key, $order_id ) ) . '" ' .
 							'class="button wpwham-checkout-files-upload-file-delete-button"' .
-							'style="padding: 0 5px; line-height: 30px; text-decoration: none; color: #b32d2e; border-color: #b32d2e;">' .
+							'style="padding: 0 5px; min-height: 30px; height: 30px; line-height: 30px; text-decoration: none; color: #b32d2e; border-color: #b32d2e;">' .
 							'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 							'</a>&nbsp;'
 							: ''
 						) .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, false ) ) . '" ' .
 						'class="button" ' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none;" ' .
+						'style="padding: 0 5px; min-height: 30px; height: 30px; line-height: 30px; text-decoration: none;" ' .
 						'target="_blank">' .
 						'<span class="dashicons dashicons-external" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, $file_key, $order_id, false, true ) ) . '" ' .
 						'class="button" ' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
+						'style="padding: 0 5px; min-height: 30px; height: 30px; line-height: 30px; text-decoration: none;">' .
 						'<span class="dashicons dashicons-download" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>' .
 						'</td>' .
@@ -873,25 +875,27 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				if ( '' != $order_file_name ) {
 					$files_exists = true;
 					$html .= '<tr>' .
-						'<td style="width:139px; word-break: break-word;">' .
+						'<td style="width:139px; word-break: break-word; vertical-align: top;">' .
+						$this->maybe_get_image( $i, null, $order_id, false, '0' ) .
+						'<br>' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '">' .
 						esc_html( $real_file_name ) . '</a>' .
 						'</td>' .
-						'<td style="width:105px;">' .
+						'<td style="width:105px; vertical-align: top;">' .
 						'<a href="' . esc_url( $this->get_file_delete_link( $i, null, $order_id ) ) . '" ' .
 						'class="button wpwham-checkout-files-upload-file-delete-button"' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none; color: #b32d2e; border-color: #b32d2e;">' .
+						'style="padding: 0 5px; min-height: 30px; height: 30px; line-height: 30px; text-decoration: none; color: #b32d2e; border-color: #b32d2e;">' .
 						'<span class="dashicons dashicons-trash" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, false ) ) . '" ' .
 						'class="button" ' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none;" ' .
+						'style="padding: 0 5px; min-height: 30px; height: 30px; line-height: 30px; text-decoration: none;" ' .
 						'target="_blank">' .
 						'<span class="dashicons dashicons-external" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>&nbsp;' .
 						'<a href="' . esc_url( $this->get_file_download_link( $i, null, $order_id, false, true ) ) . '" ' .
 						'class="button" ' .
-						'style="padding: 0 5px; line-height: 30px; text-decoration: none;">' .
+						'style="padding: 0 5px; min-height: 30px; height: 30px; line-height: 30px; text-decoration: none;">' .
 						'<span class="dashicons dashicons-download" style="line-height: 30px; font-size: 16px;"></span>' .
 						'</a>' .
 						'</td>' .
@@ -1376,7 +1380,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	 * @since   1.4.0
 	 * @todo    [dev] use another way to check if it's an image (i.e. not `getimagesize()`)
 	 */
-	function maybe_get_image( $file_uploader, $file_key = null, $order_id = 0, $add_timestamp = false ) {
+	function maybe_get_image( $file_uploader, $file_key = null, $order_id = 0, $add_timestamp = false, $margin = '10px' ) {
 		
 		// Maybe start session
 		$local_session_started = false;
@@ -1413,9 +1417,9 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		}
 		
 		if ( $tmp_file_name && @is_array( getimagesize( $tmp_file_name ) ) ) {
-			$image = '<img style="display: inline-block; margin: 10px; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id, $add_timestamp ) ) . '">';
+			$image = '<img style="display: inline-block; margin: ' . $margin . '; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . esc_url( $this->get_file_download_link( $file_uploader, $file_key, $order_id, $add_timestamp ) ) . '">';
 		} else {
-			$image = '<img style="display: inline-block; margin: 10px; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . alg_wc_checkout_files_upload()->plugin_url() . '/assets/images/default_file_image.png' . '">';
+			$image = '<img style="display: inline-block; margin: ' . $margin . '; ' . get_option( 'alg_checkout_files_upload_form_image_style', 'width:64px;' ) . '" src="' . alg_wc_checkout_files_upload()->plugin_url() . '/assets/images/default_file_image.png' . '">';
 		}
 		
 		return apply_filters( 'wpw_cfu_maybe_get_image', $image, $tmp_file_name );
