@@ -589,6 +589,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		$file_path          = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $download_file_name;
 		$file_data          = file_get_contents( $tmp_file_name );
 		file_put_contents( $file_path, $file_data );
+		register_shutdown_function( 'unlink', $file_path );
 		return $file_path;
 	}
 	
