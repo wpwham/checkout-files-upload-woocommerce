@@ -763,6 +763,19 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					continue;
 				}
 				
+				// Validate uploaded files still exist (#112169)
+				$uploaded_file_exists = true;
+				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file ) {
+					if ( empty( $file['tmp_name'] ) || ! file_exists( $file['tmp_name'] ) ) {
+						wc_add_notice( __( 'Your uploaded file could not be found. Please re-upload it.', 'checkout-files-upload-woocommerce' ), 'error' );
+						$uploaded_file_exists = false;
+						break;
+					}
+				}
+				if ( ! $uploaded_file_exists ) {
+					continue;
+				}
+				
 				// Validate file type
 				$passed_file_types = true;
 				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file ) {
@@ -1065,6 +1078,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$tmp_file_name   = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'];
 				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['name'];
 			}
+
+			// Prevent potential crash if upload session was lost (#112169)
+			if ( empty( $tmp_file_name ) ) {
+				return;
+			}
 			
 			$wp_mime_type = wp_check_filetype_and_ext( // only returns mime type for files on WP's approved "list"
 				$tmp_file_name,
@@ -1127,6 +1145,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			} else {
 				$tmp_file_name   = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'];
 				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'];
+			}
+
+			// Prevent potential crash if upload session was lost (#112169)
+			if ( empty( $tmp_file_name ) ) {
+				return;
 			}
 			
 			$wp_mime_type = wp_check_filetype_and_ext( // only returns mime type for files on WP's approved "list"
