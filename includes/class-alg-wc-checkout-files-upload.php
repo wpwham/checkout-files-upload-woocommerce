@@ -151,7 +151,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		) {
 			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $file_num ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_num, true );
 			if ( is_array( $files ) && isset( $files[ $file_key ] ) ) {
-				$attachments = array( alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files[ $file_key ]['tmp_name'] );
+				$attachments = array( $this->get_file_for_email_attachment( $files[ $file_key ], $order_id, $file_num, $file_key ) );
 			}
 		}
 		
@@ -558,7 +558,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$files = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( is_array( $files ) ) {
 					foreach ( $files as $file_key => $file ) {
-						$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
+						$attachments[] = $this->get_file_for_email_attachment( $file, $order_id, $i, $file_key );
 					}
 				} else {
 					// Backwards compatibility for < v2.0.0
@@ -570,6 +570,27 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			}
 		}
 		return $attachments;
+	}
+
+	/**
+	 * get_file_for_email_attachment.
+	 *
+	 * @version 2.4.x
+	 * @since   2.4.x
+	 */
+	function get_file_for_email_attachment( $file, $order_id, $i, $file_key ) {
+		$tmp_file_name = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
+		if ( 'bin' != pathinfo( $file['tmp_name'], PATHINFO_EXTENSION ) ) {
+			return $tmp_file_name;
+		}
+		$file_name          = $file['name'];
+		$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
+		$download_file_name = $order_id . '_' . $i . '_' . $file_key . '.' . $ext;
+		$file_path          = sys_get_temp_dir() . '/' . $download_file_name;
+		$file_data          = file_get_contents( $tmp_file_name );
+		file_put_contents( $file_path, $file_data );
+		register_shutdown_function( 'unlink', $file_path );
+		return $file_path;
 	}
 	
 	/**
