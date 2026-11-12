@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.4.1
+ * @version 2.4.2
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -125,7 +125,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * maybe_send_admin_notification.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.2
 	 * @since   1.4.4
 	 * @todo    [feature] add "Email type" option (i.e. Plain text / HTML / Multipart)
 	 * @todo    [feature] (maybe) add `{admin_email}` replaced value in `$address` (in case of comma separated input)
@@ -151,7 +151,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 		) {
 			$files = ( $order ? $order->get_meta( '_alg_checkout_files_upload_' . $file_num ) : '' ) ?: get_post_meta( $order_id, '_' . 'alg_checkout_files_upload_' . $file_num, true );
 			if ( is_array( $files ) && isset( $files[ $file_key ] ) ) {
-				$attachments = array( alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $files[ $file_key ]['tmp_name'] );
+				$attachments = array( $this->get_file_for_email_attachment( $files[ $file_key ], $order_id, $file_num, $file_key ) );
 			}
 		}
 		
@@ -538,7 +538,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.2
 	 * @since   1.0.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
@@ -558,7 +558,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 				$files = ( $order->get_meta( '_alg_checkout_files_upload_' . $i ) ) ?: get_post_meta( $order_id, '_alg_checkout_files_upload_' . $i, true );
 				if ( is_array( $files ) ) {
 					foreach ( $files as $file_key => $file ) {
-						$attachments[] = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
+						$attachments[] = $this->get_file_for_email_attachment( $file, $order_id, $i, $file_key );
 					}
 				} else {
 					// Backwards compatibility for < v2.0.0
@@ -570,6 +570,27 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			}
 		}
 		return $attachments;
+	}
+
+	/**
+	 * get_file_for_email_attachment.
+	 *
+	 * @version 2.4.2
+	 * @since   2.4.2
+	 */
+	function get_file_for_email_attachment( $file, $order_id, $i, $file_key ) {
+		$tmp_file_name = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
+		if ( 'bin' != pathinfo( $file['tmp_name'], PATHINFO_EXTENSION ) ) {
+			return $tmp_file_name;
+		}
+		$file_name          = $file['name'];
+		$ext                = pathinfo( $file_name, PATHINFO_EXTENSION );
+		$download_file_name = $order_id . '_' . $i . '_' . $file_key . '.' . $ext;
+		$file_path          = sys_get_temp_dir() . '/' . $download_file_name;
+		$file_data          = file_get_contents( $tmp_file_name );
+		file_put_contents( $file_path, $file_data );
+		register_shutdown_function( 'unlink', $file_path );
+		return $file_path;
 	}
 	
 	/**
@@ -715,7 +736,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 2.2.1
+	 * @version 2.4.2
 	 * @since   1.0.0
 	 */
 	function validate_on_checkout( $posted ) {
@@ -760,6 +781,19 @@ class Alg_WC_Checkout_Files_Upload_Main {
 					count( $_SESSION[ 'alg_checkout_files_upload_' . $i ] ) < 1
 				) {
 					// No files uploaded nor required, skip further validations.
+					continue;
+				}
+				
+				// Validate uploaded files still exist (#112169)
+				$uploaded_file_exists = true;
+				foreach ( $_SESSION[ 'alg_checkout_files_upload_' . $i ] as $file ) {
+					if ( empty( $file['tmp_name'] ) || ! file_exists( $file['tmp_name'] ) ) {
+						wc_add_notice( __( 'Your uploaded file could not be found. Please re-upload it.', 'checkout-files-upload-woocommerce' ), 'error' );
+						$uploaded_file_exists = false;
+						break;
+					}
+				}
+				if ( ! $uploaded_file_exists ) {
 					continue;
 				}
 				
@@ -1020,7 +1054,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.2
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {
@@ -1064,6 +1098,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			} else {
 				$tmp_file_name   = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['tmp_name'];
 				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $i ]['name'];
+			}
+
+			// Prevent potential crash if upload session was lost (#112169)
+			if ( empty( $tmp_file_name ) ) {
+				return;
 			}
 			
 			$wp_mime_type = wp_check_filetype_and_ext( // only returns mime type for files on WP's approved "list"
@@ -1127,6 +1166,11 @@ class Alg_WC_Checkout_Files_Upload_Main {
 			} else {
 				$tmp_file_name   = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['tmp_name'];
 				$file_name       = $_SESSION[ 'alg_checkout_files_upload_' . $file_uploader ][ $file_key ]['name'];
+			}
+
+			// Prevent potential crash if upload session was lost (#112169)
+			if ( empty( $tmp_file_name ) ) {
+				return;
 			}
 			
 			$wp_mime_type = wp_check_filetype_and_ext( // only returns mime type for files on WP's approved "list"
