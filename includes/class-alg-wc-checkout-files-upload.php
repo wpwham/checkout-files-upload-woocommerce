@@ -2,7 +2,7 @@
 /**
  * Checkout Files Upload
  *
- * @version 2.4.1
+ * @version 2.4.2
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  * @author  WP Wham
@@ -125,7 +125,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * maybe_send_admin_notification.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.2
 	 * @since   1.4.4
 	 * @todo    [feature] add "Email type" option (i.e. Plain text / HTML / Multipart)
 	 * @todo    [feature] (maybe) add `{admin_email}` replaced value in `$address` (in case of comma separated input)
@@ -538,7 +538,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.2
 	 * @since   1.0.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
@@ -575,8 +575,8 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * get_file_for_email_attachment.
 	 *
-	 * @version 2.4.x
-	 * @since   2.4.x
+	 * @version 2.4.2
+	 * @since   2.4.2
 	 */
 	function get_file_for_email_attachment( $file, $order_id, $i, $file_key ) {
 		$tmp_file_name = alg_get_alg_uploads_dir( 'checkout_files_upload' ) . '/' . $file['tmp_name'];
@@ -736,7 +736,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 2.2.1
+	 * @version 2.4.2
 	 * @since   1.0.0
 	 */
 	function validate_on_checkout( $posted ) {
@@ -1054,7 +1054,7 @@ class Alg_WC_Checkout_Files_Upload_Main {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.2
 	 * @since   1.0.0
 	 */
 	function process_checkout_files_upload() {

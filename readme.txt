@@ -3,7 +3,7 @@ Contributors: wpwham
 Tags: woocommerce, checkout files upload, checkout, woo commerce
 Requires at least: 4.4
 Tested up to: 7.1
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,6 +83,10 @@ Optionally **validate image dimensions**.
 5. Checkout Files Upload for WooCommerce - Settings: File Uploader.
 
 == Changelog ==
+
+= 2.4.2 - 2026-11-12 =
+* FIX: filename in email attachments (bug introduced in v2.4.1) (#112246, #112263, #112282, #112296).
+* FIX: prevent potential crash if upload session was lost (#112169).
 
 = 2.4.1 - 2026-11-05 =
 * FIX: improved MIME type detection and handling for uploaded files.
