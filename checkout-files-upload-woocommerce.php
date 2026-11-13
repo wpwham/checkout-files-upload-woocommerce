@@ -286,6 +286,7 @@ final class Alg_WC_Checkout_Files_Upload {
 		// Settings
 		require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-section.php' );
 		require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-file.php' );
+		require_once( 'includes/class-wpwham-checkout-files-upload-review.php' );
 		$this->settings = array();
 		$this->settings['general']  = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-general.php' );
 		$this->settings['emails']   = require_once( 'includes/settings/class-alg-wc-checkout-files-upload-settings-emails.php' );
